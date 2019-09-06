@@ -873,6 +873,16 @@ module atm_core
       call atm_timestep(domain, dt, currTime, itimestep)
 
       !    
+      ! If this is a regional domain, adjustments are required for the
+      ! lateral boundary conditions due to the microphysics.
+      !    
+#ifdef DO_PHYSICS
+      if((moist_physics) .and. (config_apply_lbcs)) then 
+         call dynamics_final_lbc_adjustment (domain, dt)
+      endif
+#endif
+
+      !    
       ! The end of the time step. Advance model xtime.
       !    
       call dynamics_update_xtime (domain, dt, currTime)
