@@ -90,6 +90,10 @@
 !inout arguments:
  type(domain_type),intent(inout):: domain
 
+!out arguments:
+ character(len=*), intent(out):: errmsg
+ integer,          intent(out):: errflg
+
 !local pointers:
  type(mpas_pool_type),pointer::  configs,      &
                                  mesh,         &
@@ -298,7 +302,8 @@
 !$OMP PARALLEL DO
        do thread=1,nThreads
           call driver_pbl(itimestep,block%configs,mesh,sfc_input,diag_physics,tend_physics, &
-                          cellSolveThreadStart(thread),cellSolveThreadEnd(thread))
+                          cellSolveThreadStart(thread),cellSolveThreadEnd(thread), &
+                          errmsg,errflg)
        end do
 !$OMP END PARALLEL DO
        call deallocate_pbl(block%configs)
