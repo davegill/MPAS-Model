@@ -889,24 +889,19 @@ module atm_core
       ! dynamics time stepping.
       !
 #ifdef DO_PHYSICS
-      !proceed with physics if moist_physics is set to true:
-      if(moist_physics) then
-         call physics_driver_after_dyn(domain,itimestep,xtime_s,errmsg,errflg)
-!        if ( errflg /= 0 ) then 
-!           call mpas_log_write('Physics before_dyn failed: '//trim(errmsg), messageType=MPAS_LOG_CRIT)
-!        end if
-      endif
+      call physics_driver_after_dyn(domain,itimestep,xtime_s,errmsg,errflg)
+!     if ( errflg /= 0 ) then 
+!        call mpas_log_write('Physics before_dyn failed: '//trim(errmsg), messageType=MPAS_LOG_CRIT)
+!     end if
 #endif
 
       !
       ! If this is a regional domain, adjustments are required for the
       ! lateral boundary conditions due to the microphysics.
       !    
-#ifdef DO_PHYSICS
-      if((moist_physics) .and. (config_apply_lbcs)) then 
+      if(config_apply_lbcs) then 
          call dynamics_final_lbc_adjustment (domain, dt)
       endif
-#endif
 
       !    
       ! The end of the time step. Advance model xtime.
