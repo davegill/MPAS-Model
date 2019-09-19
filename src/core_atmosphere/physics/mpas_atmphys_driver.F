@@ -80,7 +80,7 @@
 
 
 !=================================================================================================================
- subroutine physics_driver_before_dyn(domain,itimestep,xtime_s)
+ subroutine physics_driver_before_dyn(domain,itimestep,xtime_s,errmsg,errflg)
 !=================================================================================================================
 
 !input arguments:
@@ -366,7 +366,7 @@
 
 
 !=================================================================================================================
- subroutine physics_driver_after_dyn(domain,itimestep,xtime_s)
+ subroutine physics_driver_after_dyn(domain,itimestep,xtime_s,errmsg,errflg)
 !=================================================================================================================
 
 !input arguments:
@@ -375,6 +375,10 @@
 
 !inout arguments:
  type(domain_type),intent(inout):: domain
+
+!out arguments:
+ character(len=*), intent(out):: errmsg
+ integer,          intent(out):: errflg
 
 !local pointers:
  type(mpas_pool_type)               ,pointer ::  configs                  ,&

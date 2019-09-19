@@ -875,7 +875,10 @@ module atm_core
       !proceed with physics if moist_physics is set to true:
       if(moist_physics) then
          call physics_timetracker(domain,dt,clock,itimestep,xtime_s)
-         call physics_driver_before_dyn(domain,itimestep,xtime_s)
+         call physics_driver_before_dyn(domain,itimestep,xtime_s,errmsg,errflg)
+         if ( errflg /= 0 ) then 
+            call mpas_log_write('Physics before_dyn failed: '//trim(errmsg), messageType=MPAS_LOG_CRIT)
+         end if
       endif
 #endif
 
@@ -888,7 +891,10 @@ module atm_core
 #ifdef DO_PHYSICS
       !proceed with physics if moist_physics is set to true:
       if(moist_physics) then
-         call physics_driver_after_dyn(domain,itimestep,xtime_s)
+         call physics_driver_after_dyn(domain,itimestep,xtime_s,errmsg,errflg)
+!        if ( errflg /= 0 ) then 
+!           call mpas_log_write('Physics before_dyn failed: '//trim(errmsg), messageType=MPAS_LOG_CRIT)
+!        end if
       endif
 #endif
 
