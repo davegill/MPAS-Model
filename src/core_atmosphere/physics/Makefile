@@ -16,6 +16,7 @@ OBJS_init = \
 	mpas_atmphys_utilities.o
 
 OBJS = \
+	mpas_ccpp_cap.o                    \
 	mpas_atmphys_camrad_init.o         \
 	mpas_atmphys_control.o             \
 	mpas_atmphys_driver.o              \
@@ -64,6 +65,9 @@ core_physics: core_physics_wrf core_physics_sima
 phys_interface: $(OBJS)
 
 # DEPENDENCIES:
+mpas_ccpp_cap.o: \
+	mpas_atmphys_vars.o
+
 mpas_atmphys_camrad_init.o: \
 	mpas_atmphys_constants.o \
 	mpas_atmphys_utilities.o

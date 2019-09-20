@@ -5,13 +5,22 @@ all: dummy physics_sima
 dummy:
 	echo "****** compiling physics_sima ******"
 
-OBJS = \
-	bl_ysu.o
+OBJS = 				\
+	bl_ysu.o 		\
+	ccpp_mpas_suite_cap.o 	\
+	ccpp_kinds.o
 
 physics_sima: $(OBJS)
 	ar -ru ./../libphys.a $(OBJS)
 
 # DEPENDENCIES:
+ccpp_mpas_suite_cap.o : \
+	bl_ysu.o 	\
+	ccpp_kinds.o
+
+bl_ysu.o :		\
+	ccpp_kinds.o
+
 
 clean:
 	$(RM) *.f90 *.o *.mod

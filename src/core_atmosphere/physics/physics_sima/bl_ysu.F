@@ -36,7 +36,7 @@
 module bl_ysu
 
   use mpas_log
-  !USE ccpp_kinds, ONLY: kind_phys
+  USE ccpp_kinds, ONLY: kind_phys
 
   IMPLICIT NONE
 
