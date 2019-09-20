@@ -659,13 +659,10 @@
  kts=kms ; kte = kme-1
 
  call mpas_log_write('     IMS =$i   IME =$i', intArgs=(/ims,ime/))
- call mpas_log_write('     JMS =$i   JME =$i', intArgs=(/jms,jme/))
  call mpas_log_write('     KMS =$i   KME =$i', intArgs=(/kms,kme/))
  call mpas_log_write('     IDS =$i   IDE =$i', intArgs=(/ids,ide/))
- call mpas_log_write('     JDS =$i   JDE =$i', intArgs=(/jds,jde/))
  call mpas_log_write('     KDS =$i   KDE =$i', intArgs=(/kds,kde/))
  call mpas_log_write('     ITS =$i   ITE =$i', intArgs=(/its,ite/))
- call mpas_log_write('     JTS =$i   JTE =$i', intArgs=(/jts,jte/))
  call mpas_log_write('     KTS =$i   KTE =$i', intArgs=(/kts,kte/))
 
 !initialization local physics variables:

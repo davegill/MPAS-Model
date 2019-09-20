@@ -69,28 +69,28 @@
  subroutine allocate_gwdo
 !=================================================================================================================
 
- if(.not.allocated(cosa_p)  ) allocate(cosa_p(ims:ime,jms:jme)  )
- if(.not.allocated(sina_p)  ) allocate(sina_p(ims:ime,jms:jme)  )
+ if(.not.allocated(cosa_p)  ) allocate(cosa_p(ims:ime)  )
+ if(.not.allocated(sina_p)  ) allocate(sina_p(ims:ime)  )
 
- if(.not.allocated(dx_p)    ) allocate(dx_p(ims:ime,jms:jme)    )
- if(.not.allocated(var2d_p) ) allocate(var2d_p(ims:ime,jms:jme) )
- if(.not.allocated(con_p)   ) allocate(con_p(ims:ime,jms:jme)   )
- if(.not.allocated(oa1_p)   ) allocate(oa1_p(ims:ime,jms:jme)   )
- if(.not.allocated(oa2_p)   ) allocate(oa2_p(ims:ime,jms:jme)   )
- if(.not.allocated(oa3_p)   ) allocate(oa3_p(ims:ime,jms:jme)   )
- if(.not.allocated(oa4_p)   ) allocate(oa4_p(ims:ime,jms:jme)   )
- if(.not.allocated(ol1_p)   ) allocate(ol1_p(ims:ime,jms:jme)   )
- if(.not.allocated(ol2_p)   ) allocate(ol2_p(ims:ime,jms:jme)   )
- if(.not.allocated(ol3_p)   ) allocate(ol3_p(ims:ime,jms:jme)   )
- if(.not.allocated(ol4_p)   ) allocate(ol4_p(ims:ime,jms:jme)   )
- if(.not.allocated(kpbl_p  )) allocate(kpbl_p(ims:ime,jms:jme)  )
- if(.not.allocated(dusfcg_p)) allocate(dusfcg_p(ims:ime,jms:jme))
- if(.not.allocated(dvsfcg_p)) allocate(dvsfcg_p(ims:ime,jms:jme))
+ if(.not.allocated(dx_p)    ) allocate(dx_p(ims:ime)    )
+ if(.not.allocated(var2d_p) ) allocate(var2d_p(ims:ime) )
+ if(.not.allocated(con_p)   ) allocate(con_p(ims:ime)   )
+ if(.not.allocated(oa1_p)   ) allocate(oa1_p(ims:ime)   )
+ if(.not.allocated(oa2_p)   ) allocate(oa2_p(ims:ime)   )
+ if(.not.allocated(oa3_p)   ) allocate(oa3_p(ims:ime)   )
+ if(.not.allocated(oa4_p)   ) allocate(oa4_p(ims:ime)   )
+ if(.not.allocated(ol1_p)   ) allocate(ol1_p(ims:ime)   )
+ if(.not.allocated(ol2_p)   ) allocate(ol2_p(ims:ime)   )
+ if(.not.allocated(ol3_p)   ) allocate(ol3_p(ims:ime)   )
+ if(.not.allocated(ol4_p)   ) allocate(ol4_p(ims:ime)   )
+ if(.not.allocated(kpbl_p  )) allocate(kpbl_p(ims:ime)  )
+ if(.not.allocated(dusfcg_p)) allocate(dusfcg_p(ims:ime))
+ if(.not.allocated(dvsfcg_p)) allocate(dvsfcg_p(ims:ime))
  
- if(.not.allocated(dtaux3d_p)) allocate(dtaux3d_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(dtauy3d_p)) allocate(dtauy3d_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(rublten_p)) allocate(rublten_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(rvblten_p)) allocate(rvblten_p(ims:ime,kms:kme,jms:jme))
+ if(.not.allocated(dtaux3d_p)) allocate(dtaux3d_p(ims:ime,kms:kme))
+ if(.not.allocated(dtauy3d_p)) allocate(dtauy3d_p(ims:ime,kms:kme))
+ if(.not.allocated(rublten_p)) allocate(rublten_p(ims:ime,kms:kme))
+ if(.not.allocated(rvblten_p)) allocate(rvblten_p(ims:ime,kms:kme))
 
  end subroutine allocate_gwdo
 
@@ -137,7 +137,7 @@
  integer,intent(in):: its,ite
 
 !local variables:
- integer:: i,k,j
+ integer:: i,k
 
 !local pointers:
  integer,dimension(:),pointer:: kpbl
@@ -171,42 +171,36 @@
  call mpas_pool_get_array(tend_physics,'rublten' ,rublten )
  call mpas_pool_get_array(tend_physics,'rvblten' ,rvblten )
 
- do j = jts,jte
  do i = its,ite
 
-    sina_p(i,j)  = 0._RKIND
-    cosa_p(i,j)  = 1._RKIND
+    sina_p(i)  = 0._RKIND
+    cosa_p(i)  = 1._RKIND
 
-    var2d_p(i,j) = var2d(i)
-    con_p(i,j)   = con(i)
-    oa1_p(i,j)   = oa1(i)
-    oa2_p(i,j)   = oa2(i)
-    oa3_p(i,j)   = oa3(i)
-    oa4_p(i,j)   = oa4(i)
-    ol1_p(i,j)   = ol1(i)
-    ol2_p(i,j)   = ol2(i)
-    ol3_p(i,j)   = ol3(i)
-    ol4_p(i,j)   = ol4(i)
- enddo
+    var2d_p(i) = var2d(i)
+    con_p(i)   = con(i)
+    oa1_p(i)   = oa1(i)
+    oa2_p(i)   = oa2(i)
+    oa3_p(i)   = oa3(i)
+    oa4_p(i)   = oa4(i)
+    ol1_p(i)   = ol1(i)
+    ol2_p(i)   = ol2(i)
+    ol3_p(i)   = ol3(i)
+    ol4_p(i)   = ol4(i)
  enddo
 
- do j = jts,jte
  do i = its,ite
-    dx_p(i,j) = len_disp / meshDensity(i)**0.25
-    kpbl_p(i,j)   = kpbl(i)
-    dusfcg_p(i,j) = dusfcg(i)
-    dvsfcg_p(i,j) = dvsfcg(i)
- enddo
+    dx_p(i) = len_disp / meshDensity(i)**0.25
+    kpbl_p(i)   = kpbl(i)
+    dusfcg_p(i) = dusfcg(i)
+    dvsfcg_p(i) = dvsfcg(i)
  enddo
 
- do j = jts,jte
  do k = kts,kte
  do i = its,ite
-    dtaux3d_p(i,k,j) = dtaux3d(k,i)
-    dtauy3d_p(i,k,j) = dtauy3d(k,i)
-    rublten_p(i,k,j) = rublten(k,i)
-    rvblten_p(i,k,j) = rvblten(k,i)
- enddo
+    dtaux3d_p(i,k) = dtaux3d(k,i)
+    dtauy3d_p(i,k) = dtauy3d(k,i)
+    rublten_p(i,k) = rublten(k,i)
+    rvblten_p(i,k) = rvblten(k,i)
  enddo
  enddo
 
@@ -224,7 +218,7 @@
  type(mpas_pool_type),intent(inout):: tend_physics
 
 !local variables:
- integer:: i,k,j
+ integer:: i,k
 
 !local pointers:
  real(kind=RKIND),dimension(:),pointer  :: dusfcg,dvsfcg
@@ -241,23 +235,19 @@
  call mpas_pool_get_array(tend_physics,'rublten' ,rublten )
  call mpas_pool_get_array(tend_physics,'rvblten' ,rvblten )
 
- do j = jts,jte
  do i = its,ite
-    dusfcg(i) = dusfcg_p(i,j) 
-    dvsfcg(i) = dvsfcg_p(i,j)
- enddo
+    dusfcg(i) = dusfcg_p(i) 
+    dvsfcg(i) = dvsfcg_p(i)
  enddo
 
- do j = jts,jte
  do k = kts,kte
  do i = its,ite
-    dtaux3d(k,i)  = dtaux3d_p(i,k,j)
-    dtauy3d(k,i)  = dtauy3d_p(i,k,j)
-    rubldiff(k,i) = rublten_p(i,k,j)-rublten(k,i)
-    rvbldiff(k,i) = rvblten_p(i,k,j)-rvblten(k,i) 
-    rublten(k,i)  = rublten_p(i,k,j)
-    rvblten(k,i)  = rvblten_p(i,k,j)
- enddo
+    dtaux3d(k,i)  = dtaux3d_p(i,k)
+    dtauy3d(k,i)  = dtauy3d_p(i,k)
+    rubldiff(k,i) = rublten_p(i,k)-rublten(k,i)
+    rvbldiff(k,i) = rvblten_p(i,k)-rvblten(k,i) 
+    rublten(k,i)  = rublten_p(i,k)
+    rvblten(k,i)  = rvblten_p(i,k)
  enddo
  enddo
 

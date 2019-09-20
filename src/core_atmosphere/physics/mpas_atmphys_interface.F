@@ -83,53 +83,53 @@
 
  call mpas_pool_get_config(configs,'config_pbl_scheme',pbl_scheme)
 
- if(.not.allocated(psfc_p) ) allocate(psfc_p(ims:ime,jms:jme)         )
- if(.not.allocated(ptop_p) ) allocate(ptop_p(ims:ime,jms:jme)         )
+ if(.not.allocated(psfc_p) ) allocate(psfc_p(ims:ime)         )
+ if(.not.allocated(ptop_p) ) allocate(ptop_p(ims:ime)         )
 
- if(.not.allocated(u_p)    ) allocate(u_p(ims:ime,kms:kme,jms:jme)    )
- if(.not.allocated(v_p)    ) allocate(v_p(ims:ime,kms:kme,jms:jme)    )
- if(.not.allocated(fzm_p)  ) allocate(fzm_p(ims:ime,kms:kme,jms:jme)  )
- if(.not.allocated(fzp_p)  ) allocate(fzp_p(ims:ime,kms:kme,jms:jme)  )
- if(.not.allocated(zz_p)   ) allocate(zz_p(ims:ime,kms:kme,jms:jme)   )
- if(.not.allocated(pres_p) ) allocate(pres_p(ims:ime,kms:kme,jms:jme) )
- if(.not.allocated(pi_p)   ) allocate(pi_p(ims:ime,kms:kme,jms:jme)   )
- if(.not.allocated(z_p)    ) allocate(z_p(ims:ime,kms:kme,jms:jme)    )
- if(.not.allocated(zmid_p) ) allocate(zmid_p(ims:ime,kms:kme,jms:jme) )
- if(.not.allocated(dz_p)   ) allocate(dz_p(ims:ime,kms:kme,jms:jme)   )
- if(.not.allocated(t_p)    ) allocate(t_p(ims:ime,kms:kme,jms:jme)    )
- if(.not.allocated(th_p)   ) allocate(th_p(ims:ime,kms:kme,jms:jme)   )
- if(.not.allocated(al_p)   ) allocate(al_p(ims:ime,kms:kme,jms:jme)   )
- if(.not.allocated(rho_p)  ) allocate(rho_p(ims:ime,kms:kme,jms:jme)  )
- if(.not.allocated(rh_p)   ) allocate(rh_p(ims:ime,kms:kme,jms:jme)   )
- if(.not.allocated(znu_p)  ) allocate(znu_p(ims:ime,kms:kme,jms:jme)  )
+ if(.not.allocated(u_p)    ) allocate(u_p(ims:ime,kms:kme)    )
+ if(.not.allocated(v_p)    ) allocate(v_p(ims:ime,kms:kme)    )
+ if(.not.allocated(fzm_p)  ) allocate(fzm_p(ims:ime,kms:kme)  )
+ if(.not.allocated(fzp_p)  ) allocate(fzp_p(ims:ime,kms:kme)  )
+ if(.not.allocated(zz_p)   ) allocate(zz_p(ims:ime,kms:kme)   )
+ if(.not.allocated(pres_p) ) allocate(pres_p(ims:ime,kms:kme) )
+ if(.not.allocated(pi_p)   ) allocate(pi_p(ims:ime,kms:kme)   )
+ if(.not.allocated(z_p)    ) allocate(z_p(ims:ime,kms:kme)    )
+ if(.not.allocated(zmid_p) ) allocate(zmid_p(ims:ime,kms:kme) )
+ if(.not.allocated(dz_p)   ) allocate(dz_p(ims:ime,kms:kme)   )
+ if(.not.allocated(t_p)    ) allocate(t_p(ims:ime,kms:kme)    )
+ if(.not.allocated(th_p)   ) allocate(th_p(ims:ime,kms:kme)   )
+ if(.not.allocated(al_p)   ) allocate(al_p(ims:ime,kms:kme)   )
+ if(.not.allocated(rho_p)  ) allocate(rho_p(ims:ime,kms:kme)  )
+ if(.not.allocated(rh_p)   ) allocate(rh_p(ims:ime,kms:kme)   )
+ if(.not.allocated(znu_p)  ) allocate(znu_p(ims:ime,kms:kme)  )
 
- if(.not.allocated(w_p)    ) allocate(w_p(ims:ime,kms:kme,jms:jme)    )
- if(.not.allocated(pres2_p)) allocate(pres2_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(t2_p)   ) allocate(t2_p(ims:ime,kms:kme,jms:jme)   )
+ if(.not.allocated(w_p)    ) allocate(w_p(ims:ime,kms:kme)    )
+ if(.not.allocated(pres2_p)) allocate(pres2_p(ims:ime,kms:kme))
+ if(.not.allocated(t2_p)   ) allocate(t2_p(ims:ime,kms:kme)   )
  
- if(.not.allocated(qv_p)   ) allocate(qv_p(ims:ime,kms:kme,jms:jme)   )
- if(.not.allocated(qc_p)   ) allocate(qc_p(ims:ime,kms:kme,jms:jme)   )
- if(.not.allocated(qr_p)   ) allocate(qr_p(ims:ime,kms:kme,jms:jme)   )
- if(.not.allocated(qi_p)   ) allocate(qi_p(ims:ime,kms:kme,jms:jme)   )
- if(.not.allocated(qs_p)   ) allocate(qs_p(ims:ime,kms:kme,jms:jme)   )
- if(.not.allocated(qg_p)   ) allocate(qg_p(ims:ime,kms:kme,jms:jme)   )
+ if(.not.allocated(qv_p)   ) allocate(qv_p(ims:ime,kms:kme)   )
+ if(.not.allocated(qc_p)   ) allocate(qc_p(ims:ime,kms:kme)   )
+ if(.not.allocated(qr_p)   ) allocate(qr_p(ims:ime,kms:kme)   )
+ if(.not.allocated(qi_p)   ) allocate(qi_p(ims:ime,kms:kme)   )
+ if(.not.allocated(qs_p)   ) allocate(qs_p(ims:ime,kms:kme)   )
+ if(.not.allocated(qg_p)   ) allocate(qg_p(ims:ime,kms:kme)   )
 
  pbl_select: select case (trim(pbl_scheme))
     case("bl_mynn")
-       if(.not.allocated(ni_p)) allocate(ni_p(ims:ime,kms:kme,jms:jme))
+       if(.not.allocated(ni_p)) allocate(ni_p(ims:ime,kms:kme))
 
     case default
 
  end select pbl_select
 
 !... arrays used for calculating the hydrostatic pressure and exner function:
- if(.not.allocated(psfc_hyd_p)  ) allocate(psfc_hyd_p(ims:ime,jms:jme)          )
- if(.not.allocated(psfc_hydd_p) ) allocate(psfc_hydd_p(ims:ime,jms:jme)         )
- if(.not.allocated(pres_hyd_p)  ) allocate(pres_hyd_p(ims:ime,kms:kme,jms:jme)  )
- if(.not.allocated(pres_hydd_p) ) allocate(pres_hydd_p(ims:ime,kms:kme,jms:jme) )
- if(.not.allocated(pres2_hyd_p) ) allocate(pres2_hyd_p(ims:ime,kms:kme,jms:jme) )
- if(.not.allocated(pres2_hydd_p)) allocate(pres2_hydd_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(znu_hyd_p)   ) allocate(znu_hyd_p(ims:ime,kms:kme,jms:jme)   )
+ if(.not.allocated(psfc_hyd_p)  ) allocate(psfc_hyd_p(ims:ime)          )
+ if(.not.allocated(psfc_hydd_p) ) allocate(psfc_hydd_p(ims:ime)         )
+ if(.not.allocated(pres_hyd_p)  ) allocate(pres_hyd_p(ims:ime,kms:kme)  )
+ if(.not.allocated(pres_hydd_p) ) allocate(pres_hydd_p(ims:ime,kms:kme) )
+ if(.not.allocated(pres2_hyd_p) ) allocate(pres2_hyd_p(ims:ime,kms:kme) )
+ if(.not.allocated(pres2_hydd_p)) allocate(pres2_hydd_p(ims:ime,kms:kme))
+ if(.not.allocated(znu_hyd_p)   ) allocate(znu_hyd_p(ims:ime,kms:kme)   )
  
  end subroutine allocate_forall_physics
 
@@ -238,11 +238,9 @@
 !call mpas_log_write('')
 !call mpas_log_write('--- enter subroutine MPAS_to_phys:')
 !call mpas_log_write('ims=$i ime=$i',intArgs=(/ims,ime/))
-!call mpas_log_write('jms=$i jme=$i',intArgs=(/jms,jme/))
 !call mpas_log_write('kms=$i kme=$i',intArgs=(/kms,kme/))
 !call mpas_log_write('')
 !call mpas_log_write('its=$i ite=$i',intArgs=(/its,ite/))
-!call mpas_log_write('jts=$i jte=$i',intArgs=(/jts,jte/))
 !call mpas_log_write('kts=$i kte=$i',intArgs=(/kts,kte/))
 
 !initialization:
@@ -286,35 +284,33 @@
 
  call mpas_pool_get_array(diag_physics,'plrad',plrad)
 
- do j = jts, jte
  do k = kts, kte
  do i = its, ite
 
     !water vapor and moist arrays:
-    qv_p(i,k,j) = max(0.,qv(k,i))
-    qc_p(i,k,j) = max(0.,qc(k,i))
-    qr_p(i,k,j) = max(0.,qr(k,i))
-    qi_p(i,k,j) = max(0.,qi(k,i))
-    qs_p(i,k,j) = max(0.,qs(k,i))
-    qg_p(i,k,j) = max(0.,qg(k,i))
+    qv_p(i,k) = max(0.,qv(k,i))
+    qc_p(i,k) = max(0.,qc(k,i))
+    qr_p(i,k) = max(0.,qr(k,i))
+    qi_p(i,k) = max(0.,qi(k,i))
+    qs_p(i,k) = max(0.,qs(k,i))
+    qg_p(i,k) = max(0.,qg(k,i))
 
     !arrays located at theta points:
-    u_p(i,k,j) = u(k,i)
-    v_p(i,k,j) = v(k,i)
+    u_p(i,k) = u(k,i)
+    v_p(i,k) = v(k,i)
 
-    zz_p(i,k,j)  = zz(k,i)
-    rho_p(i,k,j) = zz(k,i) * rho_zz(k,i)
-    rho_p(i,k,j) = rho_p(i,k,j)*(1._RKIND + qv_p(i,k,j))
-    th_p(i,k,j)  = theta_m(k,i) / (1._RKIND + R_v/R_d * qv_p(i,k,j))
-    t_p(i,k,j)   = th_p(i,k,j)*exner(k,i)
+    zz_p(i,k)  = zz(k,i)
+    rho_p(i,k) = zz(k,i) * rho_zz(k,i)
+    rho_p(i,k) = rho_p(i,k)*(1._RKIND + qv_p(i,k))
+    th_p(i,k)  = theta_m(k,i) / (1._RKIND + R_v/R_d * qv_p(i,k))
+    t_p(i,k)   = th_p(i,k)*exner(k,i)
 
-    pi_p(i,k,j)   = exner(k,i)
-    pres_p(i,k,j) = pressure_p(k,i) + pressure_b(k,i)
+    pi_p(i,k)   = exner(k,i)
+    pres_p(i,k) = pressure_p(k,i) + pressure_b(k,i)
 
-    zmid_p(i,k,j) = 0.5*(zgrid(k+1,i)+zgrid(k,i))
-    dz_p(i,k,j)   = zgrid(k+1,i)-zgrid(k,i)
+    zmid_p(i,k) = 0.5*(zgrid(k+1,i)+zgrid(k,i))
+    dz_p(i,k)   = zgrid(k+1,i)-zgrid(k,i)
 
- enddo
  enddo
  enddo
 
@@ -323,11 +319,9 @@
        call mpas_pool_get_dimension(state,'index_ni',index_ni)
        ni => scalars(index_ni,:,:)
 
-       do j = jts,jte
        do k = kts,kte
        do i = its,ite
-          ni_p(i,k,j) = max(0.,ni(k,i))
-       enddo
+          ni_p(i,k) = max(0.,ni(k,i))
        enddo
        enddo
 
@@ -336,12 +330,11 @@
  end select pbl_select
 
 !calculation of the surface pressure using hydrostatic assumption down to the surface::
- do j = jts,jte
  do i = its,ite
     tem1 = zgrid(2,i)-zgrid(1,i)
     tem2 = zgrid(3,i)-zgrid(2,i)
-    rho1 = rho_zz(1,i) * zz(1,i) * (1. + qv_p(i,1,j))
-    rho2 = rho_zz(2,i) * zz(2,i) * (1. + qv_p(i,2,j))
+    rho1 = rho_zz(1,i) * zz(1,i) * (1. + qv_p(i,1))
+    rho2 = rho_zz(2,i) * zz(2,i) * (1. + qv_p(i,2))
 !   surface_pressure(i) = 0.5*gravity*(zgrid(2,i)-zgrid(1,i)) &
 !                   * (rho1 + 0.5*(rho2-rho1)*tem1/(tem1+tem2))
     surface_pressure(i) = 0.5*gravity*(zgrid(2,i)-zgrid(1,i)) &
@@ -351,26 +344,22 @@
  
  do k = kts,kte
  do i = its,ite
-    znu_p(i,k,j)  = pres_p(i,k,j) / surface_pressure(i)
- enddo
+    znu_p(i,k)  = pres_p(i,k) / surface_pressure(i)
  enddo
  enddo
 
 !arrays located at w points:
- do j = jts, jte
  do k = kts,kte+1
  do i = its,ite
-    w_p(i,k,j) = w(k,i)
-    z_p(i,k,j) = zgrid(k,i)
- enddo
+    w_p(i,k) = w(k,i)
+    z_p(i,k) = zgrid(k,i)
  enddo
  enddo
 
 !check that the pressure in the layer above the surface is greater than that in the layer
 !above it:
- do j = jts,jte
  do i = its,ite
-    if(pres_p(i,1,j) .le. pres_p(i,2,j)) then
+    if(pres_p(i,1) .le. pres_p(i,2)) then
        call mpas_log_write('')
        call mpas_log_write('--- subroutine MPAS_to_phys - pressure(1) < pressure(2):')
        call mpas_log_write('i      =$i', intArgs=(/i/))
@@ -378,24 +367,21 @@
        call mpas_log_write('lonCell=$r', realArgs=(/lonCell(i)/degrad/))
        do k = kts,kte
           call mpas_log_write('$i $i $i $r $r $r $r $r $r $r $r', intArgs=(/j,i,k/),&
-             realArgs=(/dz_p(i,k,j),pressure_b(k,i),pressure_p(k,i),pres_p(i,k,j), &
-                        rho_p(i,k,j),th_p(i,k,j),t_p(i,k,j),qv_p(i,k,j)/))
+             realArgs=(/dz_p(i,k),pressure_b(k,i),pressure_p(k,i),pres_p(i,k), &
+                        rho_p(i,k),th_p(i,k),t_p(i,k),qv_p(i,k)/))
        enddo
 !      call mpas_log_write('pressure increasing with height', messageType=MPAS_LOG_CRIT)
     endif
  enddo
- enddo
 
 !interpolation of pressure and temperature from theta points to w points:
- do j = jts,jte
  do k = kts+1,kte
  do i = its,ite
     tem1 = 1./(zgrid(k+1,i)-zgrid(k-1,i))
-    fzm_p(i,k,j) = (zgrid(k,i)-zgrid(k-1,i)) * tem1
-    fzp_p(i,k,j) = (zgrid(k+1,i)-zgrid(k,i)) * tem1
-    t2_p(i,k,j)    = fzm_p(i,k,j)*t_p(i,k,j) + fzp_p(i,k,j)*t_p(i,k-1,j)
-    pres2_p(i,k,j) = fzm_p(i,k,j)*pres_p(i,k,j) + fzp_p(i,k,j)*pres_p(i,k-1,j)
- enddo
+    fzm_p(i,k) = (zgrid(k,i)-zgrid(k-1,i)) * tem1
+    fzp_p(i,k) = (zgrid(k+1,i)-zgrid(k,i)) * tem1
+    t2_p(i,k)    = fzm_p(i,k)*t_p(i,k) + fzp_p(i,k)*t_p(i,k-1)
+    pres2_p(i,k) = fzm_p(i,k)*pres_p(i,k) + fzp_p(i,k)*pres_p(i,k-1)
  enddo
  enddo
 
@@ -403,68 +389,60 @@
 !the calculation of the top-of-the-model pressure and temperature in WRF (subroutine phy_prep
 !in ./dyn_em/module_big_step_utilities.F):
  k = kte+1
- do j = jts,jte
  do i = its,ite
     z0 = zgrid(k,i)
     z1 = 0.5*(zgrid(k,i)+zgrid(k-1,i)) 
     z2 = 0.5*(zgrid(k-1,i)+zgrid(k-2,i))
     w1 = (z0-z2)/(z1-z2)
     w2 = 1.-w1
-    t2_p(i,k,j) = w1*t_p(i,k-1,j) + w2*t_p(i,k-2,j)
+    t2_p(i,k) = w1*t_p(i,k-1) + w2*t_p(i,k-2)
     !use log of pressure to avoid occurrences of negative top-of-the-model pressure.
-    pres2_p(i,k,j) = exp(w1*log(pres_p(i,k-1,j))+w2*log(pres_p(i,k-2,j)))
- enddo
+    pres2_p(i,k) = exp(w1*log(pres_p(i,k-1))+w2*log(pres_p(i,k-2)))
  enddo
 
 !ldf (2012-06-22): recalculates the pressure at the surface as an extrapolation of the
 !pressures in the 2 layers above the surface, as was originally done:
  k = kts
- do j = jts,jte
  do i = its,ite
     z0 = zgrid(k,i)
     z1 = 0.5*(zgrid(k,i)+zgrid(k+1,i)) 
     z2 = 0.5*(zgrid(k+1,i)+zgrid(k+2,i))
     w1 = (z0-z2)/(z1-z2)
     w2 = 1.-w1
-    t2_p(i,k,j)    = w1*t_p(i,k,j)+w2*t_p(i,k+1,j)
-    pres2_p(i,k,j) = w1*pres_p(i,k,j)+w2*pres_p(i,k+1,j)
-!   psfc_p(i,j) = pres2_p(i,k,j)
-    psfc_p(i,j) = surface_pressure(i)
- enddo
+    t2_p(i,k)    = w1*t_p(i,k)+w2*t_p(i,k+1)
+    pres2_p(i,k) = w1*pres_p(i,k)+w2*pres_p(i,k+1)
+!   psfc_p(i) = pres2_p(i,k)
+    psfc_p(i) = surface_pressure(i)
  enddo
 
 !calculation of the hydrostatic pressure:
- do j = jts,jte
  do i = its,ite
     !pressure at w-points:
     k = kte+1
-    pres2_hyd_p(i,k,j)  = pres2_p(i,k,j)
-    pres2_hydd_p(i,k,j) = pres2_p(i,k,j)
+    pres2_hyd_p(i,k)  = pres2_p(i,k)
+    pres2_hydd_p(i,k) = pres2_p(i,k)
     do k = kte,1,-1
-       rho_a = rho_p(i,k,j) / (1.+qv_p(i,k,j))
-       pres2_hyd_p(i,k,j)  = pres2_hyd_p(i,k+1,j)  + gravity*rho_p(i,k,j)*dz_p(i,k,j)
-       pres2_hydd_p(i,k,j) = pres2_hydd_p(i,k+1,j) + gravity*rho_a*dz_p(i,k,j)
+       rho_a = rho_p(i,k) / (1.+qv_p(i,k))
+       pres2_hyd_p(i,k)  = pres2_hyd_p(i,k+1)  + gravity*rho_p(i,k)*dz_p(i,k)
+       pres2_hydd_p(i,k) = pres2_hydd_p(i,k+1) + gravity*rho_a*dz_p(i,k)
     enddo
     !pressure at theta-points:
     do k = kte,1,-1
-       pres_hyd_p(i,k,j)  = 0.5*(pres2_hyd_p(i,k+1,j)+pres2_hyd_p(i,k,j))
-       pres_hydd_p(i,k,j) = 0.5*(pres2_hydd_p(i,k+1,j)+pres2_hydd_p(i,k,j))
+       pres_hyd_p(i,k)  = 0.5*(pres2_hyd_p(i,k+1)+pres2_hyd_p(i,k))
+       pres_hydd_p(i,k) = 0.5*(pres2_hydd_p(i,k+1)+pres2_hydd_p(i,k))
     enddo
     !surface pressure:
-    psfc_hyd_p(i,j) = pres2_hyd_p(i,1,j)
-    psfc_hydd_p(i,j) = pres2_hydd_p(i,1,j)
+    psfc_hyd_p(i) = pres2_hyd_p(i,1)
+    psfc_hydd_p(i) = pres2_hydd_p(i,1)
     !znu:
     do k = kte,1,-1
-       znu_hyd_p(i,k,j) = pres_hyd_p(i,k,j) / psfc_hyd_p(i,j) 
+       znu_hyd_p(i,k) = pres_hyd_p(i,k) / psfc_hyd_p(i) 
     enddo
- enddo
  enddo
 
 !save the model-top pressure:
- do j = jts,jte
  do i = its,ite
-    plrad(i) = pres2_p(i,kte+1,j) 
- enddo
+    plrad(i) = pres2_p(i,kte+1) 
  enddo
 
  end subroutine MPAS_to_physics
@@ -538,23 +516,21 @@
  qr   => scalars(index_qr,:,:)
 
 !initialize variables needed in the cloud microphysics schemes:
- do j = jts, jte
  do k = kts, kte
  do i = its, ite
-    qv_p(i,k,j) = qv(k,i)
-    qc_p(i,k,j) = qc(k,i)
-    qr_p(i,k,j) = qr(k,i)
+    qv_p(i,k) = qv(k,i)
+    qc_p(i,k) = qc(k,i)
+    qr_p(i,k) = qr(k,i)
 
-    rho_p(i,k,j)  = zz(k,i) * rho_zz(k,i)
-    th_p(i,k,j)   = theta_m(k,i) / (1._RKIND + R_v/R_d * max(0._RKIND,qv_p(i,k,j)))
+    rho_p(i,k)  = zz(k,i) * rho_zz(k,i)
+    th_p(i,k)   = theta_m(k,i) / (1._RKIND + R_v/R_d * max(0._RKIND,qv_p(i,k)))
 
-    pi_p(i,k,j)   = exner(k,i)
-    pres_p(i,k,j) = pressure_b(k,i) + pressure_p(k,i)
+    pi_p(i,k)   = exner(k,i)
+    pres_p(i,k) = pressure_b(k,i) + pressure_p(k,i)
 
-    z_p(i,k,j)    = zgrid(k,i)
-    dz_p(i,k,j)   = zgrid(k+1,i) - zgrid(k,i)
-    w_p(i,k,j)    = w(k,i)
- enddo
+    z_p(i,k)    = zgrid(k,i)
+    dz_p(i,k)   = zgrid(k+1,i) - zgrid(k,i)
+    w_p(i,k)    = w(k,i)
  enddo
  enddo
 
@@ -566,16 +542,14 @@
        qs   => scalars(index_qs,:,:)
        qg   => scalars(index_qg,:,:)
 
-       do j = jts, jte
        do k = kts, kte
        do i = its, ite
-          qi_p(i,k,j) = qi(k,i)
-          qs_p(i,k,j) = qs(k,i)
-          qg_p(i,k,j) = qg(k,i)
-          recloud_p(i,k,j) = re_cloud(k,i)
-          reice_p(i,k,j)   = re_ice(k,i)
-          resnow_p(i,k,j)  = re_snow(k,i)
-       enddo
+          qi_p(i,k) = qi(k,i)
+          qs_p(i,k) = qs(k,i)
+          qg_p(i,k) = qg(k,i)
+          recloud_p(i,k) = re_cloud(k,i)
+          reice_p(i,k)   = re_ice(k,i)
+          resnow_p(i,k)  = re_snow(k,i)
        enddo
        enddo
 
@@ -585,20 +559,16 @@
           ni   => scalars(index_ni,:,:)
           nr   => scalars(index_nr,:,:)
 
-          do j = jts,jte
           do i = its,ite
-             muc_p(i,j) = mu_c(i)
-             ntc_p(i,j) = nt_c(i)
+             muc_p(i) = mu_c(i)
+             ntc_p(i) = nt_c(i)
           enddo
-          enddo
-          do j = jts, jte
           do k = kts, kte
           do i = its, ite
-             ni_p(i,k,j) = ni(k,i)
-             nr_p(i,k,j) = nr(k,i)
-             rainprod_p(i,k,j) = rainprod(k,i)
-             evapprod_p(i,k,j) = evapprod(k,i)
-          enddo
+             ni_p(i,k) = ni(k,i)
+             nr_p(i,k) = nr(k,i)
+             rainprod_p(i,k) = rainprod(k,i)
+             evapprod_p(i,k) = evapprod(k,i)
           enddo
           enddo
 
@@ -692,16 +662,15 @@
  call mpas_pool_get_array(tend,'rt_diabatic_tend',rt_diabatic_tend)
 
 !update variables needed in the dynamical core:
- do j = jts,jte
  do k = kts,kte
  do i = its,ite
-    qv(k,i) = qv_p(i,k,j)
-    qc(k,i) = qc_p(i,k,j)
-    qr(k,i) = qr_p(i,k,j)
+    qv(k,i) = qv_p(i,k)
+    qc(k,i) = qc_p(i,k)
+    qr(k,i) = qr_p(i,k)
 
     !potential temperature and diabatic forcing:
     rt_diabatic_tend(k,i) = theta_m(k,i)
-    theta_m(k,i) = th_p(i,k,j) * (1. + R_v/R_d * qv_p(i,k,j))
+    theta_m(k,i) = th_p(i,k) * (1. + R_v/R_d * qv_p(i,k))
     rt_diabatic_tend(k,i) = (theta_m(k,i) - rt_diabatic_tend(k,i)) / dt_dyn
 
     !density-weighted perturbation potential temperature:
@@ -716,15 +685,13 @@
 
  enddo
  enddo
- enddo
 
 !updates the surface pressure and calculates the surface pressure tendency:
- do j = jts,jte
  do i = its,ite
     tem1 = zgrid(2,i)-zgrid(1,i)
     tem2 = zgrid(3,i)-zgrid(2,i)
-    rho1 = rho_zz(1,i) * zz(1,i) * (1. + qv_p(i,1,j))
-    rho2 = rho_zz(2,i) * zz(2,i) * (1. + qv_p(i,2,j))
+    rho1 = rho_zz(1,i) * zz(1,i) * (1. + qv_p(i,1))
+    rho2 = rho_zz(2,i) * zz(2,i) * (1. + qv_p(i,2))
 
     tend_sfc_pressure(i) = surface_pressure(i)
 !   surface_pressure(i)  = 0.5*gravity*(zgrid(2,i)-zgrid(1,i)) &
@@ -733,7 +700,6 @@
                          * (rho1 - 0.5*(rho2-rho1)*tem1/(tem1+tem2))
     surface_pressure(i)  = surface_pressure(i) + pressure_p(1,i) + pressure_b(1,i)
     tend_sfc_pressure(i)   = (surface_pressure(i)-tend_sfc_pressure(i)) / dt_dyn
- enddo
  enddo
 
 !variables specific to different cloud microphysics schemes:
@@ -744,16 +710,14 @@
        qs   => scalars(index_qs,:,:)
        qg   => scalars(index_qg,:,:)
 
-       do j = jts, jte
        do k = kts, kte
        do i = its, ite
-          qi(k,i) = qi_p(i,k,j)
-          qs(k,i) = qs_p(i,k,j)
-          qg(k,i) = qg_p(i,k,j)
-          re_cloud(k,i) = recloud_p(i,k,j)
-          re_ice(k,i)   = reice_p(i,k,j)
-          re_snow(k,i)  = resnow_p(i,k,j)
-       enddo
+          qi(k,i) = qi_p(i,k)
+          qs(k,i) = qs_p(i,k)
+          qg(k,i) = qg_p(i,k)
+          re_cloud(k,i) = recloud_p(i,k)
+          re_ice(k,i)   = reice_p(i,k)
+          re_snow(k,i)  = resnow_p(i,k)
        enddo
        enddo
 
@@ -763,14 +727,12 @@
           ni   => scalars(index_ni,:,:)
           nr   => scalars(index_nr,:,:)
 
-          do j = jts, jte
           do k = kts, kte
           do i = its, ite
-             ni(k,i) = ni_p(i,k,j)
-             nr(k,i) = nr_p(i,k,j)
-             rainprod(k,i) = rainprod_p(i,k,j)
-             evapprod(k,i) = evapprod_p(i,k,j)
-          enddo
+             ni(k,i) = ni_p(i,k)
+             nr(k,i) = nr_p(i,k)
+             rainprod(k,i) = rainprod_p(i,k)
+             evapprod(k,i) = evapprod_p(i,k)
           enddo
           enddo
 

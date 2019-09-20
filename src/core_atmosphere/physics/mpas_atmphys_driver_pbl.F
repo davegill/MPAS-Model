@@ -90,73 +90,73 @@
 
  call mpas_pool_get_config(configs,'config_pbl_scheme',pbl_scheme)
 
- if(.not.allocated(hfx_p)  ) allocate(hfx_p(ims:ime,jms:jme)  )
- if(.not.allocated(qfx_p)  ) allocate(qfx_p(ims:ime,jms:jme)  )
- if(.not.allocated(ust_p)  ) allocate(ust_p(ims:ime,jms:jme)  )
- if(.not.allocated(wspd_p) ) allocate(wspd_p(ims:ime,jms:jme) )
- if(.not.allocated(xland_p)) allocate(xland_p(ims:ime,jms:jme))
- if(.not.allocated(hpbl_p) ) allocate(hpbl_p(ims:ime,jms:jme) )
- if(.not.allocated(kpbl_p) ) allocate(kpbl_p(ims:ime,jms:jme) )
- if(.not.allocated(znt_p)  ) allocate(znt_p(ims:ime,jms:jme)  )
- if(.not.allocated(delta_p)) allocate(delta_p(ims:ime,jms:jme))
- if(.not.allocated(wstar_p)) allocate(wstar_p(ims:ime,jms:jme))
- if(.not.allocated(uoce_p) ) allocate(uoce_p(ims:ime,jms:jme) )
- if(.not.allocated(voce_p) ) allocate(voce_p(ims:ime,jms:jme) )
+ if(.not.allocated(hfx_p)  ) allocate(hfx_p(ims:ime)  )
+ if(.not.allocated(qfx_p)  ) allocate(qfx_p(ims:ime)  )
+ if(.not.allocated(ust_p)  ) allocate(ust_p(ims:ime)  )
+ if(.not.allocated(wspd_p) ) allocate(wspd_p(ims:ime) )
+ if(.not.allocated(xland_p)) allocate(xland_p(ims:ime))
+ if(.not.allocated(hpbl_p) ) allocate(hpbl_p(ims:ime) )
+ if(.not.allocated(kpbl_p) ) allocate(kpbl_p(ims:ime) )
+ if(.not.allocated(znt_p)  ) allocate(znt_p(ims:ime)  )
+ if(.not.allocated(delta_p)) allocate(delta_p(ims:ime))
+ if(.not.allocated(wstar_p)) allocate(wstar_p(ims:ime))
+ if(.not.allocated(uoce_p) ) allocate(uoce_p(ims:ime) )
+ if(.not.allocated(voce_p) ) allocate(voce_p(ims:ime) )
 
 
  !tendencies:
- if(.not.allocated(rublten_p) ) allocate(rublten_p(ims:ime,kms:kme,jms:jme) )
- if(.not.allocated(rvblten_p) ) allocate(rvblten_p(ims:ime,kms:kme,jms:jme) )
- if(.not.allocated(rthblten_p)) allocate(rthblten_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(rqvblten_p)) allocate(rqvblten_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(rqcblten_p)) allocate(rqcblten_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(rqiblten_p)) allocate(rqiblten_p(ims:ime,kms:kme,jms:jme))
+ if(.not.allocated(rublten_p) ) allocate(rublten_p(ims:ime,kms:kme) )
+ if(.not.allocated(rvblten_p) ) allocate(rvblten_p(ims:ime,kms:kme) )
+ if(.not.allocated(rthblten_p)) allocate(rthblten_p(ims:ime,kms:kme))
+ if(.not.allocated(rqvblten_p)) allocate(rqvblten_p(ims:ime,kms:kme))
+ if(.not.allocated(rqcblten_p)) allocate(rqcblten_p(ims:ime,kms:kme))
+ if(.not.allocated(rqiblten_p)) allocate(rqiblten_p(ims:ime,kms:kme))
 
  !exchange coefficients:
- if(.not.allocated(kzh_p)) allocate(kzh_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(kzm_p)) allocate(kzm_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(kzq_p)) allocate(kzq_p(ims:ime,kms:kme,jms:jme))
+ if(.not.allocated(kzh_p)) allocate(kzh_p(ims:ime,kms:kme))
+ if(.not.allocated(kzm_p)) allocate(kzm_p(ims:ime,kms:kme))
+ if(.not.allocated(kzq_p)) allocate(kzq_p(ims:ime,kms:kme))
 
  pbl_select: select case (trim(pbl_scheme))
 
     case("bl_ysu")
        !from surface-layer model:
-       if(.not.allocated(br_p)    ) allocate(br_p(ims:ime,jms:jme)          )
-       if(.not.allocated(ctopo_p) ) allocate(ctopo_p(ims:ime,jms:jme)       )
-       if(.not.allocated(ctopo2_p)) allocate(ctopo2_p(ims:ime,jms:jme)      )
-       if(.not.allocated(psih_p)  ) allocate(psih_p(ims:ime,jms:jme)        )
-       if(.not.allocated(psim_p)  ) allocate(psim_p(ims:ime,jms:jme)        )
-       if(.not.allocated(u10_p)   ) allocate(u10_p(ims:ime,jms:jme)         )
-       if(.not.allocated(v10_p)   ) allocate(v10_p(ims:ime,jms:jme)         )
-       if(.not.allocated(exch_p)  ) allocate(exch_p(ims:ime,kms:kme,jms:jme))
+       if(.not.allocated(br_p)    ) allocate(br_p(ims:ime)          )
+       if(.not.allocated(ctopo_p) ) allocate(ctopo_p(ims:ime)       )
+       if(.not.allocated(ctopo2_p)) allocate(ctopo2_p(ims:ime)      )
+       if(.not.allocated(psih_p)  ) allocate(psih_p(ims:ime)        )
+       if(.not.allocated(psim_p)  ) allocate(psim_p(ims:ime)        )
+       if(.not.allocated(u10_p)   ) allocate(u10_p(ims:ime)         )
+       if(.not.allocated(v10_p)   ) allocate(v10_p(ims:ime)         )
+       if(.not.allocated(exch_p)  ) allocate(exch_p(ims:ime,kms:kme))
        !from radiation schemes:
-       if(.not.allocated(rthraten_p)) allocate(rthraten_p(ims:ime,kms:kme,jms:jme))
+       if(.not.allocated(rthraten_p)) allocate(rthraten_p(ims:ime,kms:kme))
 
     case("bl_mynn")
-       if(.not.allocated(dx_p)   ) allocate(dx_p(ims:ime,jms:jme)   )
-       if(.not.allocated(ch_p)   ) allocate(ch_p(ims:ime,jms:jme)   )
-       if(.not.allocated(qcg_p)  ) allocate(qcg_p(ims:ime,jms:jme)  )
-       if(.not.allocated(qsfc_p) ) allocate(qsfc_p(ims:ime,jms:jme) )
-       if(.not.allocated(rmol_p) ) allocate(rmol_p(ims:ime,jms:jme) )
-       if(.not.allocated(tsk_p)  ) allocate(tsk_p(ims:ime,jms:jme)  )
-       if(.not.allocated(vdfg_p) ) allocate(vdfg_p(ims:ime,jms:jme) )
+       if(.not.allocated(dx_p)   ) allocate(dx_p(ims:ime)   )
+       if(.not.allocated(ch_p)   ) allocate(ch_p(ims:ime)   )
+       if(.not.allocated(qcg_p)  ) allocate(qcg_p(ims:ime)  )
+       if(.not.allocated(qsfc_p) ) allocate(qsfc_p(ims:ime) )
+       if(.not.allocated(rmol_p) ) allocate(rmol_p(ims:ime) )
+       if(.not.allocated(tsk_p)  ) allocate(tsk_p(ims:ime)  )
+       if(.not.allocated(vdfg_p) ) allocate(vdfg_p(ims:ime) )
 
-       if(.not.allocated(cov_p)   ) allocate(cov_p(ims:ime,kms:kme,jms:jme)   )
-       if(.not.allocated(qke_p)   ) allocate(qke_p(ims:ime,kms:kme,jms:jme)   )
-       if(.not.allocated(qsq_p)   ) allocate(qsq_p(ims:ime,kms:kme,jms:jme)   )
-       if(.not.allocated(tsq_p)   ) allocate(tsq_p(ims:ime,kms:kme,jms:jme)   )
-       if(.not.allocated(qkeadv_p)) allocate(qkeadv_p(ims:ime,kms:kme,jms:jme))
-       if(.not.allocated(elpbl_p) ) allocate(elpbl_p(ims:ime,kms:kme,jms:jme) )
-       if(.not.allocated(tkepbl_p)) allocate(tkepbl_p(ims:ime,kms:kme,jms:jme))
-       if(.not.allocated(sh3d_p)  ) allocate(sh3d_p(ims:ime,kms:kme,jms:jme)  )
+       if(.not.allocated(cov_p)   ) allocate(cov_p(ims:ime,kms:kme)   )
+       if(.not.allocated(qke_p)   ) allocate(qke_p(ims:ime,kms:kme)   )
+       if(.not.allocated(qsq_p)   ) allocate(qsq_p(ims:ime,kms:kme)   )
+       if(.not.allocated(tsq_p)   ) allocate(tsq_p(ims:ime,kms:kme)   )
+       if(.not.allocated(qkeadv_p)) allocate(qkeadv_p(ims:ime,kms:kme))
+       if(.not.allocated(elpbl_p) ) allocate(elpbl_p(ims:ime,kms:kme) )
+       if(.not.allocated(tkepbl_p)) allocate(tkepbl_p(ims:ime,kms:kme))
+       if(.not.allocated(sh3d_p)  ) allocate(sh3d_p(ims:ime,kms:kme)  )
 
-       if(.not.allocated(dqke_p)  ) allocate(dqke_p(ims:ime,kms:kme,jms:jme)  )
-       if(.not.allocated(qbuoy_p) ) allocate(qbuoy_p(ims:ime,kms:kme,jms:jme) )
-       if(.not.allocated(qdiss_p) ) allocate(qdiss_p(ims:ime,kms:kme,jms:jme) )
-       if(.not.allocated(qshear_p)) allocate(qshear_p(ims:ime,kms:kme,jms:jme))
-       if(.not.allocated(qwt_p)   ) allocate(qwt_p(ims:ime,kms:kme,jms:jme)   )
+       if(.not.allocated(dqke_p)  ) allocate(dqke_p(ims:ime,kms:kme)  )
+       if(.not.allocated(qbuoy_p) ) allocate(qbuoy_p(ims:ime,kms:kme) )
+       if(.not.allocated(qdiss_p) ) allocate(qdiss_p(ims:ime,kms:kme) )
+       if(.not.allocated(qshear_p)) allocate(qshear_p(ims:ime,kms:kme))
+       if(.not.allocated(qwt_p)   ) allocate(qwt_p(ims:ime,kms:kme)   )
 
-       if(.not.allocated(rniblten_p)) allocate(rniblten_p(ims:ime,kms:kme,jms:jme))
+       if(.not.allocated(rniblten_p)) allocate(rniblten_p(ims:ime,kms:kme))
 
     case default
 
@@ -264,7 +264,7 @@
  integer,intent(in):: its,ite
 
 !local variables:
- integer:: i,k,j
+ integer:: i,k
 
 !local pointers:
  character(len=StrKIND),pointer:: pbl_scheme
@@ -298,23 +298,21 @@
 
  call mpas_pool_get_array(sfc_input   ,'xland' ,xland )
 
- do j = jts,jte
  do i = its,ite
     !from surface-layer model:
-    hfx_p(i,j)    = hfx(i)
-    hpbl_p(i,j)   = hpbl(i)
-    qfx_p(i,j)    = qfx(i)
-    ust_p(i,j)    = ust(i)
-    wspd_p(i,j)   = wspd(i)
-    xland_p(i,j)  = xland(i)
-    kpbl_p(i,j)   = 1
-    znt_p(i,j)    = znt(i)
-    delta_p(i,j)  = delta(i)
-    wstar_p(i,j)  = wstar(i)
+    hfx_p(i)    = hfx(i)
+    hpbl_p(i)   = hpbl(i)
+    qfx_p(i)    = qfx(i)
+    ust_p(i)    = ust(i)
+    wspd_p(i)   = wspd(i)
+    xland_p(i)  = xland(i)
+    kpbl_p(i)   = 1
+    znt_p(i)    = znt(i)
+    delta_p(i)  = delta(i)
+    wstar_p(i)  = wstar(i)
     !... ocean currents are set to zero:
-    uoce_p(i,j)  = 0._RKIND
-    voce_p(i,j)  = 0._RKIND
- enddo
+    uoce_p(i)  = 0._RKIND
+    voce_p(i)  = 0._RKIND
  enddo
 
  pbl_select: select case (trim(pbl_scheme))
@@ -335,26 +333,22 @@
        ysu_pblmix = 0
        if(config_ysu_pblmix) ysu_pblmix = 1
 
-       do j = jts,jte
        do i = its,ite
           !from surface-layer model:
-          br_p(i,j)     = br(i)
-          psim_p(i,j)   = fm(i)
-          psih_p(i,j)   = fh(i)
-          u10_p(i,j)    = u10(i)
-          v10_p(i,j)    = v10(i)
+          br_p(i)     = br(i)
+          psim_p(i)   = fm(i)
+          psih_p(i)   = fh(i)
+          u10_p(i)    = u10(i)
+          v10_p(i)    = v10(i)
           !initialization for YSU PBL scheme:
-          ctopo_p(i,j)  = 1._RKIND
-          ctopo2_p(i,j) = 1._RKIND
-       enddo
+          ctopo_p(i)  = 1._RKIND
+          ctopo2_p(i) = 1._RKIND
        enddo
 
-       do j = jts,jte
        do k = kts,kte
        do i = its,ite
-          exch_p(i,k,j)     = 0._RKIND
-          rthraten_p(i,k,j) = rthratenlw(k,i) + rthratensw(k,i) 
-       enddo
+          exch_p(i,k)     = 0._RKIND
+          rthraten_p(i,k) = rthratenlw(k,i) + rthratensw(k,i) 
        enddo
        enddo
 
@@ -377,39 +371,35 @@
        call mpas_pool_get_array(diag_physics,'tke_pbl',tke_pbl  )
        call mpas_pool_get_array(diag_physics,'sh3d'   ,sh3d     )
 
-       do j = jts,jte
        do i = its,ite
-          dx_p(i,j)    = len_disp / meshDensity(i)**0.25
-          ch_p(i,j)    = ch(i)
-          qcg_p(i,j)   = qcg(i)
-          qsfc_p(i,j)  = qsfc(i)
-          rmol_p(i,j)  = rmol(i)
-          tsk_p(i,j)   = skintemp(i)
+          dx_p(i)    = len_disp / meshDensity(i)**0.25
+          ch_p(i)    = ch(i)
+          qcg_p(i)   = qcg(i)
+          qsfc_p(i)  = qsfc(i)
+          rmol_p(i)  = rmol(i)
+          tsk_p(i)   = skintemp(i)
           !... no gravitational settling of fog/cloud droplets (grav_settling = 0):
-          vdfg_p(i,j)  = 0._RKIND
-       enddo
+          vdfg_p(i)  = 0._RKIND
        enddo
 
-       do j = jts,jte
        do k = kts,kte
        do i = its,ite
-          elpbl_p(i,k,j)    = el_pbl(k,i)
-          cov_p(i,k,j)      = cov(k,i)
-          qke_p(i,k,j)      = qke(k,i)
-          qsq_p(i,k,j)      = qsq(k,i)
-          tsq_p(i,k,j)      = tsq(k,i)
-          tkepbl_p(i,k,j)   = tke_pbl(k,i)
-          qkeadv_p(i,k,j)   = qke_adv(k,i)
-          sh3d_p(i,k,j)     = sh3d(k,i)
-          rniblten_p(i,k,j) = 0._RKIND
+          elpbl_p(i,k)    = el_pbl(k,i)
+          cov_p(i,k)      = cov(k,i)
+          qke_p(i,k)      = qke(k,i)
+          qsq_p(i,k)      = qsq(k,i)
+          tsq_p(i,k)      = tsq(k,i)
+          tkepbl_p(i,k)   = tke_pbl(k,i)
+          qkeadv_p(i,k)   = qke_adv(k,i)
+          sh3d_p(i,k)     = sh3d(k,i)
+          rniblten_p(i,k) = 0._RKIND
 
           !... outputs:
-          dqke_p(i,k,j)   = 0._RKIND
-          qbuoy_p(i,k,j)  = 0._RKIND
-          qdiss_p(i,k,j)  = 0._RKIND
-          qshear_p(i,k,j) = 0._RKIND
-          qwt_p(i,k,j)    = 0._RKIND
-       enddo
+          dqke_p(i,k)   = 0._RKIND
+          qbuoy_p(i,k)  = 0._RKIND
+          qdiss_p(i,k)  = 0._RKIND
+          qshear_p(i,k) = 0._RKIND
+          qwt_p(i,k)    = 0._RKIND
        enddo
        enddo
 
@@ -417,20 +407,18 @@
 
  end select pbl_select
 
- do j = jts,jte
  do k = kts,kte
  do i = its,ite
-    rublten_p(i,k,j)  = 0._RKIND
-    rvblten_p(i,k,j)  = 0._RKIND
-    rthblten_p(i,k,j) = 0._RKIND
-    rqvblten_p(i,k,j) = 0._RKIND
-    rqcblten_p(i,k,j) = 0._RKIND
-    rqiblten_p(i,k,j) = 0._RKIND
+    rublten_p(i,k)  = 0._RKIND
+    rvblten_p(i,k)  = 0._RKIND
+    rthblten_p(i,k) = 0._RKIND
+    rqvblten_p(i,k) = 0._RKIND
+    rqcblten_p(i,k) = 0._RKIND
+    rqiblten_p(i,k) = 0._RKIND
 
-    kzh_p(i,k,j)    = 0._RKIND
-    kzm_p(i,k,j)    = 0._RKIND
-    kzq_p(i,k,j)    = 0._RKIND
- enddo
+    kzh_p(i,k)    = 0._RKIND
+    kzm_p(i,k)    = 0._RKIND
+    kzq_p(i,k)    = 0._RKIND
  enddo
  enddo
 
@@ -450,7 +438,7 @@
  integer,intent(in):: its,ite
 
 !local variables:
- integer:: i,k,j
+ integer:: i,k
 
 !local pointers:
  character(len=StrKIND),pointer:: pbl_scheme
@@ -489,29 +477,25 @@
  call mpas_pool_get_array(tend_physics,'rqcblten',rqcblten)
  call mpas_pool_get_array(tend_physics,'rqiblten',rqiblten)
 
- do j = jts,jte
  do i = its,ite
-    hpbl(i)  = hpbl_p(i,j)
-    kpbl(i)  = kpbl_p(i,j)
-    delta(i) = delta_p(i,j)
-    wstar(i) = wstar_p(i,j)
- enddo
+    hpbl(i)  = hpbl_p(i)
+    kpbl(i)  = kpbl_p(i)
+    delta(i) = delta_p(i)
+    wstar(i) = wstar_p(i)
  enddo
 
- do j = jts,jte
  do k = kts,kte
  do i = its,ite
-    rublten(k,i)  = rublten_p(i,k,j)
-    rvblten(k,i)  = rvblten_p(i,k,j)
-    rthblten(k,i) = rthblten_p(i,k,j)
-    rqvblten(k,i) = rqvblten_p(i,k,j)
-    rqcblten(k,i) = rqcblten_p(i,k,j)
-    rqiblten(k,i) = rqiblten_p(i,k,j)
+    rublten(k,i)  = rublten_p(i,k)
+    rvblten(k,i)  = rvblten_p(i,k)
+    rthblten(k,i) = rthblten_p(i,k)
+    rqvblten(k,i) = rqvblten_p(i,k)
+    rqcblten(k,i) = rqcblten_p(i,k)
+    rqiblten(k,i) = rqiblten_p(i,k)
 
-    kzh(k,i) = kzh_p(i,k,j)
-    kzm(k,i) = kzm_p(i,k,j)
-    kzq(k,i) = kzh_p(i,k,j)
- enddo
+    kzh(k,i) = kzh_p(i,k)
+    kzm(k,i) = kzm_p(i,k)
+    kzq(k,i) = kzh_p(i,k)
  enddo
  enddo
 
@@ -520,11 +504,9 @@
     case("bl_ysu")
        call mpas_pool_get_array(diag_physics,'exch_h',exch_h)
 
-       do j = jts,jte
        do k = kts,kte
        do i = its,ite
-          exch_h(k,i) = exch_p(i,k,j)
-       enddo
+          exch_h(k,i) = exch_p(i,k)
        enddo
        enddo
 
@@ -544,26 +526,24 @@
        call mpas_pool_get_array(diag_physics,'qwt'     ,qwt     )
        call mpas_pool_get_array(tend_physics,'rniblten',rniblten)
 
-       do j = jts,jte
        do k = kts,kte
        do i = its,ite
-          el_pbl(k,i)   = elpbl_p(i,k,j)
-          cov(k,i)      = cov_p(i,k,j)
-          qke(k,i)      = qke_p(i,k,j)
-          qsq(k,i)      = qsq_p(i,k,j)
-          tsq(k,i)      = tsq_p(i,k,j)
-          sh3d(k,i)     = sh3d_p(i,k,j)
-          tke_pbl(k,i)  = tkepbl_p(i,k,j)
-          qke_adv(k,i)  = qkeadv_p(i,k,j)
+          el_pbl(k,i)   = elpbl_p(i,k)
+          cov(k,i)      = cov_p(i,k)
+          qke(k,i)      = qke_p(i,k)
+          qsq(k,i)      = qsq_p(i,k)
+          tsq(k,i)      = tsq_p(i,k)
+          sh3d(k,i)     = sh3d_p(i,k)
+          tke_pbl(k,i)  = tkepbl_p(i,k)
+          qke_adv(k,i)  = qkeadv_p(i,k)
           !... outputs:
-          dqke(k,i)     = dqke_p(i,k,j)
-          qbuoy(k,i)    = qbuoy_p(i,k,j)
-          qdiss(k,i)    = qdiss_p(i,k,j)
-          qshear(k,i)   = qshear_p(i,k,j)
-          qwt(k,i)      = qwt_p(i,k,j)
+          dqke(k,i)     = dqke_p(i,k)
+          qbuoy(k,i)    = qbuoy_p(i,k)
+          qdiss(k,i)    = qdiss_p(i,k)
+          qshear(k,i)   = qshear_p(i,k)
+          qwt(k,i)      = qwt_p(i,k)
 
-          rniblten(k,i) = rniblten_p(i,k,j)
-       enddo
+          rniblten(k,i) = rniblten_p(i,k)
        enddo
        enddo
 
@@ -601,7 +581,7 @@
 
 !local variables:
  integer:: initflag
- integer:: i,k,j
+ integer:: i,k
 
 !-----------------------------------------------------------------------------------------------------------------
 !call mpas_log_write('')

@@ -61,13 +61,13 @@
  subroutine allocate_cloudiness
 !=================================================================================================================
 
- if(.not.allocated(dx_p)     ) allocate(dx_p(ims:ime,jms:jme)             ) 
- if(.not.allocated(xland_p)  ) allocate(xland_p(ims:ime,jms:jme)          )
- if(.not.allocated(cldfrac_p)) allocate(cldfrac_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(qvrad_p)  ) allocate(qvrad_p(ims:ime,kms:kme,jms:jme)  )
- if(.not.allocated(qcrad_p)  ) allocate(qcrad_p(ims:ime,kms:kme,jms:jme)  )
- if(.not.allocated(qirad_p)  ) allocate(qirad_p(ims:ime,kms:kme,jms:jme)  )
- if(.not.allocated(qsrad_p)  ) allocate(qsrad_p(ims:ime,kms:kme,jms:jme)  )
+ if(.not.allocated(dx_p)     ) allocate(dx_p(ims:ime)             ) 
+ if(.not.allocated(xland_p)  ) allocate(xland_p(ims:ime)          )
+ if(.not.allocated(cldfrac_p)) allocate(cldfrac_p(ims:ime,kms:kme))
+ if(.not.allocated(qvrad_p)  ) allocate(qvrad_p(ims:ime,kms:kme)  )
+ if(.not.allocated(qcrad_p)  ) allocate(qcrad_p(ims:ime,kms:kme)  )
+ if(.not.allocated(qirad_p)  ) allocate(qirad_p(ims:ime,kms:kme)  )
+ if(.not.allocated(qsrad_p)  ) allocate(qsrad_p(ims:ime,kms:kme)  )
 
  end subroutine allocate_cloudiness
 
@@ -101,7 +101,7 @@
  type(mpas_pool_type),intent(inout):: diag_physics
 
 !local variables and pointers:
- integer:: i,j,k
+ integer:: i,k
 
  real(kind=RKIND),pointer:: len_disp
  real(kind=RKIND),dimension(:),pointer:: areaCell,meshDensity
@@ -116,24 +116,22 @@
 
  call mpas_pool_get_array(sfc_input,'xland',xland)
 
- do j = jts,jte
     do i = its,ite
-       dx_p(i,j)    = len_disp / meshDensity(i)**0.25
-       xland_p(i,j) = xland(i)
+       dx_p(i)    = len_disp / meshDensity(i)**0.25
+       xland_p(i) = xland(i)
     enddo
 
     !--- initialize the radiative cloud fraction and water vapor, cloud water, cloud ice,
     !    and snow mixing ratios:
     do k = kts,kte
     do i = its,ite
-       qvrad_p(i,k,j)   = qv_p(i,k,j)
-       qcrad_p(i,k,j)   = qc_p(i,k,j)
-       qirad_p(i,k,j)   = qi_p(i,k,j)
-       qsrad_p(i,k,j)   = qs_p(i,k,j)
-       cldfrac_p(i,k,j) = 0._RKIND
+       qvrad_p(i,k)   = qv_p(i,k)
+       qcrad_p(i,k)   = qc_p(i,k)
+       qirad_p(i,k)   = qi_p(i,k)
+       qsrad_p(i,k)   = qs_p(i,k)
+       cldfrac_p(i,k) = 0._RKIND
     enddo
     enddo
- enddo
 
  end subroutine cloudiness_from_MPAS
 
@@ -148,7 +146,7 @@
  type(mpas_pool_type),intent(inout):: diag_physics
 
 !local variables and pointers:
- integer:: i,j,k
+ integer:: i,k
 
  real(kind=RKIND),dimension(:,:),pointer:: cldfrac
 
@@ -156,11 +154,9 @@
 
  call mpas_pool_get_array(diag_physics,'cldfrac',cldfrac)
 
- do j = jts,jte
  do k = kts,kte
  do i = its,ite
-    cldfrac(k,i) = cldfrac_p(i,k,j)
- enddo
+    cldfrac(k,i) = cldfrac_p(i,k)
  enddo
  enddo
  
@@ -183,7 +179,7 @@
 !local variables and pointers:
  character(len=StrKIND),pointer:: radt_cld_scheme
 
- integer:: i,j,k
+ integer:: i,k
 
 !-----------------------------------------------------------------------------------------------------------------
 !call mpas_log_write('')
@@ -235,40 +231,34 @@
 !input arguments:
  logical,intent(in):: f_qc,f_qi
  integer,intent(in):: its,ite
- real(kind=RKIND),intent(in),dimension(ims:ime,kms:kme,jms:jme):: qc,qi
+ real(kind=RKIND),intent(in),dimension(ims:ime,kms:kme):: qc,qi
 
 !output arguments:
- real(kind=RKIND),intent(out),dimension(ims:ime,kms:kme,jms:jme):: cldfrac
+ real(kind=RKIND),intent(out),dimension(ims:ime,kms:kme):: cldfrac
 
 !local variables:
- integer:: i,j,k
+ integer:: i,k
 
  real(kind=RKIND),parameter:: thresh = 1.e-06
 
 !-----------------------------------------------------------------------------------------------------------------
 
- do j = jts,jte
  do k = kts,kte
  do i = its,ite
-    cldfrac(i,k,j) = 0._RKIND
- enddo
+    cldfrac(i,k) = 0._RKIND
  enddo
  enddo
 
  if(f_qc .and. f_qi) then
-    do j = jts,jte
     do k = kts,kte
     do i = its,ite
-       if(qc(i,k,j)+qi(i,k,j) .gt. thresh) cldfrac(i,k,j) = 1.0_RKIND
-    enddo
+       if(qc(i,k)+qi(i,k) .gt. thresh) cldfrac(i,k) = 1.0_RKIND
     enddo
     enddo
  elseif(f_qc) then
-    do j = jts,jte
     do k = kts,kte
     do i = its,ite
-       if(qc(i,k,j) .gt. thresh) cldfrac(i,k,j) = 1.0_RKIND
-    enddo
+       if(qc(i,k) .gt. thresh) cldfrac(i,k) = 1.0_RKIND
     enddo
     enddo
  endif
@@ -281,14 +271,14 @@
 
 !input arguments:
  integer,intent(in):: its,ite
- real(kind=RKIND),intent(in),dimension(ims:ime,kms:kme,jms:jme):: qv,qc,qi,qs
- real(kind=RKIND),intent(in),dimension(ims:ime,kms:kme,jms:jme):: t_p,pres_p
+ real(kind=RKIND),intent(in),dimension(ims:ime,kms:kme):: qv,qc,qi,qs
+ real(kind=RKIND),intent(in),dimension(ims:ime,kms:kme):: t_p,pres_p
 
 !output arguments:
- real(kind=RKIND),intent(out),dimension(ims:ime,kms:kme,jms:jme):: cldfrac
+ real(kind=RKIND),intent(out),dimension(ims:ime,kms:kme):: cldfrac
 
 !local variables:
- integer:: i,j,k
+ integer:: i,k
 
  real(kind=RKIND),parameter:: alpha0  = 100.
  real(kind=RKIND),parameter:: gamma   = 0.49
@@ -308,57 +298,53 @@
 
 !-----------------------------------------------------------------------------------------------------------------
 
- do j = jts,jte
  do k = kts,kte
  do i = its,ite
-    cldfrac(i,k,j) = 0._RKIND
- enddo
+    cldfrac(i,k) = 0._RKIND
  enddo
  enddo
  
- do j = jts,jte
  do k = kts,kte
  do i = its,ite
 
 !... calculation of the saturation mixing ratios over water and over ice (Murray, 1966):
-    esw = 1000. * svp1 * exp(svp2 * (t_p(i,k,j) - svpt0) / (t_p(i,k,j) - svp3))
-    esi = 1000. * svp1 * exp(svpi2 * (t_p(i,k,j) - svpt0) / (t_p(i,k,j) - svpi3))
+    esw = 1000. * svp1 * exp(svp2 * (t_p(i,k) - svpt0) / (t_p(i,k) - svp3))
+    esi = 1000. * svp1 * exp(svpi2 * (t_p(i,k) - svpt0) / (t_p(i,k) - svpi3))
 
-    qvsw = ep_2 * esw / (pres_p(i,k,j) - esw)
-    qvsi = ep_2 * esi / (pres_p(i,k,j) - esi)
+    qvsw = ep_2 * esw / (pres_p(i,k) - esw)
+    qvsi = ep_2 * esi / (pres_p(i,k) - esi)
 
-    qcld = qc(i,k,j) + qi(i,k,j) + qs(i,k,j)
+    qcld = qc(i,k) + qi(i,k) + qs(i,k)
     if(qcld .lt. qcldmin) then
        weight = 0.
     else
-       weight = (qi(i,k,j) + qs(i,k,j)) / qcld
+       weight = (qi(i,k) + qs(i,k)) / qcld
     endif
 
     qvs = (1-weight) * qvsw + weight * qvsi
-    rhum = qv(i,k,j) / qvs
+    rhum = qv(i,k) / qvs
 
     if(qcld .lt. qcldmin) then
 
        !assume that the cloud fraction is equal to 0. when the cloudy mixing ratio equals 0.
-       cldfrac(i,k,j) = 0.
+       cldfrac(i,k) = 0.
 
     elseif(rhum .ge. rhgrid) then
        !assume that the cloud fraction is equal to 1. when the relative humidity equal 100%.
-       cldfrac(i,k,j) = 1.
+       cldfrac(i,k) = 1.
 
     else
        !computation of the cloud fraction:
-       subsat = max(1.e-10,rhgrid*qvs-qv(i,k,j))
+       subsat = max(1.e-10,rhgrid*qvs-qv(i,k))
        denom  = subsat**gamma
        arg    = max(-6.9,-alpha0*qcld/denom) ! exp(-6.9) = 0.001
 
        rhum = max(1.e-10,rhum)
-       cldfrac(i,k,j) = (rhum/rhgrid)**pexp*(1.-exp(arg))
-       if(cldfrac(i,k,j) .lt. 0.01) cldfrac(i,k,j) = 0.
+       cldfrac(i,k) = (rhum/rhgrid)**pexp*(1.-exp(arg))
+       if(cldfrac(i,k) .lt. 0.01) cldfrac(i,k) = 0.
 
     endif
 
- enddo
  enddo
  enddo
 

@@ -23,7 +23,7 @@
  private
  public :: driver_oml1d
 
- integer,private:: i,j,k,n
+ integer,private:: i,k,n
 
 !MPAS driver for 1d ocean mixed layer
 !Bill Skamarock (send comments to skamaroc@ucar.edu).

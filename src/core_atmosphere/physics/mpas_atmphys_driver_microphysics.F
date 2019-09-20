@@ -107,54 +107,54 @@
  call mpas_pool_get_config(configs,'config_microp_scheme',microp_scheme)
 
 !sounding variables:
- if(.not.allocated(rho_p)    ) allocate(rho_p(ims:ime,kms:kme,jms:jme) )
- if(.not.allocated(th_p)     ) allocate(th_p(ims:ime,kms:kme,jms:jme)  )
- if(.not.allocated(pi_p)     ) allocate(pi_p(ims:ime,kms:kme,jms:jme)  )
- if(.not.allocated(pres_p)   ) allocate(pres_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(z_p)      ) allocate(z_p(ims:ime,kms:kme,jms:jme)   )
- if(.not.allocated(dz_p)     ) allocate(dz_p(ims:ime,kms:kme,jms:jme)  )
- if(.not.allocated(w_p)      ) allocate(w_p(ims:ime,kms:kme,jms:jme)   )
+ if(.not.allocated(rho_p)    ) allocate(rho_p(ims:ime,kms:kme) )
+ if(.not.allocated(th_p)     ) allocate(th_p(ims:ime,kms:kme)  )
+ if(.not.allocated(pi_p)     ) allocate(pi_p(ims:ime,kms:kme)  )
+ if(.not.allocated(pres_p)   ) allocate(pres_p(ims:ime,kms:kme))
+ if(.not.allocated(z_p)      ) allocate(z_p(ims:ime,kms:kme)   )
+ if(.not.allocated(dz_p)     ) allocate(dz_p(ims:ime,kms:kme)  )
+ if(.not.allocated(w_p)      ) allocate(w_p(ims:ime,kms:kme)   )
 
 !mass mixing ratios:
- if(.not.allocated(qv_p)     ) allocate(qv_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(qc_p)     ) allocate(qc_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(qr_p)     ) allocate(qr_p(ims:ime,kms:kme,jms:jme))
+ if(.not.allocated(qv_p)     ) allocate(qv_p(ims:ime,kms:kme))
+ if(.not.allocated(qc_p)     ) allocate(qc_p(ims:ime,kms:kme))
+ if(.not.allocated(qr_p)     ) allocate(qr_p(ims:ime,kms:kme))
 
  !surface precipitation:
- if(.not.allocated(rainnc_p) ) allocate(rainnc_p(ims:ime,jms:jme) )
- if(.not.allocated(rainncv_p)) allocate(rainncv_p(ims:ime,jms:jme))
+ if(.not.allocated(rainnc_p) ) allocate(rainnc_p(ims:ime) )
+ if(.not.allocated(rainncv_p)) allocate(rainncv_p(ims:ime))
 
  microp_select: select case(microp_scheme)
 
     case ("mp_thompson","mp_wsm6")
        !mass mixing ratios:
-       if(.not.allocated(qi_p)        ) allocate(qi_p(ims:ime,kms:kme,jms:jme))
-       if(.not.allocated(qs_p)        ) allocate(qs_p(ims:ime,kms:kme,jms:jme))
-       if(.not.allocated(qg_p)        ) allocate(qg_p(ims:ime,kms:kme,jms:jme))
+       if(.not.allocated(qi_p)        ) allocate(qi_p(ims:ime,kms:kme))
+       if(.not.allocated(qs_p)        ) allocate(qs_p(ims:ime,kms:kme))
+       if(.not.allocated(qg_p)        ) allocate(qg_p(ims:ime,kms:kme))
 
        !surface precipitation:
-       if(.not.allocated(sr_p)        ) allocate(sr_p(ims:ime,jms:jme)        )
-       if(.not.allocated(snownc_p)    ) allocate(snownc_p(ims:ime,jms:jme)    )
-       if(.not.allocated(snowncv_p)   ) allocate(snowncv_p(ims:ime,jms:jme)   )
-       if(.not.allocated(graupelnc_p) ) allocate(graupelnc_p(ims:ime,jms:jme) )
-       if(.not.allocated(graupelncv_p)) allocate(graupelncv_p(ims:ime,jms:jme))
+       if(.not.allocated(sr_p)        ) allocate(sr_p(ims:ime)        )
+       if(.not.allocated(snownc_p)    ) allocate(snownc_p(ims:ime)    )
+       if(.not.allocated(snowncv_p)   ) allocate(snowncv_p(ims:ime)   )
+       if(.not.allocated(graupelnc_p) ) allocate(graupelnc_p(ims:ime) )
+       if(.not.allocated(graupelncv_p)) allocate(graupelncv_p(ims:ime))
 
        !cloud water,cloud ice,and snow effective radii:
-       if(.not.allocated(recloud_p) ) allocate(recloud_p(ims:ime,kms:kme,jms:jme))
-       if(.not.allocated(reice_p)   ) allocate(reice_p(ims:ime,kms:kme,jms:jme)  )
-       if(.not.allocated(resnow_p)  ) allocate(resnow_p(ims:ime,kms:kme,jms:jme) )
+       if(.not.allocated(recloud_p) ) allocate(recloud_p(ims:ime,kms:kme))
+       if(.not.allocated(reice_p)   ) allocate(reice_p(ims:ime,kms:kme)  )
+       if(.not.allocated(resnow_p)  ) allocate(resnow_p(ims:ime,kms:kme) )
 
     microp2_select: select case(microp_scheme)
 
        case("mp_thompson")
           !number concentrations:
-          if(.not.allocated(ntc_p)) allocate(ntc_p(ims:ime,jms:jme))
-          if(.not.allocated(muc_p)) allocate(muc_p(ims:ime,jms:jme))
-          if(.not.allocated(ni_p) ) allocate(ni_p(ims:ime,kms:kme,jms:jme))
-          if(.not.allocated(nr_p) ) allocate(nr_p(ims:ime,kms:kme,jms:jme))
+          if(.not.allocated(ntc_p)) allocate(ntc_p(ims:ime))
+          if(.not.allocated(muc_p)) allocate(muc_p(ims:ime))
+          if(.not.allocated(ni_p) ) allocate(ni_p(ims:ime,kms:kme))
+          if(.not.allocated(nr_p) ) allocate(nr_p(ims:ime,kms:kme))
 
-          if(.not.allocated(rainprod_p)) allocate(rainprod_p(ims:ime,kms:kme,jms:jme))
-          if(.not.allocated(evapprod_p)) allocate(evapprod_p(ims:ime,kms:kme,jms:jme))
+          if(.not.allocated(rainprod_p)) allocate(rainprod_p(ims:ime,kms:kme))
+          if(.not.allocated(evapprod_p)) allocate(evapprod_p(ims:ime,kms:kme))
 
        case default
 
@@ -214,9 +214,9 @@
        if(allocated(graupelncv_p) ) deallocate(graupelncv_p )
 
        !cloud water,cloud ice,and snow effective radii:
-       if(.not.allocated(recloud_p) ) allocate(recloud_p(ims:ime,kms:kme,jms:jme) )
-       if(.not.allocated(reice_p)   ) allocate(reice_p(ims:ime,kms:kme,jms:jme)   )
-       if(.not.allocated(resnow_p)  ) allocate(resnow_p(ims:ime,kms:kme,jms:jme)  )
+       if(.not.allocated(recloud_p) ) allocate(recloud_p(ims:ime,kms:kme) )
+       if(.not.allocated(reice_p)   ) allocate(reice_p(ims:ime,kms:kme)   )
+       if(.not.allocated(resnow_p)  ) allocate(resnow_p(ims:ime,kms:kme)  )
 
     microp2_select: select case(microp_scheme)
 
@@ -442,7 +442,7 @@
  real,dimension(:),pointer:: graupelncv,rainncv,snowncv,sr 
 
 !local variables and arrays:
- integer:: i,j
+ integer:: i
 
 !-----------------------------------------------------------------------------------------------------------------
 
@@ -454,11 +454,9 @@
  call mpas_pool_get_array(diag_physics,'sr'        ,sr        )
 
 !variables common to all cloud microphysics schemes:
- do j = jts, jte
  do i = its, ite
-    rainncv_p(i,j) = 0._RKIND
-    rainnc_p(i,j)  = 0._RKIND
- enddo
+    rainncv_p(i) = 0._RKIND
+    rainnc_p(i)  = 0._RKIND
  enddo
 
  do i = its,ite
@@ -469,14 +467,12 @@
  microp_select: select case(microp_scheme)
 
     case ("mp_thompson","mp_wsm6")
-       do j = jts, jte
        do i = its, ite
-          snowncv_p(i,j)    = 0._RKIND
-          graupelncv_p(i,j) = 0._RKIND
-          snownc_p(i,j)     = 0._RKIND
-          graupelnc_p(i,j)  = 0._RKIND
-          sr_p(i,j)         = 0._RKIND
-       enddo
+          snowncv_p(i)    = 0._RKIND
+          graupelncv_p(i) = 0._RKIND
+          snownc_p(i)     = 0._RKIND
+          graupelnc_p(i)  = 0._RKIND
+          sr_p(i)         = 0._RKIND
        enddo
 
        do i = its,ite
@@ -512,7 +508,7 @@
  real(kind=RKIND),dimension(:),pointer:: graupelncv,rainncv,snowncv,sr
 
 !local variables and arrays:
- integer:: i,j,k
+ integer:: i,k
  real(kind=RKIND):: rho_a
 
 !-----------------------------------------------------------------------------------------------------------------
@@ -535,17 +531,16 @@
  enddo
 
 !variables common to all cloud microphysics schemes:
- do j = jts,jte
  do i = its,ite
 
     !precipitable water:
     do k = kts,kte
-       rho_a = rho_p(i,k,j) / (1._RKIND + qv_p(i,k,j))
-       precipw(i) = precipw(i) + qv_p(i,k,j) * rho_a * dz_p(i,k,j)
+       rho_a = rho_p(i,k) / (1._RKIND + qv_p(i,k))
+       precipw(i) = precipw(i) + qv_p(i,k) * rho_a * dz_p(i,k)
     enddo
 
     !time-step precipitation:
-    rainncv(i) = rainnc_p(i,j)
+    rainncv(i) = rainnc_p(i)
     
     !accumulated precipitation:
     rainnc(i) = rainnc(i) + rainncv(i)
@@ -557,23 +552,20 @@
    endif
  
  enddo
- enddo
 
 !variables specific to different cloud microphysics schemes:
  microp_select_init: select case(microp_scheme)
 
     case ("mp_thompson","mp_wsm6")
-       do j = jts,jte
        do i = its,ite
           !time-step precipitation:
-          snowncv(i)    = snownc_p(i,j)
-          graupelncv(i) = graupelnc_p(i,j)
-          sr(i) = (snownc_p(i,j) + graupelnc_p(i,j)) / (rainnc_p(i,j)+1.e-12)
+          snowncv(i)    = snownc_p(i)
+          graupelncv(i) = graupelnc_p(i)
+          sr(i) = (snownc_p(i) + graupelnc_p(i)) / (rainnc_p(i)+1.e-12)
 
           !accumulated precipitation:
           snownc(i)    = snownc(i) + snowncv(i)
           graupelnc(i) = graupelnc(i) + graupelncv(i)
-       enddo
        enddo
 
     case default
@@ -598,7 +590,7 @@
  real(kind=RKIND),dimension(:),pointer:: refl10cm_max,refl10cm_1km,refl10cm_1km_max
 
 !local variables and arrays:
- integer:: i,j,k,kp
+ integer:: i,k,kp
  real(kind=RKIND),dimension(:),allocatable:: qv1d,qc1d,qr1d,qs1d,qg1d,t1d,p1d,nr1d,dBZ1d,zp
  real(kind=RKIND):: w1,w2
 
@@ -626,20 +618,19 @@
        if(.not.allocated(dBz1d)) allocate(dBZ1d(kts:kte))
        if(.not.allocated(zp)   ) allocate(zp(kts:kte)   )
 
-       do j = jts,jte
        do i = its,ite
           do k = kts,kte
-             p1d(k) = pres_p(i,k,j)
-             t1d(k) = th_p(i,k,j) * pi_p(i,k,j)
-             qv1d(k)  = qv_p(i,k,j)
-             qr1d(k)  = qr_p(i,k,j)
-             qs1d(k)  = qs_p(i,k,j)
-             qg1d(k)  = qg_p(i,k,j)
+             p1d(k) = pres_p(i,k)
+             t1d(k) = th_p(i,k) * pi_p(i,k)
+             qv1d(k)  = qv_p(i,k)
+             qr1d(k)  = qr_p(i,k)
+             qs1d(k)  = qs_p(i,k)
+             qg1d(k)  = qg_p(i,k)
              dBZ1d(k) = -35._RKIND
-             zp(k) = z_p(i,k,j) - z_p(i,1,j)+0.5*dz_p(i,1,j) ! height AGL
+             zp(k) = z_p(i,k) - z_p(i,1)+0.5*dz_p(i,1) ! height AGL
           enddo
 
-          call refl10cm_wsm6(qv1d,qr1d,qs1d,qg1d,t1d,p1d,dBZ1d,kts,kte,i,j)
+          call refl10cm_wsm6(qv1d,qr1d,qs1d,qg1d,t1d,p1d,dBZ1d,kts,kte,i,1)
 
           kp = 1
           do k = kts,kte
@@ -651,7 +642,6 @@
           w2 = 1.0 - w1
           refl10cm_1km(i) = w1*dBZ1d(kp) + w2*dBZ1d(kp+1)
           refl10cm_1km_max(i) = max(refl10cm_1km_max(i),refl10cm_1km(i))
-       enddo
        enddo
 
        if(allocated(p1d)  ) deallocate(p1d  )
@@ -675,22 +665,21 @@
        if(.not.allocated(dBz1d)) allocate(dBZ1d(kts:kte))
        if(.not.allocated(zp)   ) allocate(zp(kts:kte)   )
 
-       do j = jts,jte
        do i = its,ite
           do k = kts,kte
-             p1d(k) = pres_p(i,k,j)
-             t1d(k) = th_p(i,k,j) * pi_p(i,k,j)
-             qv1d(k)  = qv_p(i,k,j)
-             qc1d(k)  = qc_p(i,k,j)
-             qr1d(k)  = qr_p(i,k,j)
-             qs1d(k)  = qs_p(i,k,j)
-             qg1d(k)  = qg_p(i,k,j)
-             nr1d(k)  = nr_p(i,k,j)
+             p1d(k) = pres_p(i,k)
+             t1d(k) = th_p(i,k) * pi_p(i,k)
+             qv1d(k)  = qv_p(i,k)
+             qc1d(k)  = qc_p(i,k)
+             qr1d(k)  = qr_p(i,k)
+             qs1d(k)  = qs_p(i,k)
+             qg1d(k)  = qg_p(i,k)
+             nr1d(k)  = nr_p(i,k)
              dBZ1d(k) = -35._RKIND
-             zp(k) = z_p(i,k,j) - z_p(i,1,j)+0.5*dz_p(i,1,j) ! height AGL
+             zp(k) = z_p(i,k) - z_p(i,1)+0.5*dz_p(i,1) ! height AGL
           enddo
 
-          call calc_refl10cm(qv1d,qc1d,qr1d,nr1d,qs1d,qg1d,t1d,p1d,dBZ1d,kts,kte,i,j)
+          call calc_refl10cm(qv1d,qc1d,qr1d,nr1d,qs1d,qg1d,t1d,p1d,dBZ1d,kts,kte,i,1)
 
           kp = 1
           do k = kts,kte
@@ -702,7 +691,6 @@
           w2 = 1.0 - w1
           refl10cm_1km(i) = w1*dBZ1d(kp) + w2*dBZ1d(kp+1)
           refl10cm_1km_max(i) = max(refl10cm_1km_max(i),refl10cm_1km(i))
-       enddo
        enddo
 
        if(allocated(p1d)  ) deallocate(p1d  )
@@ -736,7 +724,7 @@
  real(kind=RKIND),dimension(:,:),pointer:: relhum
 
 !local variables and arrays:
- integer:: i,j,k
+ integer:: i,k
 
  real(kind=RKIND):: tempc, rh
  real(kind=RKIND),dimension(:),allocatable:: qv1d,qvs1d,t1d,p1d
@@ -755,19 +743,17 @@
  if(.not.allocated(qv1d) ) allocate(qv1d(kts:kte) )
  if(.not.allocated(qvs1d)) allocate(qvs1d(kts:kte))
 
- do j = jts,jte
  do i = its,ite
     do k = kts,kte
-       p1d(k)  = pres_p(i,k,j)
-       t1d(k)  = th_p(i,k,j) * pi_p(i,k,j)
+       p1d(k)  = pres_p(i,k)
+       t1d(k)  = th_p(i,k) * pi_p(i,k)
        tempc   = t1d(k) - 273.16_RKIND
        qvs1d(k) = rslf(p1d(k),t1d(k))
        if(tempc .le. 0._RKIND) qvs1d(k) = rsif(p1d(k),t1d(k))
-       qv1d(k) = qv_p(i,k,j)
+       qv1d(k) = qv_p(i,k)
        relhum(k,i) = qv1d(k) / qvs1d(k)
        relhum(k,i) = relhum(k,i) * 100._RKIND
     enddo
- enddo
  enddo
 
  if(allocated(p1d)  ) deallocate(p1d  )

@@ -141,26 +141,26 @@
  
  real(kind=RKIND),public:: xice_threshold
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     area_p             !grid cell area                                                         [m2]
 
 !... arrays related to surface:
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     ht_p,             &!
     psfc_p,           &!surface pressure                                                       [Pa]
     ptop_p             !model-top pressure                                                     [Pa]
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     fzm_p,            &!weight for interpolation to w points                                    [-]
     fzp_p              !weight for interpolation to w points                                    [-]
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
 !... arrays related to u- and v-velocities interpolated to theta points:
     u_p,              &!u-velocity interpolated to theta points                               [m/s]
     v_p                !v-velocity interpolated to theta points                               [m/s]
     
 !... arrays related to vertical sounding:
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     zz_p,             &!
     pres_p,           &!pressure                                                               [Pa]
     pi_p,             &!(p_phy/p0)**(r_d/cp)                                                    [-]
@@ -173,7 +173,7 @@
     rho_p,            &!air density                                                         [kg/m3]
     rh_p               !relative humidity                                                       [-]
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     qv_p,             &!water vapor mixing ratio                                            [kg/kg]
     qc_p,             &!cloud water mixing ratio                                            [kg/kg]
     qr_p,             &!rain mixing ratio                                                   [kg/kg]
@@ -181,22 +181,22 @@
     qs_p,             &!snow mixing ratio                                                   [kg/kg]
     qg_p               !graupel mixing ratio                                                [kg/kg]
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     nc_p,             &!
     ni_p,             &!
     nr_p               !
 
 !... arrays located at w (vertical velocity) points, or at interface between layers:
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     w_p,              &!vertical velocity                                                     [m/s]
     pres2_p,          &!pressure                                                               [Pa]
     t2_p               !temperature                                                             [K]
 
 !... arrays used for calculating the hydrostatic pressure and exner function:
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     psfc_hyd_p,       &!surface pressure                                                       [Pa]
     psfc_hydd_p        !"dry" surface pressure                                                 [Pa]
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     pres_hyd_p,       &!pressure located at theta levels                                       [Pa]
     pres_hydd_p,      &!"dry" pressure located at theta levels                                 [Pa]
     pres2_hyd_p,      &!pressure located at w-velocity levels                                  [Pa]
@@ -207,7 +207,7 @@
 !... variables related to ozone climatlogy:
 !=================================================================================================================
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     o3clim_p           !climatological ozone volume mixing ratio                         [???]
 
 !=================================================================================================================
@@ -238,11 +238,11 @@
     f_qnc = .true.,   &!
     f_qni = .true.     !
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     f_ice,            &!fraction of cloud ice (used in WRF only).
     f_rain             !fraction of rain (used in WRF only).
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     rainnc_p,         &!
     rainncv_p,        &!
     snownc_p,         &!
@@ -257,10 +257,10 @@
     has_reqi,         &!
     has_reqs
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     ntc_p,            &!
     muc_p              !
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     rainprod_p,       &!
     evapprod_p,       &!
     recloud_p,        &!
@@ -274,69 +274,69 @@
  integer,public:: n_cu
  real(kind=RKIND),public:: dt_cu
 
- logical,dimension(:,:),allocatable:: &
+ logical,dimension(:),allocatable:: &
     cu_act_flag
- real(kind=RKIND),dimension(:,:),allocatable::   &
+ real(kind=RKIND),dimension(:),allocatable::   &
     rainc_p,          &!
     raincv_p,         &!
     pratec_p           !
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     rthcuten_p,       &!
     rqvcuten_p,       &!
     rqccuten_p,       &!
     rqicuten_p         !
 
 !... kain fritsch specific arrays:
- real(kind=RKIND),dimension(:,:),allocatable::   &
+ real(kind=RKIND),dimension(:),allocatable::   &
     cubot_p,          &!lowest convective level                                                 [-]
     cutop_p,          &!highest convective level                                                [-]
     nca_p              !counter for cloud relaxation time                                       [-]
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     w0avg_p          !
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     rqrcuten_p,       &!
     rqscuten_p         !
 
 !... tiedtke specific arrays:
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     znu_p              !
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     rucuten_p,        &!
     rvcuten_p          !
 
 !... grell-freitas specific parameters and arrays:
     integer, parameter:: ishallow  = 1 !shallow convection used with grell scheme.
 
- integer,dimension(:,:),allocatable:: &
+ integer,dimension(:),allocatable:: &
     k22_shallow_p,    &!
     kbcon_shallow_p,  &!
     ktop_shallow_p,   &!
     kbot_shallow_p,   &!
     ktop_deep_p        !
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     xmb_total_p,      &!
     xmb_shallow_p      !
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     rthdynten_p,      &!
     qccu_p,           &!
     qicu_p             !
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     rthraten_p         !
 
 !... grell and tiedkte specific arrays:
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     rqvdynten_p,      &!
     rqvdynblten_p,    &!
     rthdynblten_p      !
 
 !... ntiedtke specific arrays:
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     rqvften_p,        &!
     rthften_p          !
 
@@ -346,12 +346,12 @@
 
  integer:: ysu_pblmix
 
- integer,dimension(:,:),allocatable:: &
+ integer,dimension(:),allocatable:: &
     kpbl_p             !index of PBL top                                                                       [-]
 
  real(kind=RKIND),public:: dt_pbl
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     ctopo_p,          &!correction to topography                                                               [-]
     ctopo2_p,         &!correction to topography 2                                                             [-]
     hpbl_p,           &!PBL height                                                                             [m]
@@ -360,10 +360,10 @@
     uoce_p,           &!
     voce_p             !
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     exch_p             !exchange coefficient                                                                   [-]
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     rublten_p,        &!
     rvblten_p,        &!
     rthblten_p,       &!
@@ -371,7 +371,7 @@
     rqcblten_p,       &!
     rqiblten_p         !
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     kzh_p,            &!
     kzm_p,            &!
     kzq_p              !
@@ -383,10 +383,10 @@
  integer,parameter:: bl_mynn_tkebudget = 0      !
  integer,parameter:: bl_mynn_cloudpdf  = 0      !
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     vdfg_p             !
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     dqke_p,           &!
     qbuoy_p,          &!
     qdiss_p,          &!
@@ -396,18 +396,18 @@
     qwt_p,            &!
     tkepbl_p           !
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     rniblten_p         !
 
 !=================================================================================================================
 !... variables and arrays related to parameterization of gravity wave drag over orography:
 !=================================================================================================================
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     cosa_p,           &!cosine of map rotation                                                                 [-]
     sina_p             !sine of map rotation                                                                   [-]
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     var2d_p,          &!orographic variance                                                                   [m2]
     con_p,            &!orographic convexity                                                                  [m2]
     oa1_p,            &!orographic direction asymmetry function                                                [-]
@@ -419,14 +419,14 @@
     ol3_p,            &!orographic direction asymmetry function                                                [-]
     ol4_p              !orographic direction asymmetry function                                                [-]
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     dx_p               !mean distance between cell centers                                                     [m]
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     dusfcg_p,         &!vertically-integrated gwdo u-stress                                             [Pa m s-1]
     dvsfcg_p           !vertically-integrated gwdo v -stress                                            [Pa m s-1]
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     dtaux3d_p,        &!gravity wave drag over orography u-stress                                          [m s-1]
     dtauy3d_p          !gravity wave drag over orography u-stress                                          [m s-1]
 
@@ -434,7 +434,7 @@
 !... variables and arrays related to parameterization of surface layer:
 !=================================================================================================================
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     br_p,             &!bulk richardson number                                                                 [-]
     cd_p,             &!momentum exchange coeff at 10 meters                                                   [?]
     cda_p,            &!momentum exchange coeff at the lowest model level                                      [?]
@@ -471,16 +471,16 @@
     zol_p              !
 
 !... arrays only in monin_obukohv (module_sf_sfclay.F):
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     fh_p,             &!integrated stability function for heat                                                 [-]
     fm_p               !integrated stability function for momentum                                             [-]
 
 !... arrays only in mynn surface layer scheme (module_sf_mynn.F):
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     ch_p,             &!surface exchange coeff for heat                                                      [m/s]
     qcg_p              !cloud water mixing ratio at the ground surface                                     [kg/kg]
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     cov_p,            &!liquid water-liquid water potential temperature covariance                       [K kg/kg]
     qsq_p,            &!liquid water variance                                                          [(kg/kg)^2]
     tsq_p,            &!liquid water potential temperature variance                                          [K^2]
@@ -510,7 +510,7 @@
     seaice_snowdepth_max      = 1.e10,&!maximum allowed accumulation of snow (m) on sea ice.
     seaice_snowdepth_min      = 0.001  !minimum snow depth (m) on sea ice.
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     albsi_p,          &!surface albedo over seaice                                                             [-]
     snowsi_p,         &!snow depth over seaice                                                                 [m]
     icedepth_p         !seaice thickness                                                                       [m]
@@ -523,7 +523,7 @@
     declin,           &!solar declination                                                       [-]
     solcon             !solar constant                                                      [W m-2]
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     coszr_p,          &!cosine of the solar zenith angle                                        [-]
     gsw_p,            &!net shortwave flux at surface                                       [W m-2]
     swcf_p,           &!shortwave cloud forcing at top-of-atmosphere                        [W m-2]
@@ -536,31 +536,31 @@
     swupt_p,          &!all-sky upwelling shortwave flux at top-of-atmosphere               [J m-2]
     swuptc_p           !clear-sky upwelling shortwave flux at top-of-atmosphere             [J m-2]
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     swvisdir_p,       &!visible direct downward flux                                        [W m-2]
     swvisdif_p,       &!visible diffuse downward flux                                       [W m-2]
     swnirdir_p,       &!near-IR direct downward flux                                        [W m-2]
     swnirdif_p         !near-IR diffuse downward flux                                       [W m-2]
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     swdnflx_p,        &!
     swdnflxc_p,       &!
     swupflx_p,        &!
     swupflxc_p         !
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     rthratensw_p       !uncoupled theta tendency due to shortwave radiation                 [K s-1]
 
 !=================================================================================================================
 !... variables and arrays related to parameterization of long-wave radiation:
 !=================================================================================================================
 
- integer,dimension(:,:),allocatable:: &
+ integer,dimension(:),allocatable:: &
     nlrad_p            !number of layers added above the model top                              [-]
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     plrad_p            !pressure at model_top                                                  [Pa]
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     glw_p,            &!net longwave flux at surface                                        [W m-2]
     lwcf_p,           &!longwave cloud forcing at top-of-atmosphere                         [W m-2]
     lwdnb_p,          &!all-sky downwelling longwave flux at bottom-of-atmosphere           [J m-2]
@@ -573,13 +573,13 @@
     lwuptc_p,         &!clear-sky upwelling longwave flux at top-of-atmosphere              [J m-2]
     olrtoa_p           !outgoing longwave radiation at top-of-the-atmosphere                [W m-2]
 
-  real(kind=RKIND),dimension(:,:,:),allocatable:: &
+  real(kind=RKIND),dimension(:,:),allocatable:: &
     lwdnflx_p,        &!
     lwdnflxc_p,       &!
     lwupflx_p,        &!
     lwupflxc_p         !
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     rthratenlw_p,     &!uncoupled theta tendency due to longwave radiation                  [K s-1]
     rrecloud_p,       &!effective radius for cloud water calculated in rrtmg_lwrad             [mu]
     rreice_p,         &!effective radius for cloud ice calculated in rrmtg_lwrad               [mu]
@@ -603,21 +603,21 @@
     pin_p,            &!pressure levels for ozone concentration                                [Pa]
     m_hybi_p           !hybrid levels for aerosols                                             [-]
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     m_psn_p,          &!
     m_psp_p            !
 
- real(kind=RKIND),dimension(:,:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:,:),allocatable:: &
     aerosolcn_p,      &!
     aerosolcp_p        !
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     emstot_p,         &!total emissivity                                                        [-]
     cemiss_p,         &!cloud emissivity for ISCCP                                              [-]
     taucldc_p,        &!cloud water optical depth for ISCCP                                     [-]
     taucldi_p          !cloud ice optical depth for ISCCP                                       [-]    
 
- real(kind=RKIND),dimension(:,:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:,:),allocatable:: &
     abstot_p,         &!total layer absorptivity                                                [-]
     absnxt_p,         &!total nearest layer absorptivity                                        [-]
     ozmixm_p           !ozone mixing ratio.
@@ -629,7 +629,7 @@
  integer,parameter:: &
     icloud= 1          !used in WRF only.
 
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     cldfrac_p,        &!cloud fraction                                                                         [-]
     qvrad_p,          &!water vapor mixing ratio local to cloudiness and radiation                         [kg/kg]
     qcrad_p,          &!cloud liquid water mixing ratio local to cloudiness and radiation                  [kg/kg]
@@ -660,19 +660,19 @@
  integer,public:: &
     num_soils          !number of soil layers                                                                  [-]
     
- integer,dimension(:,:),allocatable:: &
+ integer,dimension(:),allocatable:: &
     isltyp_p,         &!dominant soil type category                                                            [-]
     ivgtyp_p           !dominant vegetation category                                                           [-]
 
  real(kind=RKIND),dimension(:),allocatable:: &
     dzs_p              !thickness of soil layers                                                               [m]
- real(kind=RKIND),dimension(:,:,:),allocatable:: &
+ real(kind=RKIND),dimension(:,:),allocatable:: &
     smcrel_p,         &!soil moisture threshold below which transpiration starts to stress                     [-]
     sh2o_p,           &!unfrozen soil moisture content                                       [volumetric fraction]
     smois_p,          &!soil moisture                                                        [volumetric fraction]
     tslb_p             !soil temperature                                                                       [K]
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     acsnom_p,         &!accumulated melted snow                                                           [kg m-2]
     acsnow_p,         &!accumulated snow                                                                  [kg m-2]
     canwat_p,         &!canopy water                                                                      [kg m-2]
@@ -698,14 +698,14 @@
     vegfra_p,         &!vegetation fraction                                                                    [-]
     z0_p               !background roughness length                                                            [m]
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     alswvisdir_p,     &!direct-beam surface albedo in visible spectrum                                         [-]
     alswvisdif_p,     &!diffuse-beam surface albedo in visible spectrum                                        [-]
     alswnirdir_p,     &!direct-beam surface albedo in near-IR spectrum                                         [-]
     alswnirdif_p       !diffuse-beam surface albedo in near-IR spectrum                                        [-]
 
 !.. arrays needed to run UA Noah changes (different snow-cover physics):
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     flxsnow_p,        &!energy added to sensible heat flux when ua_phys=true                               [W m-2]
     fvbsnow_p,        &!fraction of vegetation with snow beneath when ua_phys=true                             [-]
     fbursnow_p,       &!fraction of canopy buried when ua_phys=true                                            [-]
@@ -713,16 +713,16 @@
 
 !.. arrays needed in the argument list in the call to the Noah LSM urban parameterization: note that these arrays
 !.. are initialized to zero since we do not run an urban model:
- integer,dimension(:,:),allocatable:: &
+ integer,dimension(:),allocatable:: &
     utype_urb_p        !urban type                                                                             [-]
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     frc_urb_p,        &!urban fraction                                                                         [-]
     ust_urb_p          !urban u* in similarity theory                                                        [m/s]
 
 !.. arrays needed in the argument list in the call to the Noah LSM hydrology model: note that these arrays are
 !.. initialized to zero since we do not run a hydrology model:
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     infxsrt_p,        &!timestep infiltration excess                                                          [mm]
     sfcheadrt_p,      &!surface water detph                                                                   [mm]
     soldrain_p         !soil column drainage                                                                  [mm]
@@ -731,11 +731,11 @@
 !.. variables and arrays related to surface characteristics:
 !=================================================================================================================
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     xlat_p,           &!longitude, west is negative                                                      [degrees]
     xlon_p             !latitude, south is negative                                                      [degrees]
 
- real(kind=RKIND),dimension(:,:),allocatable:: &
+ real(kind=RKIND),dimension(:),allocatable:: &
     sfc_albedo_p,     &!surface albedo                                                                         [-]
     sfc_albbck_p,     &!surface background albedo                                                              [-]
     sfc_emibck_p,     &!land surface background emissivity                                                     [-]
@@ -752,15 +752,15 @@
 !   is set to true. the arrays below have the same definition as the corresponding "_p" arrays:
 !=================================================================================================================
 
- real(kind=RKIND),dimension(:,:),allocatable:: br_sea,ch_sea,chs_sea,chs2_sea,cpm_sea,cqs2_sea,      &
+ real(kind=RKIND),dimension(:),allocatable:: br_sea,ch_sea,chs_sea,chs2_sea,cpm_sea,cqs2_sea,      &
                                 flhc_sea,flqc_sea,gz1oz0_sea,hfx_sea,lh_sea,mavail_sea,mol_sea,      &
                                 psih_sea,psim_sea,fh_sea,fm_sea,qfx_sea,qgh_sea,qsfc_sea,regime_sea, &
                                 rmol_sea,ust_sea,wspd_sea,znt_sea,zol_sea,tsk_sea,xland_sea
- real(kind=RKIND),dimension(:,:),allocatable:: t2m_sea,th2m_sea,q2_sea,u10_sea,v10_sea
- real(kind=RKIND),dimension(:,:),allocatable:: cd_sea,cda_sea,ck_sea,cka_sea,ustm_sea
+ real(kind=RKIND),dimension(:),allocatable:: t2m_sea,th2m_sea,q2_sea,u10_sea,v10_sea
+ real(kind=RKIND),dimension(:),allocatable:: cd_sea,cda_sea,ck_sea,cka_sea,ustm_sea
 
- real(kind=RKIND),dimension(:,:),allocatable:: regime_hold
- real(kind=RKIND),dimension(:,:),allocatable:: tsk_ice
+ real(kind=RKIND),dimension(:),allocatable:: regime_hold
+ real(kind=RKIND),dimension(:),allocatable:: tsk_ice
 
 
  contains

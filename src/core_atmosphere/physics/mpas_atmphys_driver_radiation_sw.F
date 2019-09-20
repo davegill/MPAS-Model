@@ -103,95 +103,95 @@
 
  call mpas_pool_get_config(configs,'config_radt_sw_scheme',radt_sw_scheme)
 
- if(.not.allocated(f_ice)        ) allocate(f_ice(ims:ime,kms:kme,jms:jme)        )
- if(.not.allocated(f_rain)       ) allocate(f_rain(ims:ime,kms:kme,jms:jme)       )
+ if(.not.allocated(f_ice)        ) allocate(f_ice(ims:ime,kms:kme)        )
+ if(.not.allocated(f_rain)       ) allocate(f_rain(ims:ime,kms:kme)       )
 
- if(.not.allocated(xlat_p)       ) allocate(xlat_p(ims:ime,jms:jme)               )
- if(.not.allocated(xlon_p)       ) allocate(xlon_p(ims:ime,jms:jme)               )
+ if(.not.allocated(xlat_p)       ) allocate(xlat_p(ims:ime)               )
+ if(.not.allocated(xlon_p)       ) allocate(xlon_p(ims:ime)               )
 
- if(.not.allocated(sfc_albedo_p) ) allocate(sfc_albedo_p(ims:ime,jms:jme)         )
- if(.not.allocated(snow_p)       ) allocate(snow_p(ims:ime,jms:jme)               )
- if(.not.allocated(tsk_p)        ) allocate(tsk_p(ims:ime,jms:jme)                )
- if(.not.allocated(xice_p)       ) allocate(xice_p(ims:ime,jms:jme)               )
- if(.not.allocated(xland_p)      ) allocate(xland_p(ims:ime,jms:jme)              )
+ if(.not.allocated(sfc_albedo_p) ) allocate(sfc_albedo_p(ims:ime)         )
+ if(.not.allocated(snow_p)       ) allocate(snow_p(ims:ime)               )
+ if(.not.allocated(tsk_p)        ) allocate(tsk_p(ims:ime)                )
+ if(.not.allocated(xice_p)       ) allocate(xice_p(ims:ime)               )
+ if(.not.allocated(xland_p)      ) allocate(xland_p(ims:ime)              )
 
- if(.not.allocated(coszr_p)      ) allocate(coszr_p(ims:ime,jms:jme)              )
- if(.not.allocated(gsw_p)        ) allocate(gsw_p(ims:ime,jms:jme)                )
- if(.not.allocated(swcf_p)       ) allocate(swcf_p(ims:ime,jms:jme)               )
- if(.not.allocated(swdnb_p)      ) allocate(swdnb_p(ims:ime,jms:jme)              )
- if(.not.allocated(swdnbc_p)     ) allocate(swdnbc_p(ims:ime,jms:jme)             )
- if(.not.allocated(swdnt_p)      ) allocate(swdnt_p(ims:ime,jms:jme)              )
- if(.not.allocated(swdntc_p)     ) allocate(swdntc_p(ims:ime,jms:jme)             )
- if(.not.allocated(swupb_p)      ) allocate(swupb_p(ims:ime,jms:jme)              )
- if(.not.allocated(swupbc_p)     ) allocate(swupbc_p(ims:ime,jms:jme)             )
- if(.not.allocated(swupt_p)      ) allocate(swupt_p(ims:ime,jms:jme)              )
- if(.not.allocated(swuptc_p)     ) allocate(swuptc_p(ims:ime,jms:jme)             )
+ if(.not.allocated(coszr_p)      ) allocate(coszr_p(ims:ime)              )
+ if(.not.allocated(gsw_p)        ) allocate(gsw_p(ims:ime)                )
+ if(.not.allocated(swcf_p)       ) allocate(swcf_p(ims:ime)               )
+ if(.not.allocated(swdnb_p)      ) allocate(swdnb_p(ims:ime)              )
+ if(.not.allocated(swdnbc_p)     ) allocate(swdnbc_p(ims:ime)             )
+ if(.not.allocated(swdnt_p)      ) allocate(swdnt_p(ims:ime)              )
+ if(.not.allocated(swdntc_p)     ) allocate(swdntc_p(ims:ime)             )
+ if(.not.allocated(swupb_p)      ) allocate(swupb_p(ims:ime)              )
+ if(.not.allocated(swupbc_p)     ) allocate(swupbc_p(ims:ime)             )
+ if(.not.allocated(swupt_p)      ) allocate(swupt_p(ims:ime)              )
+ if(.not.allocated(swuptc_p)     ) allocate(swuptc_p(ims:ime)             )
  
- if(.not.allocated(rthratensw_p) ) allocate(rthratensw_p(ims:ime,kms:kme,jms:jme) )
+ if(.not.allocated(rthratensw_p) ) allocate(rthratensw_p(ims:ime,kms:kme) )
 
  radiation_sw_select: select case (trim(radt_sw_scheme))
 
     case("rrtmg_sw")
-       if(.not.allocated(recloud_p)    ) allocate(recloud_p(ims:ime,kms:kme,jms:jme)       )
-       if(.not.allocated(reice_p)      ) allocate(reice_p(ims:ime,kms:kme,jms:jme)         )
-       if(.not.allocated(resnow_p)     ) allocate(resnow_p(ims:ime,kms:kme,jms:jme)        )
+       if(.not.allocated(recloud_p)    ) allocate(recloud_p(ims:ime,kms:kme)       )
+       if(.not.allocated(reice_p)      ) allocate(reice_p(ims:ime,kms:kme)         )
+       if(.not.allocated(resnow_p)     ) allocate(resnow_p(ims:ime,kms:kme)        )
 
-       if(.not.allocated(alswvisdir_p) ) allocate(alswvisdir_p(ims:ime,jms:jme)            )
-       if(.not.allocated(alswvisdif_p) ) allocate(alswvisdif_p(ims:ime,jms:jme)            )
-       if(.not.allocated(alswnirdir_p) ) allocate(alswnirdir_p(ims:ime,jms:jme)            )
-       if(.not.allocated(alswnirdif_p) ) allocate(alswnirdif_p(ims:ime,jms:jme)            )
-       if(.not.allocated(swvisdir_p)   ) allocate(swvisdir_p(ims:ime,jms:jme)              )
-       if(.not.allocated(swvisdif_p)   ) allocate(swvisdif_p(ims:ime,jms:jme)              )
-       if(.not.allocated(swnirdir_p)   ) allocate(swnirdir_p(ims:ime,jms:jme)              )
-       if(.not.allocated(swnirdif_p)   ) allocate(swnirdif_p(ims:ime,jms:jme)              )
+       if(.not.allocated(alswvisdir_p) ) allocate(alswvisdir_p(ims:ime)            )
+       if(.not.allocated(alswvisdif_p) ) allocate(alswvisdif_p(ims:ime)            )
+       if(.not.allocated(alswnirdir_p) ) allocate(alswnirdir_p(ims:ime)            )
+       if(.not.allocated(alswnirdif_p) ) allocate(alswnirdif_p(ims:ime)            )
+       if(.not.allocated(swvisdir_p)   ) allocate(swvisdir_p(ims:ime)              )
+       if(.not.allocated(swvisdif_p)   ) allocate(swvisdif_p(ims:ime)              )
+       if(.not.allocated(swnirdir_p)   ) allocate(swnirdir_p(ims:ime)              )
+       if(.not.allocated(swnirdif_p)   ) allocate(swnirdif_p(ims:ime)              )
 
-       if(.not.allocated(swdnflx_p)    ) allocate(swdnflx_p(ims:ime,kms:kme+1,jms:jme)     )
-       if(.not.allocated(swdnflxc_p)   ) allocate(swdnflxc_p(ims:ime,kms:kme+1,jms:jme)    )
-       if(.not.allocated(swupflx_p)    ) allocate(swupflx_p(ims:ime,kms:kme+1,jms:jme)     )
-       if(.not.allocated(swupflxc_p)   ) allocate(swupflxc_p(ims:ime,kms:kme+1,jms:jme)    )
+       if(.not.allocated(swdnflx_p)    ) allocate(swdnflx_p(ims:ime,kms:kme+1)     )
+       if(.not.allocated(swdnflxc_p)   ) allocate(swdnflxc_p(ims:ime,kms:kme+1)    )
+       if(.not.allocated(swupflx_p)    ) allocate(swupflx_p(ims:ime,kms:kme+1)     )
+       if(.not.allocated(swupflxc_p)   ) allocate(swupflxc_p(ims:ime,kms:kme+1)    )
 
        if(.not.allocated(pin_p)        ) allocate(pin_p(num_oznlevels)                     )
-       if(.not.allocated(o3clim_p)     ) allocate(o3clim_p(ims:ime,1:num_oznlevels,jms:jme))
+       if(.not.allocated(o3clim_p)     ) allocate(o3clim_p(ims:ime,1:num_oznlevels))
 
     case("cam_sw")
-       if(.not.allocated(glw_p)        ) allocate(glw_p(ims:ime,jms:jme)                )
-       if(.not.allocated(lwcf_p)       ) allocate(lwcf_p(ims:ime,jms:jme)               )
-       if(.not.allocated(lwdnb_p)      ) allocate(lwdnb_p(ims:ime,jms:jme)              )
-       if(.not.allocated(lwdnbc_p)     ) allocate(lwdnbc_p(ims:ime,jms:jme)             )
-       if(.not.allocated(lwdnt_p)      ) allocate(lwdnt_p(ims:ime,jms:jme)              )
-       if(.not.allocated(lwdntc_p)     ) allocate(lwdntc_p(ims:ime,jms:jme)             )
-       if(.not.allocated(lwupb_p)      ) allocate(lwupb_p(ims:ime,jms:jme)              )
-       if(.not.allocated(lwupbc_p)     ) allocate(lwupbc_p(ims:ime,jms:jme)             )
-       if(.not.allocated(lwupt_p)      ) allocate(lwupt_p(ims:ime,jms:jme)              )
-       if(.not.allocated(lwuptc_p)     ) allocate(lwuptc_p(ims:ime,jms:jme)             )
-       if(.not.allocated(olrtoa_p)     ) allocate(olrtoa_p(ims:ime,jms:jme)             )
-       if(.not.allocated(sfc_emiss_p)  ) allocate(sfc_emiss_p(ims:ime,jms:jme)          )
-       if(.not.allocated(rthratenlw_p) ) allocate(rthratenlw_p(ims:ime,kms:kme,jms:jme) )
+       if(.not.allocated(glw_p)        ) allocate(glw_p(ims:ime)                )
+       if(.not.allocated(lwcf_p)       ) allocate(lwcf_p(ims:ime)               )
+       if(.not.allocated(lwdnb_p)      ) allocate(lwdnb_p(ims:ime)              )
+       if(.not.allocated(lwdnbc_p)     ) allocate(lwdnbc_p(ims:ime)             )
+       if(.not.allocated(lwdnt_p)      ) allocate(lwdnt_p(ims:ime)              )
+       if(.not.allocated(lwdntc_p)     ) allocate(lwdntc_p(ims:ime)             )
+       if(.not.allocated(lwupb_p)      ) allocate(lwupb_p(ims:ime)              )
+       if(.not.allocated(lwupbc_p)     ) allocate(lwupbc_p(ims:ime)             )
+       if(.not.allocated(lwupt_p)      ) allocate(lwupt_p(ims:ime)              )
+       if(.not.allocated(lwuptc_p)     ) allocate(lwuptc_p(ims:ime)             )
+       if(.not.allocated(olrtoa_p)     ) allocate(olrtoa_p(ims:ime)             )
+       if(.not.allocated(sfc_emiss_p)  ) allocate(sfc_emiss_p(ims:ime)          )
+       if(.not.allocated(rthratenlw_p) ) allocate(rthratenlw_p(ims:ime,kms:kme) )
 
-       if(.not.allocated(cemiss_p)     ) allocate(cemiss_p(ims:ime,kms:kme,jms:jme)     )
-       if(.not.allocated(taucldc_p)    ) allocate(taucldc_p(ims:ime,kms:kme,jms:jme)    )
-       if(.not.allocated(taucldi_p)    ) allocate(taucldi_p(ims:ime,kms:kme,jms:jme)    )
+       if(.not.allocated(cemiss_p)     ) allocate(cemiss_p(ims:ime,kms:kme)     )
+       if(.not.allocated(taucldc_p)    ) allocate(taucldc_p(ims:ime,kms:kme)    )
+       if(.not.allocated(taucldi_p)    ) allocate(taucldi_p(ims:ime,kms:kme)    )
 
        if(.not.allocated(pin_p)        ) allocate(pin_p(num_oznlevels)                  )
        if(.not.allocated(ozmixm_p) ) &
-          allocate(ozmixm_p(ims:ime,1:num_oznlevels,jms:jme,num_months) )
+          allocate(ozmixm_p(ims:ime,1:num_oznlevels,num_months) )
        
        if(.not.allocated(m_hybi_p)     ) allocate(m_hybi_p(num_aerlevels)               )
-       if(.not.allocated(m_psn_p)      ) allocate(m_psn_p(ims:ime,jms:jme)              )
-       if(.not.allocated(m_psp_p)      ) allocate(m_psp_p(ims:ime,jms:jme)              )
+       if(.not.allocated(m_psn_p)      ) allocate(m_psn_p(ims:ime)              )
+       if(.not.allocated(m_psp_p)      ) allocate(m_psp_p(ims:ime)              )
        if(.not.allocated(aerosolcn_p)  ) &
-          allocate(aerosolcn_p(ims:ime,1:num_aerlevels,jms:jme,num_aerosols) )
+          allocate(aerosolcn_p(ims:ime,1:num_aerlevels,num_aerosols) )
        if(.not.allocated(aerosolcp_p)  ) &
-          allocate(aerosolcp_p(ims:ime,1:num_aerlevels,jms:jme,num_aerosols) )
+          allocate(aerosolcp_p(ims:ime,1:num_aerlevels,num_aerosols) )
 
        !allocate these arrays on the first time step, only:
        if(xtime_s .lt. 1.e-12) then
 
-          if(.not.allocated(emstot_p) ) allocate(emstot_p(ims:ime,kms:kme,jms:jme) )
+          if(.not.allocated(emstot_p) ) allocate(emstot_p(ims:ime,kms:kme) )
           if(.not.allocated(abstot_p) ) &
-             allocate(abstot_p(ims:ime,kms:kme,cam_abs_dim2,jms:jme) )
+             allocate(abstot_p(ims:ime,kms:kme,cam_abs_dim2) )
           if(.not.allocated(absnxt_p) ) &
-             allocate(absnxt_p(ims:ime,kms:kme,cam_abs_dim1,jms:jme) )
+             allocate(absnxt_p(ims:ime,kms:kme,cam_abs_dim1) )
 
        endif
 
@@ -314,7 +314,7 @@
  real(kind=RKIND),intent(in):: xtime_s
 
 !local variables:
- integer:: i,j,k,n
+ integer:: i,k,n
 
 !local pointers:
  logical,pointer:: config_o3climatology
@@ -357,55 +357,47 @@
  call mpas_pool_get_array(diag_physics,'m_hybi'    ,m_hybi    )
  call mpas_pool_get_array(diag_physics,'m_ps'      ,m_ps      )
 
- do j = jts,jte
  do i = its,ite
-    xlat_p(i,j)       = latCell(i) / degrad
-    xlon_p(i,j)       = lonCell(i) / degrad
+    xlat_p(i)       = latCell(i) / degrad
+    xlon_p(i)       = lonCell(i) / degrad
 
-    sfc_albedo_p(i,j) = sfc_albedo(i)
-    snow_p(i,j)       = snow(i)
-    tsk_p(i,j)        = skintemp(i)
-    xice_p(i,j)       = xice(i)
-    xland_p(i,j)      = xland(i)
+    sfc_albedo_p(i) = sfc_albedo(i)
+    snow_p(i)       = snow(i)
+    tsk_p(i)        = skintemp(i)
+    xice_p(i)       = xice(i)
+    xland_p(i)      = xland(i)
  enddo
- enddo
- do j = jts,jte
  do k = kts,kte
  do i = its,ite
-    cldfrac_p(i,k,j) = cldfrac(k,i)
- enddo
+    cldfrac_p(i,k) = cldfrac(k,i)
  enddo
  enddo
 
 !initialization:
- do j = jts,jte
  do k = kts,kte
  do i = its,ite
-    f_ice(i,k,j)  = 0.0_RKIND
-    f_rain(i,k,j) = 0.0_RKIND
- enddo
+    f_ice(i,k)  = 0.0_RKIND
+    f_rain(i,k) = 0.0_RKIND
  enddo
  enddo
 
- do j = jts,jte
  do i = its,ite
-    coszr_p(i,j)    = 0.0_RKIND
-    gsw_p(i,j)      = 0.0_RKIND
-    swcf_p(i,j)     = 0.0_RKIND
-    swdnb_p(i,j)    = 0.0_RKIND
-    swdnbc_p(i,j)   = 0.0_RKIND
-    swdnt_p(i,j)    = 0.0_RKIND
-    swdntc_p(i,j)   = 0.0_RKIND
-    swupb_p(i,j)    = 0.0_RKIND
-    swupbc_p(i,j)   = 0.0_RKIND
-    swupt_p(i,j)    = 0.0_RKIND
-    swuptc_p(i,j)   = 0.0_RKIND
+    coszr_p(i)    = 0.0_RKIND
+    gsw_p(i)      = 0.0_RKIND
+    swcf_p(i)     = 0.0_RKIND
+    swdnb_p(i)    = 0.0_RKIND
+    swdnbc_p(i)   = 0.0_RKIND
+    swdnt_p(i)    = 0.0_RKIND
+    swdntc_p(i)   = 0.0_RKIND
+    swupb_p(i)    = 0.0_RKIND
+    swupbc_p(i)   = 0.0_RKIND
+    swupt_p(i)    = 0.0_RKIND
+    swuptc_p(i)   = 0.0_RKIND
  enddo
 
  do k = kts,kte
  do i = its,ite
-    rthratensw_p(i,k,j) = 0.0_RKIND
- enddo
+    rthratensw_p(i,k) = 0.0_RKIND
  enddo
  enddo
 
@@ -420,13 +412,11 @@
                 call mpas_pool_get_array(diag_physics,'re_ice'  ,re_ice  )
                 call mpas_pool_get_array(diag_physics,'re_snow' ,re_snow )
 
-                do j = jts,jte
                 do k = kts,kte
                 do i = its,ite
-                   recloud_p(i,k,j) = re_cloud(k,i)
-                   reice_p(i,k,j)   = re_ice(k,i)
-                   resnow_p(i,k,j)  = re_snow(k,i)
-                enddo
+                   recloud_p(i,k) = re_cloud(k,i)
+                   reice_p(i,k)   = re_ice(k,i)
+                   resnow_p(i,k)  = re_snow(k,i)
                 enddo
                 enddo
              else
@@ -434,13 +424,11 @@
                 !has_reqc = 0
                 !has_reqi = 0
                 !has_reqs = 0
-                do j = jts,jte
                 do k = kts,kte
                 do i = its,ite
-                   recloud_p(i,k,j) = 0._RKIND
-                   reice_p(i,k,j)   = 0._RKIND
-                   resnow_p(i,k,j)  = 0._RKIND
-                enddo
+                   recloud_p(i,k) = 0._RKIND
+                   reice_p(i,k)   = 0._RKIND
+                   resnow_p(i,k)  = 0._RKIND
                 enddo
                 enddo
              endif
@@ -448,14 +436,12 @@
           case default          
        end select microp_select
 
-       do j = jts,jte
        do k = kts,kte+2
        do i = its,ite
-          swdnflx_p(i,k,j)  = 0.0_RKIND
-          swdnflxc_p(i,k,j) = 0.0_RKIND
-          swupflx_p(i,k,j)  = 0.0_RKIND
-          swupflxc_p(i,k,j) = 0.0_RKIND
-       enddo
+          swdnflx_p(i,k)  = 0.0_RKIND
+          swdnflxc_p(i,k) = 0.0_RKIND
+          swupflx_p(i,k)  = 0.0_RKIND
+          swupflxc_p(i,k) = 0.0_RKIND
        enddo
        enddo
 
@@ -464,73 +450,65 @@
           do k = 1, num_oznLevels
              pin_p(k) = pin(k)
           enddo
-          do j = jts,jte
           do k = 1, num_oznLevels
              do i = its,ite
-                o3clim_p(i,k,j) = o3clim(k,i)
+                o3clim_p(i,k) = o3clim(k,i)
              enddo
-          enddo
           enddo
        else
           do k = 1, num_oznLevels
              pin_p(k) = 0.0_RKIND
           enddo
-          do j = jts,jte
           do k = 1, num_oznLevels
              do i = its,ite
-                o3clim_p(i,k,j) = 0.0_RKIND
+                o3clim_p(i,k) = 0.0_RKIND
              enddo
-          enddo
           enddo
        endif
 
     case("cam_sw")
-       do j = jts,jte
        do i = its,ite
-          sfc_emiss_p(i,j)  = sfc_emiss(i)
+          sfc_emiss_p(i)  = sfc_emiss(i)
 
-          olrtoa_p(i,j)     = 0.0_RKIND
-          glw_p(i,j)        = 0.0_RKIND
-          lwcf_p(i,j)       = 0.0_RKIND
-          lwdnb_p(i,j)      = 0.0_RKIND
-          lwdnbc_p(i,j)     = 0.0_RKIND
-          lwdnt_p(i,j)      = 0.0_RKIND
-          lwdntc_p(i,j)     = 0.0_RKIND
-          lwupb_p(i,j)      = 0.0_RKIND
-          lwupbc_p(i,j)     = 0.0_RKIND
-          lwupt_p(i,j)      = 0.0_RKIND
-          lwuptc_p(i,j)     = 0.0_RKIND
+          olrtoa_p(i)     = 0.0_RKIND
+          glw_p(i)        = 0.0_RKIND
+          lwcf_p(i)       = 0.0_RKIND
+          lwdnb_p(i)      = 0.0_RKIND
+          lwdnbc_p(i)     = 0.0_RKIND
+          lwdnt_p(i)      = 0.0_RKIND
+          lwdntc_p(i)     = 0.0_RKIND
+          lwupb_p(i)      = 0.0_RKIND
+          lwupbc_p(i)     = 0.0_RKIND
+          lwupt_p(i)      = 0.0_RKIND
+          lwuptc_p(i)     = 0.0_RKIND
        enddo
        do k = kts,kte
        do i = its,ite
-          rthratenlw_p(i,k,j) = 0.0_RKIND
-          cemiss_p(i,k,j)     = 0.0_RKIND
-          taucldc_p(i,k,j)    = 0.0_RKIND
-          taucldi_p(i,k,j)    = 0.0_RKIND
-       enddo
+          rthratenlw_p(i,k) = 0.0_RKIND
+          cemiss_p(i,k)     = 0.0_RKIND
+          taucldc_p(i,k)    = 0.0_RKIND
+          taucldi_p(i,k)    = 0.0_RKIND
        enddo
        enddo
        !infrared absorption:
        if(xtime_s .lt. 1.e-12) then
-          do j = jts,jte
           do n = 1,cam_abs_dim1
           do k = kts,kte
           do i = its,ite
-             absnxt_p(i,k,n,j) = 0.0_RKIND
+             absnxt_p(i,k,n) = 0.0_RKIND
           enddo
           enddo
           enddo
           do n = 1,cam_abs_dim2
           do k = kts,kte+1
           do i = its,ite
-             abstot_p(i,k,n,j) = 0.0_RKIND
+             abstot_p(i,k,n) = 0.0_RKIND
           enddo
           enddo
           enddo
           do k = kts,kte+1
           do i = its,ite
-             emstot_p(i,k,j) = 0.0_RKIND
-          enddo
+             emstot_p(i,k) = 0.0_RKIND
           enddo
           enddo
        endif
@@ -539,11 +517,9 @@
           pin_p(k) = pin(k)
        enddo
        do n = 1, num_months
-          do j = jts,jte
           do k = 1, num_oznlevels
           do i = its,ite
-             ozmixm_p(i,k,j,n) = ozmixm(n,k,i)
-          enddo
+             ozmixm_p(i,k,n) = ozmixm(n,k,i)
           enddo
           enddo
        enddo
@@ -552,18 +528,14 @@
           m_hybi_p(k) = m_hybi(k,1)
        enddo
        do i = its,ite
-       do j = jts,jte
-          m_psp_p(i,j) = m_ps(i)
-          m_psn_p(i,j) = m_ps(i)
-       enddo
+          m_psp_p(i) = m_ps(i)
+          m_psn_p(i) = m_ps(i)
        enddo
        do n = 1,num_aerosols
-       do j = jts,jte
        do k = 1, num_aerlevels
        do i = its,ite
-          aerosolcp_p(i,k,j,n) = aerosols(n,k,i)
-          aerosolcn_p(i,k,j,n) = aerosols(n,k,i)
-       enddo
+          aerosolcp_p(i,k,n) = aerosols(n,k,i)
+          aerosolcn_p(i,k,n) = aerosols(n,k,i)
        enddo
        enddo
        enddo
@@ -585,7 +557,7 @@
  integer,intent(in):: its,ite
 
 !local variables:
- integer:: i,j,k,n
+ integer:: i,k,n
 
 !local pointers:
  real(kind=RKIND),dimension(:),pointer  :: coszr,gsw,swcf,swdnb,swdnbc,swdnt,swdntc, &
@@ -607,29 +579,27 @@
  call mpas_pool_get_array(diag_physics,'swuptc'    ,swuptc    )
  call mpas_pool_get_array(tend_physics,'rthratensw',rthratensw)
 
- do j = jts,jte
 
  do i = its,ite
-    coszr(i) = coszr_p(i,j)
-    gsw(i)    = gsw_p(i,j)
-    swcf(i)   = swcf_p(i,j)
-    swdnb(i)  = swdnb_p(i,j)
-    swdnbc(i) = swdnbc_p(i,j)
-    swdnt(i)  = swdnt_p(i,j)
-    swdntc(i) = swdntc_p(i,j)
-    swupb(i)  = swupb_p(i,j)
-    swupbc(i) = swupbc_p(i,j)
-    swupt(i)  = swupt_p(i,j)
-    swuptc(i) = swuptc_p(i,j)
+    coszr(i) = coszr_p(i)
+    gsw(i)    = gsw_p(i)
+    swcf(i)   = swcf_p(i)
+    swdnb(i)  = swdnb_p(i)
+    swdnbc(i) = swdnbc_p(i)
+    swdnt(i)  = swdnt_p(i)
+    swdntc(i) = swdntc_p(i)
+    swupb(i)  = swupb_p(i)
+    swupbc(i) = swupbc_p(i)
+    swupt(i)  = swupt_p(i)
+    swuptc(i) = swuptc_p(i)
  enddo
 
  do k = kts,kte
  do i = its,ite
-    rthratensw(k,i) = rthratensw_p(i,k,j)
+    rthratensw(k,i) = rthratensw_p(i,k)
  enddo
  enddo
 
- enddo
 
  end subroutine radiation_sw_to_MPAS
 

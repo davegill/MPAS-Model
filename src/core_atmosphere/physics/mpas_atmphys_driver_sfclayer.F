@@ -100,111 +100,111 @@
  call mpas_pool_get_config(configs,'config_frac_seaice'    ,config_frac_seaice)
  call mpas_pool_get_config(configs,'config_sfclayer_scheme',sfclayer_scheme   )
 
- if(.not.allocated(dx_p)    ) allocate(dx_p(ims:ime,jms:jme)    )
- if(.not.allocated(br_p)    ) allocate(br_p(ims:ime,jms:jme)    )
- if(.not.allocated(cd_p)    ) allocate(cd_p(ims:ime,jms:jme)    )
- if(.not.allocated(cda_p)   ) allocate(cda_p(ims:ime,jms:jme)   )
- if(.not.allocated(chs_p)   ) allocate(chs_p(ims:ime,jms:jme)   )
- if(.not.allocated(chs2_p)  ) allocate(chs2_p(ims:ime,jms:jme)  )
- if(.not.allocated(ck_p)    ) allocate(ck_p(ims:ime,jms:jme)    )
- if(.not.allocated(cka_p)   ) allocate(cka_p(ims:ime,jms:jme)   )
- if(.not.allocated(cpm_p)   ) allocate(cpm_p(ims:ime,jms:jme)   )
- if(.not.allocated(cqs2_p)  ) allocate(cqs2_p(ims:ime,jms:jme)  )
- if(.not.allocated(gz1oz0_p)) allocate(gz1oz0_p(ims:ime,jms:jme))
- if(.not.allocated(flhc_p)  ) allocate(flhc_p(ims:ime,jms:jme)  )
- if(.not.allocated(flqc_p)  ) allocate(flqc_p(ims:ime,jms:jme)  )
- if(.not.allocated(hfx_p)   ) allocate(hfx_p(ims:ime,jms:jme)   )
- if(.not.allocated(hpbl_p)  ) allocate(hpbl_p(ims:ime,jms:jme)  )
- if(.not.allocated(lh_p)    ) allocate(lh_p(ims:ime,jms:jme)    )
- if(.not.allocated(mavail_p)) allocate(mavail_p(ims:ime,jms:jme))
- if(.not.allocated(mol_p)   ) allocate(mol_p(ims:ime,jms:jme)   )
- if(.not.allocated(psih_p)  ) allocate(psih_p(ims:ime,jms:jme)  )
- if(.not.allocated(psim_p)  ) allocate(psim_p(ims:ime,jms:jme)  )
- if(.not.allocated(q2_p)    ) allocate(q2_p(ims:ime,jms:jme)    )
- if(.not.allocated(qfx_p)   ) allocate(qfx_p(ims:ime,jms:jme)   )
- if(.not.allocated(qgh_p)   ) allocate(qgh_p(ims:ime,jms:jme)   )
- if(.not.allocated(qsfc_p)  ) allocate(qsfc_p(ims:ime,jms:jme)  )
- if(.not.allocated(regime_p)) allocate(regime_p(ims:ime,jms:jme))
- if(.not.allocated(rmol_p)  ) allocate(rmol_p(ims:ime,jms:jme)  )
- if(.not.allocated(t2m_p)   ) allocate(t2m_p(ims:ime,jms:jme)   )
- if(.not.allocated(tsk_p)   ) allocate(tsk_p(ims:ime,jms:jme)   )
- if(.not.allocated(th2m_p)  ) allocate(th2m_p(ims:ime,jms:jme)  )
- if(.not.allocated(u10_p)   ) allocate(u10_p(ims:ime,jms:jme)   )
- if(.not.allocated(ust_p)   ) allocate(ust_p(ims:ime,jms:jme)   )
- if(.not.allocated(ustm_p)  ) allocate(ustm_p(ims:ime,jms:jme)  )
- if(.not.allocated(v10_p)   ) allocate(v10_p(ims:ime,jms:jme)   )
- if(.not.allocated(wspd_p)  ) allocate(wspd_p(ims:ime,jms:jme)  )
- if(.not.allocated(xland_p) ) allocate(xland_p(ims:ime,jms:jme) )
- if(.not.allocated(zol_p)   ) allocate(zol_p(ims:ime,jms:jme)   )
- if(.not.allocated(znt_p)   ) allocate(znt_p(ims:ime,jms:jme)   )
+ if(.not.allocated(dx_p)    ) allocate(dx_p(ims:ime)    )
+ if(.not.allocated(br_p)    ) allocate(br_p(ims:ime)    )
+ if(.not.allocated(cd_p)    ) allocate(cd_p(ims:ime)    )
+ if(.not.allocated(cda_p)   ) allocate(cda_p(ims:ime)   )
+ if(.not.allocated(chs_p)   ) allocate(chs_p(ims:ime)   )
+ if(.not.allocated(chs2_p)  ) allocate(chs2_p(ims:ime)  )
+ if(.not.allocated(ck_p)    ) allocate(ck_p(ims:ime)    )
+ if(.not.allocated(cka_p)   ) allocate(cka_p(ims:ime)   )
+ if(.not.allocated(cpm_p)   ) allocate(cpm_p(ims:ime)   )
+ if(.not.allocated(cqs2_p)  ) allocate(cqs2_p(ims:ime)  )
+ if(.not.allocated(gz1oz0_p)) allocate(gz1oz0_p(ims:ime))
+ if(.not.allocated(flhc_p)  ) allocate(flhc_p(ims:ime)  )
+ if(.not.allocated(flqc_p)  ) allocate(flqc_p(ims:ime)  )
+ if(.not.allocated(hfx_p)   ) allocate(hfx_p(ims:ime)   )
+ if(.not.allocated(hpbl_p)  ) allocate(hpbl_p(ims:ime)  )
+ if(.not.allocated(lh_p)    ) allocate(lh_p(ims:ime)    )
+ if(.not.allocated(mavail_p)) allocate(mavail_p(ims:ime))
+ if(.not.allocated(mol_p)   ) allocate(mol_p(ims:ime)   )
+ if(.not.allocated(psih_p)  ) allocate(psih_p(ims:ime)  )
+ if(.not.allocated(psim_p)  ) allocate(psim_p(ims:ime)  )
+ if(.not.allocated(q2_p)    ) allocate(q2_p(ims:ime)    )
+ if(.not.allocated(qfx_p)   ) allocate(qfx_p(ims:ime)   )
+ if(.not.allocated(qgh_p)   ) allocate(qgh_p(ims:ime)   )
+ if(.not.allocated(qsfc_p)  ) allocate(qsfc_p(ims:ime)  )
+ if(.not.allocated(regime_p)) allocate(regime_p(ims:ime))
+ if(.not.allocated(rmol_p)  ) allocate(rmol_p(ims:ime)  )
+ if(.not.allocated(t2m_p)   ) allocate(t2m_p(ims:ime)   )
+ if(.not.allocated(tsk_p)   ) allocate(tsk_p(ims:ime)   )
+ if(.not.allocated(th2m_p)  ) allocate(th2m_p(ims:ime)  )
+ if(.not.allocated(u10_p)   ) allocate(u10_p(ims:ime)   )
+ if(.not.allocated(ust_p)   ) allocate(ust_p(ims:ime)   )
+ if(.not.allocated(ustm_p)  ) allocate(ustm_p(ims:ime)  )
+ if(.not.allocated(v10_p)   ) allocate(v10_p(ims:ime)   )
+ if(.not.allocated(wspd_p)  ) allocate(wspd_p(ims:ime)  )
+ if(.not.allocated(xland_p) ) allocate(xland_p(ims:ime) )
+ if(.not.allocated(zol_p)   ) allocate(zol_p(ims:ime)   )
+ if(.not.allocated(znt_p)   ) allocate(znt_p(ims:ime)   )
 
  if(config_frac_seaice) then
-    if(.not.allocated(sst_p)      ) allocate(sst_p(ims:ime,jms:jme)      )
-    if(.not.allocated(xice_p)     ) allocate(xice_p(ims:ime,jms:jme)     )
+    if(.not.allocated(sst_p)      ) allocate(sst_p(ims:ime)      )
+    if(.not.allocated(xice_p)     ) allocate(xice_p(ims:ime)     )
 
-    if(.not.allocated(br_sea)     ) allocate(br_sea(ims:ime,jms:jme)     )
-    if(.not.allocated(chs_sea)    ) allocate(chs_sea(ims:ime,jms:jme)    )
-    if(.not.allocated(chs2_sea)   ) allocate(chs2_sea(ims:ime,jms:jme)   )
-    if(.not.allocated(cqs2_sea)   ) allocate(cqs2_sea(ims:ime,jms:jme)   )
-    if(.not.allocated(cpm_sea)    ) allocate(cpm_sea(ims:ime,jms:jme)    )
-    if(.not.allocated(flhc_sea)   ) allocate(flhc_sea(ims:ime,jms:jme)   )
-    if(.not.allocated(flqc_sea)   ) allocate(flqc_sea(ims:ime,jms:jme)   )
-    if(.not.allocated(gz1oz0_sea) ) allocate(gz1oz0_sea(ims:ime,jms:jme) )
-    if(.not.allocated(hfx_sea)    ) allocate(hfx_sea(ims:ime,jms:jme)    )
-    if(.not.allocated(qfx_sea)    ) allocate(qfx_sea(ims:ime,jms:jme)    )
-    if(.not.allocated(mavail_sea) ) allocate(mavail_sea(ims:ime,jms:jme) )
-    if(.not.allocated(mol_sea)    ) allocate(mol_sea(ims:ime,jms:jme)    )
-    if(.not.allocated(lh_sea)     ) allocate(lh_sea(ims:ime,jms:jme)     )
-    if(.not.allocated(psih_sea)   ) allocate(psih_sea(ims:ime,jms:jme)   )
-    if(.not.allocated(psim_sea)   ) allocate(psim_sea(ims:ime,jms:jme)   )
-    if(.not.allocated(qgh_sea)    ) allocate(qgh_sea(ims:ime,jms:jme)    )
-    if(.not.allocated(qsfc_sea)   ) allocate(qsfc_sea(ims:ime,jms:jme)   )
-    if(.not.allocated(regime_sea) ) allocate(regime_sea(ims:ime,jms:jme) )
-    if(.not.allocated(rmol_sea)   ) allocate(rmol_sea(ims:ime,jms:jme)   )
-    if(.not.allocated(tsk_sea)    ) allocate(tsk_sea(ims:ime,jms:jme)    )
-    if(.not.allocated(ust_sea)    ) allocate(ust_sea(ims:ime,jms:jme)    )
-    if(.not.allocated(ustm_sea)   ) allocate(ustm_sea(ims:ime,jms:jme)   )
-    if(.not.allocated(wspd_sea)   ) allocate(wspd_sea(ims:ime,jms:jme)   )
-    if(.not.allocated(xland_sea)  ) allocate(xland_sea(ims:ime,jms:jme)  )
-    if(.not.allocated(zol_sea)    ) allocate(zol_sea(ims:ime,jms:jme)    )
-    if(.not.allocated(znt_sea)    ) allocate(znt_sea(ims:ime,jms:jme)    )
+    if(.not.allocated(br_sea)     ) allocate(br_sea(ims:ime)     )
+    if(.not.allocated(chs_sea)    ) allocate(chs_sea(ims:ime)    )
+    if(.not.allocated(chs2_sea)   ) allocate(chs2_sea(ims:ime)   )
+    if(.not.allocated(cqs2_sea)   ) allocate(cqs2_sea(ims:ime)   )
+    if(.not.allocated(cpm_sea)    ) allocate(cpm_sea(ims:ime)    )
+    if(.not.allocated(flhc_sea)   ) allocate(flhc_sea(ims:ime)   )
+    if(.not.allocated(flqc_sea)   ) allocate(flqc_sea(ims:ime)   )
+    if(.not.allocated(gz1oz0_sea) ) allocate(gz1oz0_sea(ims:ime) )
+    if(.not.allocated(hfx_sea)    ) allocate(hfx_sea(ims:ime)    )
+    if(.not.allocated(qfx_sea)    ) allocate(qfx_sea(ims:ime)    )
+    if(.not.allocated(mavail_sea) ) allocate(mavail_sea(ims:ime) )
+    if(.not.allocated(mol_sea)    ) allocate(mol_sea(ims:ime)    )
+    if(.not.allocated(lh_sea)     ) allocate(lh_sea(ims:ime)     )
+    if(.not.allocated(psih_sea)   ) allocate(psih_sea(ims:ime)   )
+    if(.not.allocated(psim_sea)   ) allocate(psim_sea(ims:ime)   )
+    if(.not.allocated(qgh_sea)    ) allocate(qgh_sea(ims:ime)    )
+    if(.not.allocated(qsfc_sea)   ) allocate(qsfc_sea(ims:ime)   )
+    if(.not.allocated(regime_sea) ) allocate(regime_sea(ims:ime) )
+    if(.not.allocated(rmol_sea)   ) allocate(rmol_sea(ims:ime)   )
+    if(.not.allocated(tsk_sea)    ) allocate(tsk_sea(ims:ime)    )
+    if(.not.allocated(ust_sea)    ) allocate(ust_sea(ims:ime)    )
+    if(.not.allocated(ustm_sea)   ) allocate(ustm_sea(ims:ime)   )
+    if(.not.allocated(wspd_sea)   ) allocate(wspd_sea(ims:ime)   )
+    if(.not.allocated(xland_sea)  ) allocate(xland_sea(ims:ime)  )
+    if(.not.allocated(zol_sea)    ) allocate(zol_sea(ims:ime)    )
+    if(.not.allocated(znt_sea)    ) allocate(znt_sea(ims:ime)    )
 
-    if(.not.allocated(cd_sea)     ) allocate(cd_sea(ims:ime,jms:jme)     )
-    if(.not.allocated(cda_sea)    ) allocate(cda_sea(ims:ime,jms:jme)    )
-    if(.not.allocated(ck_sea)     ) allocate(ck_sea(ims:ime,jms:jme)     )
-    if(.not.allocated(cka_sea)    ) allocate(cka_sea(ims:ime,jms:jme)    )
-    if(.not.allocated(t2m_sea)    ) allocate(t2m_sea(ims:ime,jms:jme)    )
-    if(.not.allocated(th2m_sea)   ) allocate(th2m_sea(ims:ime,jms:jme)   )
-    if(.not.allocated(q2_sea)     ) allocate(q2_sea(ims:ime,jms:jme)     )
-    if(.not.allocated(u10_sea)    ) allocate(u10_sea(ims:ime,jms:jme)    )
-    if(.not.allocated(v10_sea)    ) allocate(v10_sea(ims:ime,jms:jme)    )
+    if(.not.allocated(cd_sea)     ) allocate(cd_sea(ims:ime)     )
+    if(.not.allocated(cda_sea)    ) allocate(cda_sea(ims:ime)    )
+    if(.not.allocated(ck_sea)     ) allocate(ck_sea(ims:ime)     )
+    if(.not.allocated(cka_sea)    ) allocate(cka_sea(ims:ime)    )
+    if(.not.allocated(t2m_sea)    ) allocate(t2m_sea(ims:ime)    )
+    if(.not.allocated(th2m_sea)   ) allocate(th2m_sea(ims:ime)   )
+    if(.not.allocated(q2_sea)     ) allocate(q2_sea(ims:ime)     )
+    if(.not.allocated(u10_sea)    ) allocate(u10_sea(ims:ime)    )
+    if(.not.allocated(v10_sea)    ) allocate(v10_sea(ims:ime)    )
 
-    if(.not.allocated(regime_hold)) allocate(regime_hold(ims:ime,jms:jme))
+    if(.not.allocated(regime_hold)) allocate(regime_hold(ims:ime))
  endif
 
  sfclayer_select: select case (trim(sfclayer_scheme))
 
     case("sf_monin_obukhov")
-       if(.not.allocated(fh_p)) allocate(fh_p(ims:ime,jms:jme))
-       if(.not.allocated(fm_p)) allocate(fm_p(ims:ime,jms:jme))
+       if(.not.allocated(fh_p)) allocate(fh_p(ims:ime))
+       if(.not.allocated(fm_p)) allocate(fm_p(ims:ime))
        if(config_frac_seaice) then
-          if(.not.allocated(fh_sea)) allocate(fh_sea(ims:ime,jms:jme))
-          if(.not.allocated(fm_sea)) allocate(fm_sea(ims:ime,jms:jme))
+          if(.not.allocated(fh_sea)) allocate(fh_sea(ims:ime))
+          if(.not.allocated(fm_sea)) allocate(fm_sea(ims:ime))
        endif
 
     case("sf_mynn")
-       if(.not.allocated(snowh_p)) allocate(snowh_p(ims:ime,jms:jme))
-       if(.not.allocated(ch_p)   ) allocate(ch_p(ims:ime,jms:jme)   )
-       if(.not.allocated(qcg_p)  ) allocate(qcg_p(ims:ime,jms:jme)  )
+       if(.not.allocated(snowh_p)) allocate(snowh_p(ims:ime))
+       if(.not.allocated(ch_p)   ) allocate(ch_p(ims:ime)   )
+       if(.not.allocated(qcg_p)  ) allocate(qcg_p(ims:ime)  )
        if(config_frac_seaice) then
-          if(.not.allocated(ch_sea)) allocate(ch_sea(ims:ime,jms:jme))
+          if(.not.allocated(ch_sea)) allocate(ch_sea(ims:ime))
        endif
 
-       if(.not.allocated(cov_p)     ) allocate(cov_p(ims:ime,kms:kme,jms:jme)     )
-       if(.not.allocated(qsq_p)     ) allocate(qsq_p(ims:ime,kms:kme,jms:jme)     )
-       if(.not.allocated(tsq_p)     ) allocate(tsq_p(ims:ime,kms:kme,jms:jme)     )
-       if(.not.allocated(sh3d_p)    ) allocate(sh3d_p(ims:ime,kms:kme,jms:jme)    )
-       if(.not.allocated(elpbl_p)   ) allocate(elpbl_p(ims:ime,kms:kme,jms:jme)   )
+       if(.not.allocated(cov_p)     ) allocate(cov_p(ims:ime,kms:kme)     )
+       if(.not.allocated(qsq_p)     ) allocate(qsq_p(ims:ime,kms:kme)     )
+       if(.not.allocated(tsq_p)     ) allocate(tsq_p(ims:ime,kms:kme)     )
+       if(.not.allocated(sh3d_p)    ) allocate(sh3d_p(ims:ime,kms:kme)    )
+       if(.not.allocated(elpbl_p)   ) allocate(elpbl_p(ims:ime,kms:kme)   )
 
     case default
 
@@ -342,7 +342,7 @@
  integer,intent(in):: its,ite
 
 !local variables:
- integer:: i,j,k
+ integer:: i,k
 
 !local pointers:
  logical,pointer:: config_frac_seaice
@@ -401,116 +401,112 @@
  call mpas_pool_get_array(diag_physics,'znt'     ,znt     )
  call mpas_pool_get_array(diag_physics,'zol'     ,zol     )
 
- do j = jts,jte
  do i = its,ite
     !input variables:
-    dx_p(i,j)     = len_disp / meshDensity(i)**0.25
-    hpbl_p(i,j)   = hpbl(i)
-    mavail_p(i,j) = mavail(i)
-    tsk_p(i,j)    = skintemp(i)
-    xland_p(i,j)  = xland(i)
+    dx_p(i)     = len_disp / meshDensity(i)**0.25
+    hpbl_p(i)   = hpbl(i)
+    mavail_p(i) = mavail(i)
+    tsk_p(i)    = skintemp(i)
+    xland_p(i)  = xland(i)
 
     !inout variables:
-    br_p(i,j)     = br(i)
-    cpm_p(i,j)    = cpm(i)
-    chs_p(i,j)    = chs(i)
-    chs2_p(i,j)   = chs2(i)
-    cqs2_p(i,j)   = cqs2(i)
-    flhc_p(i,j)   = flhc(i)
-    flqc_p(i,j)   = flqc(i)
-    gz1oz0_p(i,j) = gz1oz0(i)
-    hfx_p(i,j)    = hfx(i)
-    qfx_p(i,j)    = qfx(i)
-    qgh_p(i,j)    = qgh(i)
-    qsfc_p(i,j)   = qsfc(i)
-    lh_p(i,j)     = lh(i)
-    mol_p(i,j)    = mol(i)
-    psim_p(i,j)   = psim(i)
-    psih_p(i,j)   = psih(i)
-    regime_p(i,j) = regime(i)
-    rmol_p(i,j)   = rmol(i)
-    ust_p(i,j)    = ust(i)
-    wspd_p(i,j)   = wspd(i)
-    znt_p(i,j)    = znt(i)
-    zol_p(i,j)    = zol(i)
+    br_p(i)     = br(i)
+    cpm_p(i)    = cpm(i)
+    chs_p(i)    = chs(i)
+    chs2_p(i)   = chs2(i)
+    cqs2_p(i)   = cqs2(i)
+    flhc_p(i)   = flhc(i)
+    flqc_p(i)   = flqc(i)
+    gz1oz0_p(i) = gz1oz0(i)
+    hfx_p(i)    = hfx(i)
+    qfx_p(i)    = qfx(i)
+    qgh_p(i)    = qgh(i)
+    qsfc_p(i)   = qsfc(i)
+    lh_p(i)     = lh(i)
+    mol_p(i)    = mol(i)
+    psim_p(i)   = psim(i)
+    psih_p(i)   = psih(i)
+    regime_p(i) = regime(i)
+    rmol_p(i)   = rmol(i)
+    ust_p(i)    = ust(i)
+    wspd_p(i)   = wspd(i)
+    znt_p(i)    = znt(i)
+    zol_p(i)    = zol(i)
 
     !output variables:
-    q2_p(i,j)     = 0._RKIND
-    t2m_p(i,j)    = 0._RKIND
-    th2m_p(i,j)   = 0._RKIND
-    u10_p(i,j)    = 0._RKIND
-    v10_p(i,j)    = 0._RKIND
+    q2_p(i)     = 0._RKIND
+    t2m_p(i)    = 0._RKIND
+    th2m_p(i)   = 0._RKIND
+    u10_p(i)    = 0._RKIND
+    v10_p(i)    = 0._RKIND
 
     !output variables (optional):
-    cd_p(i,j)     = 0._RKIND
-    cda_p(i,j)    = 0._RKIND
-    ck_p(i,j)     = 0._RKIND
-    cka_p(i,j)    = 0._RKIND
-    ustm_p(i,j)   = ustm(i)
- enddo
+    cd_p(i)     = 0._RKIND
+    cda_p(i)    = 0._RKIND
+    ck_p(i)     = 0._RKIND
+    cka_p(i)    = 0._RKIND
+    ustm_p(i)   = ustm(i)
  enddo
 
  if(config_frac_seaice) then
     call mpas_pool_get_array(sfc_input,'sst' ,sst)
     call mpas_pool_get_array(sfc_input,'xice',xice)
-    do j = jts,jte
     do i = its,ite
-       sst_p(i,j)      = sst(i)
-       xice_p(i,j)     = xice(i)
+       sst_p(i)      = sst(i)
+       xice_p(i)     = xice(i)
 
        !input variables:
-       mavail_sea(i,j) = mavail(i)
-       tsk_sea(i,j)    = skintemp(i)
-       xland_sea(i,j)  = xland(i)
+       mavail_sea(i) = mavail(i)
+       tsk_sea(i)    = skintemp(i)
+       xland_sea(i)  = xland(i)
        !inout variables:
-       br_sea(i,j)      = br(i)
-       cpm_sea(i,j)     = cpm(i)
-       chs_sea(i,j)     = chs(i)
-       chs2_sea(i,j)    = chs2(i)
-       cqs2_sea(i,j)    = cqs2(i)
-       flhc_sea(i,j)    = flhc(i)
-       flqc_sea(i,j)    = flqc(i)
-       gz1oz0_sea(i,j)  = gz1oz0(i)
-       lh_sea(i,j)      = lh(i)
-       hfx_sea(i,j)     = hfx(i)
-       qfx_sea(i,j)     = qfx(i)
-       mol_sea(i,j)     = mol(i)
-       psim_sea(i,j)    = psim(i)
-       psih_sea(i,j)    = psih(i)
-       qgh_sea(i,j)     = qgh(i)
-       rmol_sea(i,j)    = rmol(i)
-       regime_sea(i,j)  = regime(i)
-       ust_sea(i,j)     = ust(i)
-       ustm_sea(i,j)    = ustm(i)
-       wspd_sea(i,j)    = wspd(i)
-       zol_sea(i,j)     = zol(i)
-       znt_sea(i,j)     = znt(i)
-       regime_hold(i,j) = regime(i)
+       br_sea(i)      = br(i)
+       cpm_sea(i)     = cpm(i)
+       chs_sea(i)     = chs(i)
+       chs2_sea(i)    = chs2(i)
+       cqs2_sea(i)    = cqs2(i)
+       flhc_sea(i)    = flhc(i)
+       flqc_sea(i)    = flqc(i)
+       gz1oz0_sea(i)  = gz1oz0(i)
+       lh_sea(i)      = lh(i)
+       hfx_sea(i)     = hfx(i)
+       qfx_sea(i)     = qfx(i)
+       mol_sea(i)     = mol(i)
+       psim_sea(i)    = psim(i)
+       psih_sea(i)    = psih(i)
+       qgh_sea(i)     = qgh(i)
+       rmol_sea(i)    = rmol(i)
+       regime_sea(i)  = regime(i)
+       ust_sea(i)     = ust(i)
+       ustm_sea(i)    = ustm(i)
+       wspd_sea(i)    = wspd(i)
+       zol_sea(i)     = zol(i)
+       znt_sea(i)     = znt(i)
+       regime_hold(i) = regime(i)
        !output variables:
-       cd_sea(i,j)      = 0._RKIND
-       cda_sea(i,j)     = 0._RKIND
-       ck_sea(i,j)      = 0._RKIND
-       cka_sea(i,j)     = 0._RKIND
-       qsfc_sea(i,j)    = 0._RKIND
-       q2_sea(i,j)      = 0._RKIND
-       t2m_sea(i,j)     = 0._RKIND
-       th2m_sea(i,j)    = 0._RKIND
-       u10_sea(i,j)     = 0._RKIND
-       v10_sea(i,j)     = 0._RKIND
+       cd_sea(i)      = 0._RKIND
+       cda_sea(i)     = 0._RKIND
+       ck_sea(i)      = 0._RKIND
+       cka_sea(i)     = 0._RKIND
+       qsfc_sea(i)    = 0._RKIND
+       q2_sea(i)      = 0._RKIND
+       t2m_sea(i)     = 0._RKIND
+       th2m_sea(i)    = 0._RKIND
+       u10_sea(i)     = 0._RKIND
+       v10_sea(i)     = 0._RKIND
 
        !overwrite some local variables for sea-ice cells:
-       if(xice_p(i,j).ge.xice_threshold .and. xice_p(i,j).le.1._RKIND) then
-          xland_sea(i,j)  = 2._RKIND
-          mavail_sea(i,j) = 1._RKIND
-          znt_sea(i,j)    = 0.0001_RKIND
-          tsk_sea(i,j)    = max(sst_p(i,j),271.4_RKIND)
+       if(xice_p(i).ge.xice_threshold .and. xice_p(i).le.1._RKIND) then
+          xland_sea(i)  = 2._RKIND
+          mavail_sea(i) = 1._RKIND
+          znt_sea(i)    = 0.0001_RKIND
+          tsk_sea(i)    = max(sst_p(i),271.4_RKIND)
        else
-          xland_sea(i,j)  = xland_p(i,j)
-          mavail_sea(i,j) = mavail_p(i,j)
-          znt_sea(i,j)    = znt_p(i,j)
-          tsk_sea(i,j)    = tsk_p(i,j)
+          xland_sea(i)  = xland_p(i)
+          mavail_sea(i) = mavail_p(i)
+          znt_sea(i)    = znt_p(i)
+          tsk_sea(i)    = tsk_p(i)
        endif
-    enddo
     enddo
  endif
 
@@ -520,15 +516,13 @@
        call mpas_pool_get_array(diag_physics,'fh',fh)
        call mpas_pool_get_array(diag_physics,'fm',fm)
 
-       do j = jts,jte
        do i = its,ite
-          fh_p(i,j) = fh(i)
-          fm_p(i,j) = fm(i)
+          fh_p(i) = fh(i)
+          fm_p(i) = fm(i)
           if(config_frac_seaice) then
-             fh_sea(i,j) = fh(i)
-             fm_sea(i,j) = fm(i)
+             fh_sea(i) = fh(i)
+             fm_sea(i) = fm(i)
           endif
-       enddo
        enddo
 
     case("sf_mynn")
@@ -543,29 +537,25 @@
        !inout variables:
        call mpas_pool_get_array(diag_physics,'ch',ch        )
 
-       do j = jts,jte
        do i = its,ite
           !input variables:
-          snowh_p(i,j) = snowh(i)
-          qcg_p(i,j)   = qcg(i)
+          snowh_p(i) = snowh(i)
+          qcg_p(i)   = qcg(i)
           !inout variables:
-          ch_p(i,j)    = ch(i)
+          ch_p(i)    = ch(i)
           if(config_frac_seaice) then
-             ch_sea(i,j) = ch(i)
+             ch_sea(i) = ch(i)
           endif
        enddo
-       enddo
 
-       do j = jts,jte
        do k = kts,kte
        do i = its,ite
           !input variables:
-          cov_p(i,k,j)      = cov(k,i)
-          qsq_p(i,k,j)      = qsq(k,i)
-          tsq_p(i,k,j)      = tsq(k,i)
-          sh3d_p(i,k,j)     = sh3d(k,i)
-          elpbl_p(i,k,j)    = el_pbl(k,i)
-       enddo
+          cov_p(i,k)      = cov(k,i)
+          qsq_p(i,k)      = qsq(k,i)
+          tsq_p(i,k)      = tsq(k,i)
+          sh3d_p(i,k)     = sh3d(k,i)
+          elpbl_p(i,k)    = el_pbl(k,i)
        enddo
        enddo
 
@@ -588,7 +578,7 @@
  type(mpas_pool_type),intent(inout):: diag_physics
 
 !local variables:
- integer:: i,j
+ integer:: i
 
 !local pointers:
  logical,pointer:: config_frac_seaice
@@ -657,77 +647,73 @@
  call mpas_pool_get_array(diag_physics,'ck'    ,ck    )
  call mpas_pool_get_array(diag_physics,'cka'   ,cka   )
 
- do j = jts,jte
  do i = its,ite
     !inout variables:
-    br(i)     = br_p(i,j)
-    cpm(i)    = cpm_p(i,j)
-    chs(i)    = chs_p(i,j)
-    chs2(i)   = chs2_p(i,j)
-    cqs2(i)   = cqs2_p(i,j)
-    flhc(i)   = flhc_p(i,j)
-    flqc(i)   = flqc_p(i,j)
-    gz1oz0(i) = gz1oz0_p(i,j)
-    hfx(i)    = hfx_p(i,j)
-    lh(i)     = lh_p(i,j)
-    mol(i)    = mol_p(i,j)
-    qfx(i)    = qfx_p(i,j)
-    qgh(i)    = qgh_p(i,j)
-    qsfc(i)   = qsfc_p(i,j)
-    psim(i)   = psim_p(i,j)
-    psih(i)   = psih_p(i,j)
-    regime(i) = regime_p(i,j)
-    rmol(i)   = rmol_p(i,j)
-    ust(i)    = ust_p(i,j)
-    wspd(i)   = wspd_p(i,j)
-    zol(i)    = zol_p(i,j)
-    znt(i)    = znt_p(i,j)
+    br(i)     = br_p(i)
+    cpm(i)    = cpm_p(i)
+    chs(i)    = chs_p(i)
+    chs2(i)   = chs2_p(i)
+    cqs2(i)   = cqs2_p(i)
+    flhc(i)   = flhc_p(i)
+    flqc(i)   = flqc_p(i)
+    gz1oz0(i) = gz1oz0_p(i)
+    hfx(i)    = hfx_p(i)
+    lh(i)     = lh_p(i)
+    mol(i)    = mol_p(i)
+    qfx(i)    = qfx_p(i)
+    qgh(i)    = qgh_p(i)
+    qsfc(i)   = qsfc_p(i)
+    psim(i)   = psim_p(i)
+    psih(i)   = psih_p(i)
+    regime(i) = regime_p(i)
+    rmol(i)   = rmol_p(i)
+    ust(i)    = ust_p(i)
+    wspd(i)   = wspd_p(i)
+    zol(i)    = zol_p(i)
+    znt(i)    = znt_p(i)
     !output variables:
-    q2(i)     = q2_p(i,j)
-    t2m(i)    = t2m_p(i,j)
-    th2m(i)   = th2m_p(i,j)
-    u10(i)    = u10_p(i,j)
-    v10(i)    = v10_p(i,j)
+    q2(i)     = q2_p(i)
+    t2m(i)    = t2m_p(i)
+    th2m(i)   = th2m_p(i)
+    u10(i)    = u10_p(i)
+    v10(i)    = v10_p(i)
     !output variables (optional):
-    cd(i)     = cd_p(i,j)
-    cda(i)    = cda_p(i,j)
-    ck(i)     = ck_p(i,j)
-    cka(i)    = cka_p(i,j)
-    ustm(i)   = ustm_p(i,j)
- enddo
+    cd(i)     = cd_p(i)
+    cda(i)    = cda_p(i)
+    ck(i)     = ck_p(i)
+    cka(i)    = cka_p(i)
+    ustm(i)   = ustm_p(i)
  enddo
 
  if(config_frac_seaice) then
     call mpas_pool_get_array(sfc_input,'xice',xice)
-    do j = jts,jte
     do i = its,ite
        if(xice(i).ge.xice_threshold .and. xice(i).le.1._RKIND) then
-          br(i)     = br_p(i,j)*xice(i)     + (1._RKIND-xice(i))*br_sea(i,j)
-          flhc(i)   = flhc_p(i,j)*xice(i)   + (1._RKIND-xice(i))*flhc_sea(i,j)
-          flqc(i)   = flqc_p(i,j)*xice(i)   + (1._RKIND-xice(i))*flqc_sea(i,j)
-          gz1oz0(i) = gz1oz0_p(i,j)*xice(i) + (1._RKIND-xice(i))*gz1oz0_sea(i,j)
-          mol(i)    = mol_p(i,j)*xice(i)    + (1._RKIND-xice(i))*mol_sea(i,j)
-          psih(i)   = psih_p(i,j)*xice(i)   + (1._RKIND-xice(i))*psih_sea(i,j)
-          psim(i)   = psim_p(i,j)*xice(i)   + (1._RKIND-xice(i))*psim_sea(i,j)
-          rmol(i)   = rmol_p(i,j)*xice(i)   + (1._RKIND-xice(i))*rmol_sea(i,j)
-          ust(i)    = ust_p(i,j)*xice(i)    + (1._RKIND-xice(i))*ust_sea(i,j)
-          wspd(i)   = wspd_p(i,j)*xice(i)   + (1._RKIND-xice(i))*wspd_sea(i,j)
-          zol(i)    = zol_p(i,j)*xice(i)    + (1._RKIND-xice(i))*zol_sea(i,j)
-          if(xice(i) .ge. 0.5_RKIND) regime(i) = regime_hold(i,j)
+          br(i)     = br_p(i)*xice(i)     + (1._RKIND-xice(i))*br_sea(i)
+          flhc(i)   = flhc_p(i)*xice(i)   + (1._RKIND-xice(i))*flhc_sea(i)
+          flqc(i)   = flqc_p(i)*xice(i)   + (1._RKIND-xice(i))*flqc_sea(i)
+          gz1oz0(i) = gz1oz0_p(i)*xice(i) + (1._RKIND-xice(i))*gz1oz0_sea(i)
+          mol(i)    = mol_p(i)*xice(i)    + (1._RKIND-xice(i))*mol_sea(i)
+          psih(i)   = psih_p(i)*xice(i)   + (1._RKIND-xice(i))*psih_sea(i)
+          psim(i)   = psim_p(i)*xice(i)   + (1._RKIND-xice(i))*psim_sea(i)
+          rmol(i)   = rmol_p(i)*xice(i)   + (1._RKIND-xice(i))*rmol_sea(i)
+          ust(i)    = ust_p(i)*xice(i)    + (1._RKIND-xice(i))*ust_sea(i)
+          wspd(i)   = wspd_p(i)*xice(i)   + (1._RKIND-xice(i))*wspd_sea(i)
+          zol(i)    = zol_p(i)*xice(i)    + (1._RKIND-xice(i))*zol_sea(i)
+          if(xice(i) .ge. 0.5_RKIND) regime(i) = regime_hold(i)
           !output variables:
-          q2(i)     = q2_p(i,j)*xice(i)   + (1._RKIND-xice(i))*q2_sea(i,j)
-          t2m(i)    = t2m_p(i,j)*xice(i)  + (1._RKIND-xice(i))*t2m_sea(i,j)
-          th2m(i)   = th2m_p(i,j)*xice(i) + (1._RKIND-xice(i))*th2m_sea(i,j)
-          u10(i)    = u10_p(i,j)*xice(i)  + (1._RKIND-xice(i))*u10_sea(i,j)
-          v10(i)    = v10_p(i,j)*xice(i)  + (1._RKIND-xice(i))*v10_sea(i,j)
+          q2(i)     = q2_p(i)*xice(i)   + (1._RKIND-xice(i))*q2_sea(i)
+          t2m(i)    = t2m_p(i)*xice(i)  + (1._RKIND-xice(i))*t2m_sea(i)
+          th2m(i)   = th2m_p(i)*xice(i) + (1._RKIND-xice(i))*th2m_sea(i)
+          u10(i)    = u10_p(i)*xice(i)  + (1._RKIND-xice(i))*u10_sea(i)
+          v10(i)    = v10_p(i)*xice(i)  + (1._RKIND-xice(i))*v10_sea(i)
           !output variables (optional):
-          cd(i)     = cd_p(i,j)*xice(i)   + (1._RKIND-xice(i))*cd_sea(i,j)
-          cda(i)    = cda_p(i,j)*xice(i)  + (1._RKIND-xice(i))*cda_sea(i,j)
-          ck(i)     = ck_p(i,j)*xice(i)   + (1._RKIND-xice(i))*ck_sea(i,j)
-          cka(i)    = cka_p(i,j)*xice(i)  + (1._RKIND-xice(i))*cka_sea(i,j)
-          ustm(i)   = ustm_p(i,j)*xice(i)   + (1._RKIND-xice(i))*ustm_sea(i,j)
+          cd(i)     = cd_p(i)*xice(i)   + (1._RKIND-xice(i))*cd_sea(i)
+          cda(i)    = cda_p(i)*xice(i)  + (1._RKIND-xice(i))*cda_sea(i)
+          ck(i)     = ck_p(i)*xice(i)   + (1._RKIND-xice(i))*ck_sea(i)
+          cka(i)    = cka_p(i)*xice(i)  + (1._RKIND-xice(i))*cka_sea(i)
+          ustm(i)   = ustm_p(i)*xice(i)   + (1._RKIND-xice(i))*ustm_sea(i)
        endif
-    enddo
     enddo
  endif
 
@@ -737,40 +723,32 @@
        call mpas_pool_get_array(diag_physics,'fh',fh)
        call mpas_pool_get_array(diag_physics,'fm',fm)
 
-       do j = jts,jte
        do i = its,ite
-          fh(i) = fh_p(i,j)
-          fm(i) = fm_p(i,j)
-       enddo
+          fh(i) = fh_p(i)
+          fm(i) = fm_p(i)
        enddo
        if(config_frac_seaice) then
           call mpas_pool_get_array(sfc_input,'xice',xice)
-          do j = jts,jte
           do i = its,ite
              if(xice(i).ge.xice_threshold .and. xice(i).le.1._RKIND) then
-                fh(i) = fh_p(i,j)*xice(i) + (1._RKIND-xice(i))*fh_sea(i,j)
-                fm(i) = fm_p(i,j)*xice(i) + (1._RKIND-xice(i))*fm_sea(i,j)
+                fh(i) = fh_p(i)*xice(i) + (1._RKIND-xice(i))*fh_sea(i)
+                fm(i) = fm_p(i)*xice(i) + (1._RKIND-xice(i))*fm_sea(i)
              endif
-          enddo
           enddo
        endif
 
     case("sf_mynn")
        call mpas_pool_get_array(diag_physics,'ch',ch)
 
-       do j = jts,jte
        do i = its,ite
-          ch(i) = ch_p(i,j)
-       enddo
+          ch(i) = ch_p(i)
        enddo
        if(config_frac_seaice) then
           call mpas_pool_get_array(sfc_input,'xice',xice)
-          do j = jts,jte
           do i = its,ite
              if(xice(i).ge.xice_threshold .and. xice(i).le.1._RKIND) then
-                ch(i) = ch_p(i,j)*xice(i) + (1._RKIND-xice(i))*ch_sea(i,j)
+                ch(i) = ch_p(i)*xice(i) + (1._RKIND-xice(i))*ch_sea(i)
              endif
-          enddo
           enddo
        endif
 

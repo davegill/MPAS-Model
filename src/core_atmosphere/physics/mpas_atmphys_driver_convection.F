@@ -106,148 +106,132 @@
 !local variables and pointers:
  character(len=StrKIND),pointer:: convection_scheme
 
- integer:: i,k,j
+ integer:: i,k
 
 !-----------------------------------------------------------------------------------------------------------------
 
  call mpas_pool_get_config(configs,'config_convection_scheme',convection_scheme)
 
- if(.not.allocated(cu_act_flag)) allocate(cu_act_flag(ims:ime,jms:jme)       )
- if(.not.allocated(rthcuten_p) ) allocate(rthcuten_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(rqvcuten_p) ) allocate(rqvcuten_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(rqccuten_p) ) allocate(rqccuten_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(rqicuten_p) ) allocate(rqicuten_p(ims:ime,kms:kme,jms:jme))
- if(.not.allocated(pratec_p)   ) allocate(pratec_p(ims:ime,jms:jme)          )
- if(.not.allocated(raincv_p)   ) allocate(raincv_p(ims:ime,jms:jme)          )
+ if(.not.allocated(cu_act_flag)) allocate(cu_act_flag(ims:ime)       )
+ if(.not.allocated(rthcuten_p) ) allocate(rthcuten_p(ims:ime,kms:kme))
+ if(.not.allocated(rqvcuten_p) ) allocate(rqvcuten_p(ims:ime,kms:kme))
+ if(.not.allocated(rqccuten_p) ) allocate(rqccuten_p(ims:ime,kms:kme))
+ if(.not.allocated(rqicuten_p) ) allocate(rqicuten_p(ims:ime,kms:kme))
+ if(.not.allocated(pratec_p)   ) allocate(pratec_p(ims:ime)          )
+ if(.not.allocated(raincv_p)   ) allocate(raincv_p(ims:ime)          )
 
  do i = its,ite
- do j = jts,jte
-    pratec_p(i,j) = 0._RKIND
-    raincv_p(i,j) = 0._RKIND
- enddo
+    pratec_p(i) = 0._RKIND
+    raincv_p(i) = 0._RKIND
  enddo
 
  do i = its,ite
  do k = kts,kte
- do j = jts,jte
-    rthcuten_p(i,k,j) = 0._RKIND
-    rqvcuten_p(i,k,j) = 0._RKIND
-    rqccuten_p(i,k,j) = 0._RKIND
-    rqicuten_p(i,k,j) = 0._RKIND
- enddo
+    rthcuten_p(i,k) = 0._RKIND
+    rqvcuten_p(i,k) = 0._RKIND
+    rqccuten_p(i,k) = 0._RKIND
+    rqicuten_p(i,k) = 0._RKIND
  enddo
  enddo
 
  convection_select: select case(convection_scheme)
 
     case ("cu_grell_freitas")
-       if(.not.allocated(ht_p)           ) allocate(ht_p(ims:ime,jms:jme)               )
-       if(.not.allocated(cubot_p)        ) allocate(cubot_p(ims:ime,jms:jme)            )
-       if(.not.allocated(cutop_p)        ) allocate(cutop_p(ims:ime,jms:jme)            )
-       if(.not.allocated(kpbl_p)         ) allocate(kpbl_p(ims:ime,jms:jme)             )
-       if(.not.allocated(k22_shallow_p)  ) allocate(k22_shallow_p(ims:ime,jms:jme)      )
-       if(.not.allocated(kbcon_shallow_p)) allocate(kbcon_shallow_p(ims:ime,jms:jme)    )
-       if(.not.allocated(ktop_shallow_p) ) allocate(ktop_shallow_p(ims:ime,jms:jme)     )
-       if(.not.allocated(kbot_shallow_p) ) allocate(kbot_shallow_p(ims:ime,jms:jme)     )
-       if(.not.allocated(ktop_deep_p)    ) allocate(ktop_deep_p(ims:ime,jms:jme)        )
+       if(.not.allocated(ht_p)           ) allocate(ht_p(ims:ime)               )
+       if(.not.allocated(cubot_p)        ) allocate(cubot_p(ims:ime)            )
+       if(.not.allocated(cutop_p)        ) allocate(cutop_p(ims:ime)            )
+       if(.not.allocated(kpbl_p)         ) allocate(kpbl_p(ims:ime)             )
+       if(.not.allocated(k22_shallow_p)  ) allocate(k22_shallow_p(ims:ime)      )
+       if(.not.allocated(kbcon_shallow_p)) allocate(kbcon_shallow_p(ims:ime)    )
+       if(.not.allocated(ktop_shallow_p) ) allocate(ktop_shallow_p(ims:ime)     )
+       if(.not.allocated(kbot_shallow_p) ) allocate(kbot_shallow_p(ims:ime)     )
+       if(.not.allocated(ktop_deep_p)    ) allocate(ktop_deep_p(ims:ime)        )
 
-       if(.not.allocated(dx_p)           ) allocate(dx_p(ims:ime,jms:jme)               )
-       if(.not.allocated(area_p)         ) allocate(area_p(ims:ime,jms:jme)             )
-       if(.not.allocated(gsw_p)          ) allocate(gsw_p(ims:ime,jms:jme)              )
-       if(.not.allocated(hfx_p)          ) allocate(hfx_p(ims:ime,jms:jme)              )
-       if(.not.allocated(qfx_p)          ) allocate(qfx_p(ims:ime,jms:jme)              )
-       if(.not.allocated(xland_p)        ) allocate(xland_p(ims:ime,jms:jme)            )
+       if(.not.allocated(dx_p)           ) allocate(dx_p(ims:ime)               )
+       if(.not.allocated(area_p)         ) allocate(area_p(ims:ime)             )
+       if(.not.allocated(gsw_p)          ) allocate(gsw_p(ims:ime)              )
+       if(.not.allocated(hfx_p)          ) allocate(hfx_p(ims:ime)              )
+       if(.not.allocated(qfx_p)          ) allocate(qfx_p(ims:ime)              )
+       if(.not.allocated(xland_p)        ) allocate(xland_p(ims:ime)            )
 
-       if(.not.allocated(rthblten_p)     ) allocate(rthblten_p(ims:ime,kms:kme,jms:jme) )
-       if(.not.allocated(rthdynten_p)    ) allocate(rthdynten_p(ims:ime,kms:kme,jms:jme))
-       if(.not.allocated(rthraten_p)     ) allocate(rthraten_p(ims:ime,kms:kme,jms:jme) )
-       if(.not.allocated(rqvblten_p)     ) allocate(rqvblten_p(ims:ime,kms:kme,jms:jme) )
-       if(.not.allocated(rqvdynten_p)    ) allocate(rqvdynten_p(ims:ime,kms:kme,jms:jme))
-       if(.not.allocated(rucuten_p)      ) allocate(rucuten_p(ims:ime,kms:kme,jms:jme)  )
-       if(.not.allocated(rvcuten_p)      ) allocate(rvcuten_p(ims:ime,kms:kme,jms:jme)  )
+       if(.not.allocated(rthblten_p)     ) allocate(rthblten_p(ims:ime,kms:kme) )
+       if(.not.allocated(rthdynten_p)    ) allocate(rthdynten_p(ims:ime,kms:kme))
+       if(.not.allocated(rthraten_p)     ) allocate(rthraten_p(ims:ime,kms:kme) )
+       if(.not.allocated(rqvblten_p)     ) allocate(rqvblten_p(ims:ime,kms:kme) )
+       if(.not.allocated(rqvdynten_p)    ) allocate(rqvdynten_p(ims:ime,kms:kme))
+       if(.not.allocated(rucuten_p)      ) allocate(rucuten_p(ims:ime,kms:kme)  )
+       if(.not.allocated(rvcuten_p)      ) allocate(rvcuten_p(ims:ime,kms:kme)  )
 
-       if(.not.allocated(xmb_total_p)    ) allocate(xmb_total_p(ims:ime,jms:jme)        )
-       if(.not.allocated(xmb_shallow_p)  ) allocate(xmb_shallow_p(ims:ime,jms:jme)      )
+       if(.not.allocated(xmb_total_p)    ) allocate(xmb_total_p(ims:ime)        )
+       if(.not.allocated(xmb_shallow_p)  ) allocate(xmb_shallow_p(ims:ime)      )
 
-       if(.not.allocated(qccu_p)         ) allocate(qccu_p(ims:ime,kms:kme,jms:jme)     )
-       if(.not.allocated(qicu_p)         ) allocate(qicu_p(ims:ime,kms:kme,jms:jme)     )
+       if(.not.allocated(qccu_p)         ) allocate(qccu_p(ims:ime,kms:kme)     )
+       if(.not.allocated(qicu_p)         ) allocate(qicu_p(ims:ime,kms:kme)     )
 
     case ("cu_kain_fritsch")
-       if(.not.allocated(dx_p)       ) allocate(dx_p(ims:ime,jms:jme)              )
-       if(.not.allocated(area_p)     ) allocate(area_p(ims:ime,jms:jme)            )
-       if(.not.allocated(nca_p)      ) allocate(nca_p(ims:ime,jms:jme)             )
-       if(.not.allocated(cubot_p)    ) allocate(cubot_p(ims:ime,jms:jme)           )
-       if(.not.allocated(cutop_p)    ) allocate(cutop_p(ims:ime,jms:jme)           ) 
-       if(.not.allocated(w0avg_p)    ) allocate(w0avg_p(ims:ime,kms:kme,jms:jme)   )
-       if(.not.allocated(rqrcuten_p) ) allocate(rqrcuten_p(ims:ime,kms:kme,jms:jme))
-       if(.not.allocated(rqscuten_p) ) allocate(rqscuten_p(ims:ime,kms:kme,jms:jme))
+       if(.not.allocated(dx_p)       ) allocate(dx_p(ims:ime)              )
+       if(.not.allocated(area_p)     ) allocate(area_p(ims:ime)            )
+       if(.not.allocated(nca_p)      ) allocate(nca_p(ims:ime)             )
+       if(.not.allocated(cubot_p)    ) allocate(cubot_p(ims:ime)           )
+       if(.not.allocated(cutop_p)    ) allocate(cutop_p(ims:ime)           ) 
+       if(.not.allocated(w0avg_p)    ) allocate(w0avg_p(ims:ime,kms:kme)   )
+       if(.not.allocated(rqrcuten_p) ) allocate(rqrcuten_p(ims:ime,kms:kme))
+       if(.not.allocated(rqscuten_p) ) allocate(rqscuten_p(ims:ime,kms:kme))
 
        do i = its,ite
-       do j = jts,jte
-          cubot_p(i,j) = DBLE(kte+1)
-          cutop_p(i,j) = DBLE(kts)
-       enddo
+          cubot_p(i) = DBLE(kte+1)
+          cutop_p(i) = DBLE(kts)
        enddo
 
        do i = its,ite
        do k = kts,kte
-       do j = jts,jte
-          rqrcuten_p(i,k,j) = 0._RKIND
-          rqscuten_p(i,k,j) = 0._RKIND
-       enddo
+          rqrcuten_p(i,k) = 0._RKIND
+          rqscuten_p(i,k) = 0._RKIND
        enddo
        enddo
 
     case ("cu_tiedtke","cu_ntiedtke")
-       if(.not.allocated(hfx_p)        ) allocate(hfx_p(ims:ime,jms:jme)                )
-       if(.not.allocated(qfx_p)        ) allocate(qfx_p(ims:ime,jms:jme)                )
-       if(.not.allocated(xland_p)      ) allocate(xland_p(ims:ime,jms:jme)              )
-       if(.not.allocated(rucuten_p)    ) allocate(rucuten_p(ims:ime,kms:kme,jms:jme)    )
-       if(.not.allocated(rvcuten_p)    ) allocate(rvcuten_p(ims:ime,kms:kme,jms:jme)    )
+       if(.not.allocated(hfx_p)        ) allocate(hfx_p(ims:ime)                )
+       if(.not.allocated(qfx_p)        ) allocate(qfx_p(ims:ime)                )
+       if(.not.allocated(xland_p)      ) allocate(xland_p(ims:ime)              )
+       if(.not.allocated(rucuten_p)    ) allocate(rucuten_p(ims:ime,kms:kme)    )
+       if(.not.allocated(rvcuten_p)    ) allocate(rvcuten_p(ims:ime,kms:kme)    )
 
        do i = its,ite
-       do j = jts,jte
-          hfx_p(i,j)   = 0._RKIND
-          qfx_p(i,j)   = 0._RKIND
-          xland_p(i,j) = 0._RKIND
-       enddo
+          hfx_p(i)   = 0._RKIND
+          qfx_p(i)   = 0._RKIND
+          xland_p(i) = 0._RKIND
        enddo
 
        do i = its,ite
        do k = kts,kte
-       do j = jts,jte
-          rucuten_p(i,k,j)     = 0._RKIND
-          rvcuten_p(i,k,j)     = 0._RKIND
-       enddo
+          rucuten_p(i,k)     = 0._RKIND
+          rvcuten_p(i,k)     = 0._RKIND
        enddo
        enddo
 
        cu_tiedtke_select: select case(convection_scheme)
 
           case ("cu_tiedtke")
-             if(.not.allocated(rqvdynten_p)  ) allocate(rqvdynten_p(ims:ime,kms:kme,jms:jme)  )
-             if(.not.allocated(rqvdynblten_p)) allocate(rqvdynblten_p(ims:ime,kms:kme,jms:jme))
+             if(.not.allocated(rqvdynten_p)  ) allocate(rqvdynten_p(ims:ime,kms:kme)  )
+             if(.not.allocated(rqvdynblten_p)) allocate(rqvdynblten_p(ims:ime,kms:kme))
 
              do i = its,ite
              do k = kts,kte
-             do j = jts,jte
-                rqvdynten_p(i,k,j)   = 0._RKIND
-                rqvdynblten_p(i,k,j) = 0._RKIND
-             enddo
+                rqvdynten_p(i,k)   = 0._RKIND
+                rqvdynblten_p(i,k) = 0._RKIND
              enddo
              enddo
 
           case("cu_ntiedtke")
-             if(.not.allocated(dx_p)     ) allocate(dx_p(ims:ime,jms:jme)             )
-             if(.not.allocated(rqvften_p)) allocate(rqvften_p(ims:ime,kms:kme,jms:jme))
-             if(.not.allocated(rthften_p)) allocate(rthften_p(ims:ime,kms:kme,jms:jme))
+             if(.not.allocated(dx_p)     ) allocate(dx_p(ims:ime)             )
+             if(.not.allocated(rqvften_p)) allocate(rqvften_p(ims:ime,kms:kme))
+             if(.not.allocated(rthften_p)) allocate(rthften_p(ims:ime,kms:kme))
 
              do i = its,ite
              do k = kts,kte
-             do j = jts,jte
-                rqvften_p(i,k,j) = 0._RKIND
-                rthften_p(i,k,j) = 0._RKIND
-             enddo
+                rqvften_p(i,k) = 0._RKIND
+                rthften_p(i,k) = 0._RKIND
              enddo
              enddo
 
@@ -417,7 +401,7 @@
 !local variables and arrays:
  logical:: log_convection
 
- integer:: i,j
+ integer:: i
  integer:: icount,initflag
 
  real(kind=RKIND):: dx
@@ -456,10 +440,8 @@
  curr_secs   = -1
  cudtacttime = -1
  adapt_step_flag = .false.
- do j = jts, jte
  do i = its, ite
-    cu_act_flag(i,j) = .false.
- enddo
+    cu_act_flag(i) = .false.
  enddo
 
 !... initialization of initflag needed in the calls cu_tiedtke and cu_ntiedtke:
@@ -637,7 +619,7 @@
  real(kind=RKIND),dimension(:,:),pointer:: rqvblten,rqvdynten,rucuten,rvcuten
 
 !local variables:
- integer:: i,j,k
+ integer:: i,k
  integer:: iEdge
  real(kind=RKIND),pointer:: len_disp
 
@@ -653,17 +635,15 @@
  call mpas_pool_get_array(tend_physics,'rqccuten',rqccuten)
  call mpas_pool_get_array(tend_physics,'rqicuten',rqicuten)
 
- do j = jts,jte
  do i = its,ite
-    raincv_p(i,j) = raincv(i)
-    pratec_p(i,j) = cuprec(i)
+    raincv_p(i) = raincv(i)
+    pratec_p(i) = cuprec(i)
     do k = kts,kte
-       rthcuten_p(i,k,j) = rthcuten(k,i)
-       rqvcuten_p(i,k,j) = rqvcuten(k,i)
-       rqccuten_p(i,k,j) = rqccuten(k,i)
-       rqicuten_p(i,k,j) = rqicuten(k,i)
+       rthcuten_p(i,k) = rthcuten(k,i)
+       rqvcuten_p(i,k) = rqvcuten(k,i)
+       rqccuten_p(i,k) = rqccuten(k,i)
+       rqicuten_p(i,k) = rqicuten(k,i)
     enddo
- enddo
  enddo
 
  convection_select: select case(convection_scheme)
@@ -701,40 +681,38 @@
        call mpas_pool_get_array(tend_physics,'rucuten'   ,rucuten   )
        call mpas_pool_get_array(tend_physics,'rvcuten'   ,rvcuten   )
 
-       do j = jts,jte
        do i = its,ite
-          dx_p(i,j) = len_disp / meshDensity(i)**0.25
-          area_p(i,j)          = areaCell(i)
-          ht_p(i,j)            = zgrid(1,i)
-          xland_p(i,j)         = xland(i)
-          gsw_p(i,j)           = gsw(i)
-          hfx_p(i,j)           = hfx(i)
-          qfx_p(i,j)           = qfx(i)
-          kpbl_p(i,j)          = kpbl(i)
-          cubot_p(i,j)         = cubot(i)
-          cutop_p(i,j)         = cutop(i)
+          dx_p(i) = len_disp / meshDensity(i)**0.25
+          area_p(i)          = areaCell(i)
+          ht_p(i)            = zgrid(1,i)
+          xland_p(i)         = xland(i)
+          gsw_p(i)           = gsw(i)
+          hfx_p(i)           = hfx(i)
+          qfx_p(i)           = qfx(i)
+          kpbl_p(i)          = kpbl(i)
+          cubot_p(i)         = cubot(i)
+          cutop_p(i)         = cutop(i)
 
-          xmb_total_p(i,j)     = xmb_total(i)
-          xmb_shallow_p(i,j)   = xmb_shallow(i)
+          xmb_total_p(i)     = xmb_total(i)
+          xmb_shallow_p(i)   = xmb_shallow(i)
 
-          k22_shallow_p(i,j)   = k22_shallow(i)
-          kbcon_shallow_p(i,j) = kbcon_shallow(i)
-          ktop_shallow_p(i,j)  = ktop_shallow(i)
-          ktop_deep_p(i,j)     = ktop_deep(i)
+          k22_shallow_p(i)   = k22_shallow(i)
+          kbcon_shallow_p(i) = kbcon_shallow(i)
+          ktop_shallow_p(i)  = ktop_shallow(i)
+          ktop_deep_p(i)     = ktop_deep(i)
 
           do k = kts,kte
-             qccu_p(i,k,j)      = qc_cu(k,i)
-             qicu_p(i,k,j)      = qi_cu(k,i)
+             qccu_p(i,k)      = qc_cu(k,i)
+             qicu_p(i,k)      = qi_cu(k,i)
 
-             rthblten_p(i,k,j)  = rthblten(k,i)
-             rthdynten_p(i,k,j) = rthdynten(k,i)
-             rthraten_p(i,k,j)  = rthratenlw(k,i) + rthratensw(k,i)
-             rqvblten_p(i,k,j)  = rqvblten(k,i)
-             rqvdynten_p(i,k,j) = rqvdynten(k,i)
-             rucuten_p(i,k,j)   = rucuten(k,i)
-             rvcuten_p(i,k,j)   = rvcuten(k,k)
+             rthblten_p(i,k)  = rthblten(k,i)
+             rthdynten_p(i,k) = rthdynten(k,i)
+             rthraten_p(i,k)  = rthratenlw(k,i) + rthratensw(k,i)
+             rqvblten_p(i,k)  = rqvblten(k,i)
+             rqvdynten_p(i,k) = rqvdynten(k,i)
+             rucuten_p(i,k)   = rucuten(k,i)
+             rvcuten_p(i,k)   = rvcuten(k,k)
           enddo
-       enddo
        enddo
 
     case ("cu_kain_fritsch")
@@ -751,28 +729,26 @@
        call mpas_pool_get_array(tend_physics,'rqrcuten',rqrcuten)
        call mpas_pool_get_array(tend_physics,'rqscuten',rqscuten)
 
-       do j = jts,jte
        do i = its,ite
           !area of grid-cell:       
-          dx_p(i,j)    = len_disp / meshDensity(i)**0.25
-          area_p(i,j)  = areaCell(i)
-          cubot_p(i,j) = cubot(i)
-          cutop_p(i,j) = cutop(i)
+          dx_p(i)    = len_disp / meshDensity(i)**0.25
+          area_p(i)  = areaCell(i)
+          cubot_p(i) = cubot(i)
+          cutop_p(i) = cutop(i)
 
           do k = kts,kte
-             rqrcuten_p(i,k,j) = rqrcuten(k,i)
-             rqscuten_p(i,k,j) = rqscuten(k,i)
+             rqrcuten_p(i,k) = rqrcuten(k,i)
+             rqscuten_p(i,k) = rqscuten(k,i)
           enddo
 
           !decreases the characteristic time period that convection remains active. When nca_p
           !becomes less than the convective timestep, convective tendencies and precipitation
           !are reset to zero (note that this is also done in subroutine kf_eta_cps).
-          nca_p(i,j) = nca(i)
+          nca_p(i) = nca(i)
 
           do k = kts,kte
-             w0avg_p(i,k,j) = w0avg(k,i)
+             w0avg_p(i,k) = w0avg(k,i)
           enddo
-       enddo
        enddo
 
     case ("cu_tiedtke","cu_ntiedtke")
@@ -785,30 +761,26 @@
        call mpas_pool_get_array(tend_physics,'rucuten'  ,rucuten  )
        call mpas_pool_get_array(tend_physics,'rvcuten'  ,rvcuten  )
 
-       do j = jts,jte
        do i = its,ite
-          xland_p(i,j) = xland(i)
-          hfx_p(i,j)   = hfx(i)
-          qfx_p(i,j)   = qfx(i)
+          xland_p(i) = xland(i)
+          hfx_p(i)   = hfx(i)
+          qfx_p(i)   = qfx(i)
        enddo
 
        do k = kts,kte
        do i = its,ite
-          rucuten_p(i,k,j) = rucuten(k,i)
-          rvcuten_p(i,k,j) = rvcuten(k,i)
-       enddo
+          rucuten_p(i,k) = rucuten(k,i)
+          rvcuten_p(i,k) = rvcuten(k,i)
        enddo
        enddo
 
        cu_tiedtke_select: select case(convection_scheme)
 
           case ("cu_tiedtke")
-             do j = jts,jte
              do k = kts,kte
              do i = its,ite
-                rqvdynblten_p(i,k,j) = rqvblten(k,i) 
-                rqvdynten_p(i,k,j)   = rqvdynten(k,i)
-             enddo
+                rqvdynblten_p(i,k) = rqvblten(k,i) 
+                rqvdynten_p(i,k)   = rqvdynten(k,i)
              enddo
              enddo
  
@@ -823,17 +795,15 @@
              call mpas_pool_get_array(tend_physics,'rthratenlw',rthratenlw)
              call mpas_pool_get_array(tend_physics,'rthratensw',rthratensw)
              
-             do j = jts,jte
              do i = its,ite
-                dx_p(i,j) = len_disp / meshDensity(i)**0.25
+                dx_p(i) = len_disp / meshDensity(i)**0.25
              enddo
 
              do k = kts,kte
              do i = its,ite
-                rqvften_p(i,k,j) = rqvdynten(k,i) + rqvblten(k,i)
-                rthften_p(i,k,j) = (rthdynten(k,i) + rthblten(k,i) &
-                                 + rthratenlw(k,i) + rthratensw(k,i)) * pi_p(i,k,j) 
-             enddo
+                rqvften_p(i,k) = rqvdynten(k,i) + rqvblten(k,i)
+                rthften_p(i,k) = (rthdynten(k,i) + rthblten(k,i) &
+                                 + rthratenlw(k,i) + rthratensw(k,i)) * pi_p(i,k) 
              enddo
              enddo
 
@@ -860,7 +830,7 @@
  type(mpas_pool_type),intent(inout):: tend_physics
 
 !local variables:
- integer:: i,k,j
+ integer:: i,k
 
 !local pointers:
  character(len=StrKIND),pointer:: convection_scheme
@@ -884,17 +854,15 @@
  call mpas_pool_get_array(tend_physics,'rqccuten',rqccuten)
  call mpas_pool_get_array(tend_physics,'rqicuten',rqicuten)
 
- do j = jts,jte
  do i = its,ite
-    raincv(i) = raincv_p(i,j)
-    cuprec(i) = pratec_p(i,j)
+    raincv(i) = raincv_p(i)
+    cuprec(i) = pratec_p(i)
     do k = kts, kte
-       rthcuten(k,i) = rthcuten_p(i,k,j)
-       rqvcuten(k,i) = rqvcuten_p(i,k,j)
-       rqccuten(k,i) = rqccuten_p(i,k,j)
-       rqicuten(k,i) = rqicuten_p(i,k,j)
+       rthcuten(k,i) = rthcuten_p(i,k)
+       rqvcuten(k,i) = rqvcuten_p(i,k)
+       rqccuten(k,i) = rqccuten_p(i,k)
+       rqicuten(k,i) = rqicuten_p(i,k)
     enddo
- enddo
  enddo
 
  convection_select: select case(convection_scheme)
@@ -914,24 +882,22 @@
        call mpas_pool_get_array(tend_physics,'rucuten',rucuten)
        call mpas_pool_get_array(tend_physics,'rvcuten',rvcuten)
 
-       do j = jts,jte
        do i = its,ite
-          cubot(i)         = cubot_p(i,j)
-          cutop(i)         = cutop_p(i,j)
-          xmb_total(i)     = xmb_total_p(i,j)
-          xmb_shallow(i)   = xmb_shallow_p(i,j)
-          k22_shallow(i)   = k22_shallow_p(i,j)
-          kbcon_shallow(i) = kbcon_shallow_p(i,j)
-          ktop_shallow(i)  = ktop_shallow_p(i,j)
-          ktop_deep(i)     = ktop_deep_p(i,j)
+          cubot(i)         = cubot_p(i)
+          cutop(i)         = cutop_p(i)
+          xmb_total(i)     = xmb_total_p(i)
+          xmb_shallow(i)   = xmb_shallow_p(i)
+          k22_shallow(i)   = k22_shallow_p(i)
+          kbcon_shallow(i) = kbcon_shallow_p(i)
+          ktop_shallow(i)  = ktop_shallow_p(i)
+          ktop_deep(i)     = ktop_deep_p(i)
 
           do k = kts,kte
-             qc_cu(k,i)    = qccu_p(i,k,j)
-             qi_cu(k,i)    = qicu_p(i,k,j)
-             rucuten(k,i)  = rucuten_p(i,k,j)
-             rvcuten(k,k)  = rvcuten_p(i,k,j)
+             qc_cu(k,i)    = qccu_p(i,k)
+             qi_cu(k,i)    = qicu_p(i,k)
+             rucuten(k,i)  = rucuten_p(i,k)
+             rvcuten(k,k)  = rvcuten_p(i,k)
           enddo
-       enddo
        enddo
 
     case ("cu_kain_fritsch")
@@ -943,29 +909,25 @@
        call mpas_pool_get_array(tend_physics,'rqrcuten',rqrcuten)
        call mpas_pool_get_array(tend_physics,'rqscuten',rqscuten)
 
-       do j = jts,jte
        do i = its,ite
-          cubot(i) = cubot_p(i,j)
-          cutop(i) = cutop_p(i,j)
-          nca(i)   = nca_p(i,j)
+          cubot(i) = cubot_p(i)
+          cutop(i) = cutop_p(i)
+          nca(i)   = nca_p(i)
           do k = kts, kte
-             w0avg(k,i)    = w0avg_p(i,k,j)
-             rqrcuten(k,i) = rqrcuten_p(i,k,j)
-             rqscuten(k,i) = rqscuten_p(i,k,j)
+             w0avg(k,i)    = w0avg_p(i,k)
+             rqrcuten(k,i) = rqrcuten_p(i,k)
+             rqscuten(k,i) = rqscuten_p(i,k)
           enddo                          
-       enddo
        enddo
 
     case ("cu_tiedtke","cu_ntiedtke")
        call mpas_pool_get_array(tend_physics,'rucuten',rucuten)
        call mpas_pool_get_array(tend_physics,'rvcuten',rvcuten)
 
-       do j = jts,jte
        do k = kts,kte
        do i = its,ite
-          rucuten(k,i) = rucuten_p(i,k,j)
-          rvcuten(k,i) = rvcuten_p(i,k,j)
-       enddo
+          rucuten(k,i) = rucuten_p(i,k)
+          rvcuten(k,i) = rvcuten_p(i,k)
        enddo
        enddo
 
