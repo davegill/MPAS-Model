@@ -57,22 +57,6 @@
   type = real | kind = kind_phys
   intent = in
   optional = F
-[nmix]
-  standard_name = number_of_scalar_tracers
-  long_name = number of scalar tracers
-  units = none
-  dimensions = ()
-  type = integer
-  intent = in
-  optional = F
-[qmix]
-  standard_name = scalars
-  long_name = scalars
-  units = kg kg-1
-  dimensions = (horizontal_loop_start:horizontal_loop_end,vertical_layer_start:vertical_layer_end,number_of_scalar_tracers)
-  type = real | kind = kind_phys
-  intent = in
-  optional = F
 [p2d]
   standard_name = air_pressure
   long_name = air pressure
@@ -158,14 +142,6 @@
   long_name = tendency of ice water mixing ratio due to boundary layer
   units = kg kg-1 s-1
   dimensions = (horizontal_loop_start:horizontal_loop_end,vertical_layer_start:vertical_layer_end)
-  type = real | kind = kind_phys
-  intent = out
-  optional = F
-[qmixtnp]
-  standard_name = tendency_of_scalars_due_to_boundary_layer
-  long_name = tendency of scalars due to boundary layer
-  units = kg kg-1 s-1
-  dimensions = (horizontal_loop_start:horizontal_loop_end,vertical_layer_start:vertical_layer_end,number_of_scalar_tracers)
   type = real | kind = kind_phys
   intent = out
   optional = F

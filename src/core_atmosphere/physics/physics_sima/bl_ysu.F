@@ -365,13 +365,13 @@ contains
               ,tx=t3d_hv                                                       &
               ,qvx=qv3d_hv,qcx=qc3d_hv,qix=qi3d_hv                             &
               ,f_qc=flag_qc,f_qi=flag_qi                                       &
-              ,nmix=nmix,qmix=qmix_hv                                          &
+!             ,nmix=nmix,qmix=qmix_hv                                          &
               ,p2d=p3d_hv,p2di=p3di_hv                                         &
               ,pi2d=pi3d_hv                                                    &
               ,utnp=rublten_hv,vtnp=rvblten_hv                                 &
               ,ttnp=rthblten_hv,qvtnp=rqvblten_hv                              &
               ,qctnp=rqcblten_hv,qitnp=rqiblten_hv                             &
-              ,qmixtnp=rqmixblten_hv                                           &
+!             ,qmixtnp=rqmixblten_hv                                           &
               ,cp=cp,g=g,rovcp=rovcp,rd=rd,rovg=rovg                           &    
               ,xlv=xlv,rv=rv                                                   &
               ,ep1=ep1,ep2=ep2,karman=karman                                   &
@@ -401,7 +401,7 @@ contains
       do n = 1, nmix
          do k = kts, kte
             do i = its, ite
-               rqmixblten(i,k,j,n) = rqmixblten_hv(i,k,n)
+!              rqmixblten(i,k,j,n) = rqmixblten_hv(i,k,n)
             end do
          end do
       end do
@@ -455,9 +455,12 @@ contains
 !> \section arg_table_bl_ysu_run  Argument Table
 !! \htmlinclude arg_table_bl_ysu_run.html
 !!
-   subroutine bl_ysu_run(j,ux,vx,tx,qvx,qcx,qix,nmix,qmix,p2d,p2di,pi2d,       &
+   subroutine bl_ysu_run(j,ux,vx,tx,qvx,qcx,qix,&
+!                 nmix,qmix,&
+                  p2d,p2di,pi2d,       &
                   f_qc,f_qi,                                                   &
-                  utnp,vtnp,ttnp,qvtnp,qctnp,qitnp,qmixtnp,                    &
+                  utnp,vtnp,ttnp,qvtnp,qctnp,qitnp,&
+!                 qmixtnp,                    &
                   cp,g,rovcp,rd,rovg,ep1,ep2,karman,xlv,rv,                    &
                   dz8w2d,psfcpa,                                               &
                   znt,ust,hpbl,psim,psih,                                      &
@@ -553,7 +556,7 @@ contains
 
    integer,  intent(in)      ::     ysu_topdown_pblmix 
 !
-   integer,  intent(in)      ::     nmix
+!  integer,  intent(in)      ::     nmix
 !
    real,     intent(in   )   ::     dt,cp,g,rovcp,rovg,rd,xlv,rv
 !
@@ -571,8 +574,8 @@ contains
                                                                           qcx, &
                                                                           qix
 !
-   real,     dimension( its:ite, kts:kte, nmix )                             , &
-             intent(in   )   ::                                          qmix
+!  real,     dimension( its:ite, kts:kte, nmix )                             , &
+!            intent(in   )   ::                                          qmix
 !
    real,     dimension( its:ite, kts:kte )                                   , &
              intent(out  )   ::                                          utnp, &
@@ -582,8 +585,8 @@ contains
                                                                         qctnp, &
                                                                         qitnp
 !
-   real,     dimension( its:ite, kts:kte, nmix )                             , &
-             intent(out  )   ::                                       qmixtnp
+!  real,     dimension( its:ite, kts:kte, nmix )                             , &
+!            intent(out  )   ::                                       qmixtnp
 !
    real,     dimension( its:ite, kms:kme )                                   , &
              intent(in   )   ::                                          p2di
@@ -708,7 +711,7 @@ contains
                                                                zfacent,entfac
    real, dimension( its:ite, kts:kte )     ::                            qcxl, &
                                                                          qixl
-   real, dimension( its:ite, kts:kte, nmix ) ::                         qmixl
+!  real, dimension( its:ite, kts:kte, nmix ) ::                         qmixl
    real, dimension( its:ite )              ::                            ust3, &
                                                                        wstar3, &
                                                                      wstar3_2, &
@@ -1488,6 +1491,7 @@ contains
       enddo
    endif
 
+#if 0
    !--- chemical species and/or passive tracers, meaning all variables that we want to
    !    be vertically-mixed:
    if(nmix > 0) then
@@ -1508,6 +1512,7 @@ contains
          enddo
       enddo
    endif
+#endif
 
 !
 !     compute tridiagonal matrix elements for momentum
