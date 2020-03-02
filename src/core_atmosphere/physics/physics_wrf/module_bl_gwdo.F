@@ -121,13 +121,21 @@ contains
 !
 !local
 !
-  real,   dimension( its:ite, kts:kte )  ::                           delprsi, &
-                                                                          pdh
+  real,   dimension( its:ite, kts:kte )  ::                           delprsi
   real,   dimension( its:ite, kts:kte )  ::  ugeo, vgeo, dudt, dvdt, dtaux, dtauy
   real,   dimension( its:ite )  ::  dusfc, dvsfc
-  real,     dimension( its:ite, kts:kte+1 )   ::                         pdhi
   real,   dimension( its:ite, 4 )        ::                               oa4, &
                                                                           ol4
+  real,   dimension( its:ite, kts:kte )  ::                            t3d_hv, &
+                                                                      qv3d_hv, &
+                                                                      pi3d_hv, &
+                                                                       p3d_hv, &
+                                                                      p3di_hv, &
+                                                                         z_hv
+  real,   dimension( its:ite )           ::                          var2d_hv, &
+                                                                     oc12d_hv, &
+                                                                        dx_hv
+  integer,dimension( its:ite )           ::                         kpbl2d_hv   
   integer ::  i,j,k,kpblmax
 !
    if(present(p_top) .and. present(znu) .and. present(znw)) then
@@ -137,67 +145,98 @@ contains
    else
       kpblmax = kte
    endif
-!
+
+   !  Outer j-loop. Allows consistency between WRF and MPAS in the driver.
+
    do j = jts,jte
-      do k = kts,kte+1
-        do i = its,ite
-           if (k.le.kte)pdh(i,k) = p3d(i,k,j)
-           pdhi(i,k) = p3di(i,k,j)
-        enddo
+
+      do k = kts,kte
+         do i = its,ite
+
+            !  Delta p (positive) between interfaces levels
+
+            delprsi(i,k) = p3di(i,k,j)-p3di(i,k+1,j)
+
+            !  Rotate winds to zonal/meridional
+
+            ugeo(i,k) = u3d(i,k,j)*cosa(i,j) - v3d(i,k,j)*sina(i,j)
+            vgeo(i,k) = u3d(i,k,j)*sina(i,j) + v3d(i,k,j)*cosa(i,j)
+         enddo
       enddo
-!
+      do i = its,ite
+         oa4(i,1) = oa2d1(i,j)
+         oa4(i,2) = oa2d2(i,j)
+         oa4(i,3) = oa2d3(i,j)
+         oa4(i,4) = oa2d4(i,j)
+         ol4(i,1) = ol2d1(i,j)
+         ol4(i,2) = ol2d2(i,j)
+         ol4(i,3) = ol2d3(i,j)
+         ol4(i,4) = ol2d4(i,j)
+      enddo
+
+      !  All variables for gwdo2d are tile-sized and have only a single
+      !  horizontal dimension. The _hv suffix refers to "horizontal vertical",
+      !  a reminder that there is a single horizontal index.
+
+      !  All of the following 3d and 2d variables are declared intent(in) in the
+      !  gwdo2d subroutine, so there is no need to put the updated values back
+      !  from the temporary arrays back into the original arrays.
+
+      !  3d, layers
+
       do k = kts,kte
         do i = its,ite
-          delprsi(i,k) = pdhi(i,k)-pdhi(i,k+1)
-! rotate winds to zonal/meridional
-          ugeo(i,k) = u3d(i,k,j)*cosa(i,j) - v3d(i,k,j)*sina(i,j)
-          vgeo(i,k) = u3d(i,k,j)*sina(i,j) + v3d(i,k,j)*cosa(i,j)
-          dudt(i,k) = 0.0
-          dvdt(i,k) = 0.0
+            t3d_hv(i,k) =  t3d(i,k,j)
+           qv3d_hv(i,k) = qv3d(i,k,j)
+           p3di_hv(i,k) = p3di(i,k,j)
+            p3d_hv(i,k) =  p3d(i,k,j)
+           pi3d_hv(i,k) = pi3d(i,k,j)
+              z_hv(i,k) =    z(i,k,j)
         enddo
       enddo
-        do i = its,ite
-            oa4(i,1) = oa2d1(i,j)
-            oa4(i,2) = oa2d2(i,j)
-            oa4(i,3) = oa2d3(i,j)
-            oa4(i,4) = oa2d4(i,j)
-            ol4(i,1) = ol2d1(i,j)
-            ol4(i,2) = ol2d2(i,j)
-            ol4(i,3) = ol2d3(i,j)
-            ol4(i,4) = ol2d4(i,j)
-        enddo
-      call gwdo2d(dudt=dudt(its,kts),dvdt=dvdt(its,kts)                        &
-              ,dtaux2d=dtaux(its,kts),dtauy2d=dtauy(its,kts)                   &
-              ,u1=ugeo(its,kts),v1=vgeo(its,kts)                               &
-              ,t1=t3d(ims,kms,j),q1=qv3d(ims,kms,j)                            &
-              ,del=delprsi(its,kts)                                            &
-              ,prsi=pdhi(its,kts)                                              &
-              ,prsl=pdh(its,kts),prslk=pi3d(ims,kms,j)                         &
-              ,zl=z(ims,kms,j)                                                 &
+
+      !  2d
+
+      do i = its,ite
+             dx_hv(i) =     dx(i,j)
+          var2d_hv(i) =  var2d(i,j)
+          oc12d_hv(i) =  oc12d(i,j)
+         kpbl2d_hv(i) = kpbl2d(i,j)
+      enddo
+
+      call gwdo2d(dudt=dudt,dvdt=dvdt                                          &
+              ,dtaux2d=dtaux,dtauy2d=dtauy                                     &
+              ,u1=ugeo,v1=vgeo                                                 &
+              ,t1=t3d_hv,q1=qv3d_hv                                            &
+              ,del=delprsi                                                     &
+              ,prsi=p3di_hv                                                    &
+              ,prsl=p3d_hv,prslk=pi3d_hv                                       &
+              ,zl=z_hv                                                         &
               ,kpblmax=kpblmax                                                 &
-              ,var=var2d(ims,j),oc1=oc12d(ims,j)                               &
+              ,var=var2d_hv,oc1=oc12d_hv                                       &
               ,oa4=oa4,ol4=ol4                                                 &
-              ,dusfc=dusfc(its),dvsfc=dvsfc(its)                               &
+              ,dusfc=dusfc,dvsfc=dvsfc                                         &
               ,g_=g,cp_=cp,rd_=rd,rv_=rv,fv_=ep1,pi_=pi                        &
-              ,dxmeter=dx,deltim=dt                                            &
-              ,kpbl=kpbl2d(ims,j),lat=j                                        &
-              ,ids=ids,ide=ide, jds=jds,jde=jde, kds=kds,kde=kde               &
-              ,ims=ims,ime=ime, jms=jms,jme=jme, kms=kms,kme=kme               &
-              ,its=its,ite=ite, jts=jts,jte=jte, kts=kts,kte=kte   )
+              ,dxmeter=dx_hv,deltim=dt                                         &
+              ,kpbl=kpbl2d_hv,lat=j                                            &
+              ,its=its,ite=ite, kts=kts,kte=kte, kms=kms,kme=kme               )
+
+      ! Rotate tendencies from zonal/meridional back to model grid
+
       do k = kts,kte
-        do i = its,ite
-! rotate tendencies from zonal/meridional to model grid
-          rublten(i,k,j) = rublten(i,k,j)+dudt(i,k)*cosa(i,j) + dvdt(i,k)*sina(i,j)
-          rvblten(i,k,j) = rvblten(i,k,j)-dudt(i,k)*sina(i,j) + dvdt(i,k)*cosa(i,j)
-          dtaux3d(i,k,j) = dtaux(i,k)*cosa(i,j) + dtauy(i,k)*sina(i,j)
-          dtauy3d(i,k,j) =-dtaux(i,k)*sina(i,j) + dtauy(i,k)*cosa(i,j)
-          if(k.eq.kts)then
-             dusfcg(i,j) = dusfc(i)*cosa(i,j) + dvsfc(i)*sina(i,j)
-             dvsfcg(i,j) =-dusfc(i)*sina(i,j) + dvsfc(i)*cosa(i,j)
-          endif
+         do i = its,ite
+            rublten(i,k,j) = rublten(i,k,j)+dudt(i,k)*cosa(i,j) + dvdt(i,k)*sina(i,j)
+            rvblten(i,k,j) = rvblten(i,k,j)-dudt(i,k)*sina(i,j) + dvdt(i,k)*cosa(i,j)
+            dtaux3d(i,k,j) = dtaux(i,k)*cosa(i,j) + dtauy(i,k)*sina(i,j)
+            dtauy3d(i,k,j) =-dtaux(i,k)*sina(i,j) + dtauy(i,k)*cosa(i,j)
         enddo
       enddo
-   enddo
+      do i = its,ite
+         dusfcg(i,j) = dusfc(i)*cosa(i,j) + dvsfc(i)*sina(i,j)
+         dvsfcg(i,j) =-dusfc(i)*sina(i,j) + dvsfc(i)*cosa(i,j)
+      enddo
+
+   enddo ! Outer J-loop
 !
    end subroutine gwdo
 !-------------------------------------------------------------------------------
@@ -210,9 +249,7 @@ contains
                      var, oc1, oa4, ol4, dusfc, dvsfc,                         &
                      g_, cp_, rd_, rv_, fv_, pi_,                              &
                      dxmeter, deltim, kpbl, lat,                               &
-                     ids, ide, jds, jde, kds, kde,                             &
-                     ims, ime, jms, jme, kms, kme,                             &
-                     its, ite, jts, jte, kts, kte)
+                     its, ite, kts, kte, kms, kme                              )
 !-------------------------------------------------------------------------------
 !  
 !  abstract : 
@@ -263,25 +300,21 @@ contains
    implicit none
 !
    integer                           , intent(in   ) :: lat, kpblmax,          &
-                                                        ids, ide, jds, jde,    &
-                                                        kds, kde, ims, ime,    &
-                                                        jms, jme, kms, kme,    &
-                                                        its, ite, jts, jte,    &
-                                                        kts, kte
-   integer, dimension(ims:ime)       , intent(in   ) :: kpbl
+                                                        its, ite, kts, kte, kms, kme
+   integer, dimension(its:ite)       , intent(in   ) :: kpbl
    real                              , intent(in   ) :: g_, pi_, rd_, rv_, fv_,&
                                                         cp_, deltim
-   real, dimension(ims:ime)          , intent(in   ) :: dxmeter
-   real, dimension(its:ite,kts:kte)  , intent(inout) :: dudt, dvdt        
+   real, dimension(its:ite)          , intent(in   ) :: dxmeter
+   real, dimension(its:ite,kts:kte)  , intent(  out) :: dudt, dvdt        
    real, dimension(its:ite,kts:kte)  , intent(  out) :: dtaux2d, dtauy2d  
    real, dimension(its:ite,kts:kte)  , intent(in   ) :: u1, v1
-   real, dimension(ims:ime,kms:kme)  , intent(in   ) :: t1, q1, prslk, zl 
+   real, dimension(its:ite,kts:kte)  , intent(in   ) :: t1, q1, prslk, zl 
 !
    real, dimension(its:ite,kts:kte)  , intent(in   ) :: prsl, del 
-   real, dimension(its:ite,kts:kte+1), intent(in   ) :: prsi
+   real, dimension(its:ite,kms:kme)  , intent(in   ) :: prsi
    real, dimension(its:ite,4)        , intent(in   ) :: oa4, ol4
 !
-   real, dimension(ims:ime)          , intent(in   ) :: var, oc1
+   real, dimension(its:ite)          , intent(in   ) :: var, oc1
    real, dimension(its:ite)          , intent(  out) :: dusfc, dvsfc
 !
    real, parameter      ::  ric     = 0.25    ! critical richardson number 
@@ -717,11 +750,6 @@ contains
      enddo                                                          
    enddo                                                             
 !
-   do i = its,ite
-     dusfc(i) = 0.
-     dvsfc(i) = 0.
-   enddo
-!
    do k = kts,kte                                                       
      do i = its,ite 
        taud(i,k) = taud(i,k) * dtfac(i)                              
@@ -729,10 +757,10 @@ contains
        dtauy = taud(i,k) * yn(i)
        dtaux2d(i,k) = dtaux
        dtauy2d(i,k) = dtauy
-       dudt(i,k) = dtaux + dudt(i,k)
-       dvdt(i,k) = dtauy + dvdt(i,k)
-       dusfc(i)  = dusfc(i) + dtaux * del(i,k)
-       dvsfc(i)  = dvsfc(i) + dtauy * del(i,k)
+       dudt(i,k) = dtaux
+       dvdt(i,k) = dtauy
+       dusfc(i)  = dtaux * del(i,k)
+       dvsfc(i)  = dtauy * del(i,k)
      enddo                                                          
    enddo                                                             
 !
