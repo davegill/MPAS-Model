@@ -126,15 +126,19 @@ contains
   real,   dimension( its:ite )  ::  dusfc, dvsfc
   real,   dimension( its:ite, 4 )        ::                               oa4, &
                                                                           ol4
-  real,   dimension( its:ite, kts:kte )  ::                            t3d_hv, &
+  real,   dimension( its:ite, kms:kme )  ::                           p3di_hv
+  real,   dimension( its:ite, kts:kte )  ::                            u3d_hv, &
+                                                                       v3d_hv, &
+                                                                       t3d_hv, &
                                                                       qv3d_hv, &
                                                                       pi3d_hv, &
                                                                        p3d_hv, &
-                                                                      p3di_hv, &
                                                                          z_hv
   real,   dimension( its:ite )           ::                          var2d_hv, &
                                                                      oc12d_hv, &
-                                                                        dx_hv
+                                                                        dx_hv, &
+                                                                      sina_hv, &
+                                                                      cosa_hv
   integer,dimension( its:ite )           ::                         kpbl2d_hv   
   integer ::  i,j,k,kpblmax
 !
@@ -152,10 +156,6 @@ contains
 
       do k = kts,kte
          do i = its,ite
-
-            !  Delta p (positive) between interfaces levels
-
-            delprsi(i,k) = p3di(i,k,j)-p3di(i,k+1,j)
 
             !  Rotate winds to zonal/meridional
 
@@ -182,13 +182,22 @@ contains
       !  gwdo2d subroutine, so there is no need to put the updated values back
       !  from the temporary arrays back into the original arrays.
 
+      !  3d, interface levels
+
+      do k = kts,kte+1
+        do i = its,ite
+           p3di_hv(i,k) = p3di(i,k,j)
+        enddo
+      enddo
+
       !  3d, layers
 
       do k = kts,kte
         do i = its,ite
+            u3d_hv(i,k) =  u3d(i,k,j)
+            v3d_hv(i,k) =  v3d(i,k,j)
             t3d_hv(i,k) =  t3d(i,k,j)
            qv3d_hv(i,k) = qv3d(i,k,j)
-           p3di_hv(i,k) = p3di(i,k,j)
             p3d_hv(i,k) =  p3d(i,k,j)
            pi3d_hv(i,k) = pi3d(i,k,j)
               z_hv(i,k) =    z(i,k,j)
@@ -202,13 +211,14 @@ contains
           var2d_hv(i) =  var2d(i,j)
           oc12d_hv(i) =  oc12d(i,j)
          kpbl2d_hv(i) = kpbl2d(i,j)
+           sina_hv(i) =   sina(i,j)
+           cosa_hv(i) =   cosa(i,j)
       enddo
 
       call gwdo2d(dudt=dudt,dvdt=dvdt                                          &
               ,dtaux2d=dtaux,dtauy2d=dtauy                                     &
               ,u1=ugeo,v1=vgeo                                                 &
               ,t1=t3d_hv,q1=qv3d_hv                                            &
-              ,del=delprsi                                                     &
               ,prsi=p3di_hv                                                    &
               ,prsl=p3d_hv,prslk=pi3d_hv                                       &
               ,zl=z_hv                                                         &
@@ -219,7 +229,7 @@ contains
               ,g_=g,cp_=cp,rd_=rd,rv_=rv,fv_=ep1,pi_=pi                        &
               ,dxmeter=dx_hv,deltim=dt                                         &
               ,kpbl=kpbl2d_hv,lat=j                                            &
-              ,its=its,ite=ite, kts=kts,kte=kte, kms=kms,kme=kme               )
+              ,its=its,ite=ite, kts=kts,kte=kte, kms=kms,kme=kte+1             )
 
       ! Rotate tendencies from zonal/meridional back to model grid
 
@@ -243,7 +253,6 @@ contains
 !-------------------------------------------------------------------------------
    subroutine gwdo2d(dudt, dvdt, dtaux2d, dtauy2d,                             &
                      u1, v1, t1, q1,                                           &
-                     del,                                                      &
                      prsi, prsl, prslk, zl,                                    &
                      kpblmax,                                                  &
                      var, oc1, oa4, ol4, dusfc, dvsfc,                         &
@@ -310,7 +319,7 @@ contains
    real, dimension(its:ite,kts:kte)  , intent(in   ) :: u1, v1
    real, dimension(its:ite,kts:kte)  , intent(in   ) :: t1, q1, prslk, zl 
 !
-   real, dimension(its:ite,kts:kte)  , intent(in   ) :: prsl, del 
+   real, dimension(its:ite,kts:kte)  , intent(in   ) :: prsl
    real, dimension(its:ite,kms:kme)  , intent(in   ) :: prsi
    real, dimension(its:ite,4)        , intent(in   ) :: oa4, ol4
 !
@@ -353,6 +362,7 @@ contains
    real, dimension(its:ite,kts:kte+1) :: taup
    real, dimension(its:ite,kts:kte-1) :: velco
    real, dimension(its:ite,kts:kte)   :: bnv2, usqj, taud, rho, vtk, vtj
+   real, dimension(its:ite,kts:kte)   :: del 
 !
    integer, dimension(its:ite)        :: kbl, klowtop
    integer, parameter       ::  mdir=8
@@ -424,9 +434,17 @@ contains
      do i = its,ite
        vtj(i,k) = t1(i,k)  * (1.+fv_*q1(i,k))
        vtk(i,k) = vtj(i,k) / prslk(i,k)
-       rho(i,k) = 1./rd_ * prsl(i,k) / vtj(i,k) ! density kg/m**3
+
+       !  Density kg/m**3
+
+       rho(i,k) = 1./rd_ * prsl(i,k) / vtj(i,k)
+
+       !  Delta p (positive) between interfaces levels (Pa)
+
+       del(i,k) = prsi(i,k) - prsi(i,k+1)
      enddo
    enddo
+
 !
    do i = its,ite
      zlowtop(i) = 2. * var(i)
