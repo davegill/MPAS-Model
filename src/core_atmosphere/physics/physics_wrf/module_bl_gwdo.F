@@ -122,7 +122,7 @@ contains
 !local
 !
   real,   dimension( its:ite, kts:kte )  ::                           delprsi
-  real,   dimension( its:ite, kts:kte )  ::  ugeo, vgeo, dudt, dvdt, dtaux, dtauy
+  real,   dimension( its:ite, kts:kte )  ::  dudt, dvdt, dtaux, dtauy
   real,   dimension( its:ite )  ::  dusfc, dvsfc
   real,   dimension( its:ite, 4 )        ::                               oa4, &
                                                                           ol4
@@ -154,15 +154,6 @@ contains
 
    do j = jts,jte
 
-      do k = kts,kte
-         do i = its,ite
-
-            !  Rotate winds to zonal/meridional
-
-            ugeo(i,k) = u3d(i,k,j)*cosa(i,j) - v3d(i,k,j)*sina(i,j)
-            vgeo(i,k) = u3d(i,k,j)*sina(i,j) + v3d(i,k,j)*cosa(i,j)
-         enddo
-      enddo
       do i = its,ite
          oa4(i,1) = oa2d1(i,j)
          oa4(i,2) = oa2d2(i,j)
@@ -217,7 +208,8 @@ contains
 
       call gwdo2d(dudt=dudt,dvdt=dvdt                                          &
               ,dtaux2d=dtaux,dtauy2d=dtauy                                     &
-              ,u1=ugeo,v1=vgeo                                                 &
+              ,sina=sina_hv,cosa=cosa_hv                                       &
+              ,uproj=u3d_hv,vproj=v3d_hv                                       &
               ,t1=t3d_hv,q1=qv3d_hv                                            &
               ,prsi=p3di_hv                                                    &
               ,prsl=p3d_hv,prslk=pi3d_hv                                       &
@@ -252,7 +244,8 @@ contains
 !-------------------------------------------------------------------------------
 !-------------------------------------------------------------------------------
    subroutine gwdo2d(dudt, dvdt, dtaux2d, dtauy2d,                             &
-                     u1, v1, t1, q1,                                           &
+                     sina, cosa, uproj, vproj,                                 &
+                     t1, q1,                                                   &
                      prsi, prsl, prslk, zl,                                    &
                      kpblmax,                                                  &
                      var, oc1, oa4, ol4, dusfc, dvsfc,                         &
@@ -291,6 +284,7 @@ contains
 !
 !  input :                                                                
 !    dudt, dvdt       - non-lin tendency for u and v wind component
+!    uproj, vproj     - projection-relative U and V m/sec
 !    u1, v1           - zonal and meridional wind m/sec  at t0-dt
 !    t1               - temperature deg k at t0-dt
 !    q1               - mixing ratio at t0-dt
@@ -316,7 +310,8 @@ contains
    real, dimension(its:ite)          , intent(in   ) :: dxmeter
    real, dimension(its:ite,kts:kte)  , intent(  out) :: dudt, dvdt        
    real, dimension(its:ite,kts:kte)  , intent(  out) :: dtaux2d, dtauy2d  
-   real, dimension(its:ite,kts:kte)  , intent(in   ) :: u1, v1
+   real, dimension(its:ite)          , intent(in   ) :: sina, cosa
+   real, dimension(its:ite,kts:kte)  , intent(in   ) :: uproj, vproj
    real, dimension(its:ite,kts:kte)  , intent(in   ) :: t1, q1, prslk, zl 
 !
    real, dimension(its:ite,kts:kte)  , intent(in   ) :: prsl
@@ -363,6 +358,7 @@ contains
    real, dimension(its:ite,kts:kte-1) :: velco
    real, dimension(its:ite,kts:kte)   :: bnv2, usqj, taud, rho, vtk, vtj
    real, dimension(its:ite,kts:kte)   :: del 
+   real, dimension(its:ite,kts:kte)   :: u1, v1
 !
    integer, dimension(its:ite)        :: kbl, klowtop
    integer, parameter       ::  mdir=8
@@ -408,7 +404,7 @@ contains
    dxy4p(its:ite,3) = dxy4(its:ite,4)
    dxy4p(its:ite,4) = dxy4(its:ite,3)
 !
-   cleff(its:ite) = dxmeter
+   cleff(its:ite) = dxmeter(its:ite)
 !
 ! initialize arrays                                                 
 !                                                                       
@@ -435,13 +431,19 @@ contains
        vtj(i,k) = t1(i,k)  * (1.+fv_*q1(i,k))
        vtk(i,k) = vtj(i,k) / prslk(i,k)
 
-       !  Density kg/m**3
+       !  Density (kg/m^3)
 
        rho(i,k) = 1./rd_ * prsl(i,k) / vtj(i,k)
 
        !  Delta p (positive) between interfaces levels (Pa)
 
        del(i,k) = prsi(i,k) - prsi(i,k+1)
+       
+       !  Earth-relative zonal and meridional winds (m/s)
+
+       u1(i,k) = uproj(i,k)*cosa(i) - vproj(i,k)*sina(i)
+       v1(i,k) = uproj(i,k)*sina(i) + vproj(i,k)*cosa(i)
+
      enddo
    enddo
 
@@ -768,6 +770,11 @@ contains
      enddo                                                          
    enddo                                                             
 !
+   do i = its,ite 
+     dusfc(i) = 0.
+     dvsfc(i) = 0.
+   enddo
+!
    do k = kts,kte                                                       
      do i = its,ite 
        taud(i,k) = taud(i,k) * dtfac(i)                              
@@ -777,8 +784,8 @@ contains
        dtauy2d(i,k) = dtauy
        dudt(i,k) = dtaux
        dvdt(i,k) = dtauy
-       dusfc(i)  = dtaux * del(i,k)
-       dvsfc(i)  = dtauy * del(i,k)
+       dusfc(i)  = dusfc(i) + dtaux * del(i,k)
+       dvsfc(i)  = dvsfc(i) + dtauy * del(i,k)
      enddo                                                          
    enddo                                                             
 !
