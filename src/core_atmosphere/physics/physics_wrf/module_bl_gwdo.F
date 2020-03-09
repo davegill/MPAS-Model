@@ -127,8 +127,6 @@ contains
                                                                    dtauy3d_hv
   real,     dimension( its:ite ) ::                                 dusfcg_hv, &
                                                                     dvsfcg_hv
-  real,   dimension( its:ite, kts:kte )  ::  dudt, dvdt, dtaux, dtauy
-  real,   dimension( its:ite )  ::  dusfc, dvsfc
   real,   dimension( its:ite, kms:kme )  ::                           p3di_hv
   real,   dimension( its:ite, kts:kte )  ::                            u3d_hv, &
                                                                        v3d_hv, &
@@ -217,9 +215,7 @@ contains
           ol2d4_hv(i) =  ol2d4(i,j)
       enddo
 
-      call gwdo2d(dudt=dudt,dvdt=dvdt                                          &
-              ,dtaux2d=dtaux,dtauy2d=dtauy                                     &
-              ,sina=sina_hv,cosa=cosa_hv                                       &
+      call gwdo2d(sina=sina_hv,cosa=cosa_hv                                    &
               ,rublten=rublten_hv,rvblten=rvblten_hv                           &
               ,dtaux3d=dtaux3d_hv,dtauy3d=dtauy3d_hv                           &
               ,dusfcg=dusfcg_hv,dvsfcg=dvsfcg_hv                               &
@@ -234,7 +230,6 @@ contains
               ,oa2d3=oa2d3_hv, oa2d4=oa2d4_hv                                  &
               ,ol2d1=ol2d1_hv, ol2d2=ol2d2_hv                                  &
               ,ol2d3=ol2d3_hv, ol2d4=ol2d4_hv                                  &
-              ,dusfc=dusfc,dvsfc=dvsfc                                         &
               ,g_=g,cp_=cp,rd_=rd,rv_=rv,fv_=ep1,pi_=pi                        &
               ,dxmeter=dx_hv,deltim=dt                                         &
               ,kpbl=kpbl2d_hv,lat=j                                            &
@@ -263,8 +258,7 @@ contains
    end subroutine gwdo
 !-------------------------------------------------------------------------------
 !-------------------------------------------------------------------------------
-   subroutine gwdo2d(dudt, dvdt, dtaux2d, dtauy2d,                             &
-                     sina, cosa,                                               &
+   subroutine gwdo2d(sina, cosa,                                               &
                      rublten,rvblten,                                          &
                      dtaux3d,dtauy3d,                                          &
                      dusfcg,dvsfcg,                                            &
@@ -277,7 +271,6 @@ contains
                      oa2d3, oa2d4,                                             &
                      ol2d1, ol2d2,                                             &
                      ol2d3, ol2d4,                                             &
-                     dusfc, dvsfc,                                             &
                      g_, cp_, rd_, rv_, fv_, pi_,                              &
                      dxmeter, deltim, kpbl, lat,                               &
                      its, ite, kts, kte, kms, kme                              )
@@ -337,8 +330,6 @@ contains
    real                              , intent(in   ) :: g_, pi_, rd_, rv_, fv_,&
                                                         cp_, deltim
    real, dimension(its:ite)          , intent(in   ) :: dxmeter
-   real, dimension(its:ite,kts:kte)  , intent(  out) :: dudt, dvdt        
-   real, dimension(its:ite,kts:kte)  , intent(  out) :: dtaux2d, dtauy2d  
    real, dimension(its:ite,kts:kte)  , intent(inout) :: rublten, rvblten
    real, dimension(its:ite,kts:kte)  , intent(  out) :: dtaux3d, dtauy3d
    real, dimension(its:ite)          , intent(  out) :: dusfcg, dvsfcg
@@ -352,7 +343,6 @@ contains
    real, dimension(its:ite)          , intent(in   ) :: var, oc1, &
                                                         oa2d1, oa2d2, oa2d3, oa2d4, &
                                                         ol2d1, ol2d2, ol2d3, ol2d4
-   real, dimension(its:ite)          , intent(  out) :: dusfc, dvsfc
 !
    real, parameter      ::  ric     = 0.25    ! critical richardson number 
    real, parameter      ::  dw2min  = 1.
@@ -380,6 +370,9 @@ contains
                             wtkbj,tem,gfobnv,hd,fro,rim,temc,tem1,efact,       &
                             temv,dtaux,dtauy
 !
+   real, dimension(its:ite,kts:kte)   :: dudt, dvdt        
+   real, dimension(its:ite,kts:kte)   :: dtaux2d, dtauy2d  
+   real, dimension(its:ite)           :: dusfc, dvsfc
    logical, dimension(its:ite)        :: ldrag, icrilv, flag,kloop1
    real, dimension(its:ite)           :: coefm
 !                                                                       
