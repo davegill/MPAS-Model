@@ -124,8 +124,6 @@ contains
   real,   dimension( its:ite, kts:kte )  ::                           delprsi
   real,   dimension( its:ite, kts:kte )  ::  dudt, dvdt, dtaux, dtauy
   real,   dimension( its:ite )  ::  dusfc, dvsfc
-  real,   dimension( its:ite, 4 )        ::                               oa4, &
-                                                                          ol4
   real,   dimension( its:ite, kms:kme )  ::                           p3di_hv
   real,   dimension( its:ite, kts:kte )  ::                            u3d_hv, &
                                                                        v3d_hv, &
@@ -139,6 +137,14 @@ contains
                                                                         dx_hv, &
                                                                       sina_hv, &
                                                                       cosa_hv
+  real,   dimension( its:ite )           ::                          oa2d1_hv, &
+                                                                     oa2d2_hv, &
+                                                                     oa2d3_hv, &
+                                                                     oa2d4_hv, &
+                                                                     ol2d1_hv, &
+                                                                     ol2d2_hv, &
+                                                                     ol2d3_hv, &
+                                                                     ol2d4_hv
   integer,dimension( its:ite )           ::                         kpbl2d_hv   
   integer ::  i,j,k,kpblmax
 !
@@ -154,20 +160,10 @@ contains
 
    do j = jts,jte
 
-      do i = its,ite
-         oa4(i,1) = oa2d1(i,j)
-         oa4(i,2) = oa2d2(i,j)
-         oa4(i,3) = oa2d3(i,j)
-         oa4(i,4) = oa2d4(i,j)
-         ol4(i,1) = ol2d1(i,j)
-         ol4(i,2) = ol2d2(i,j)
-         ol4(i,3) = ol2d3(i,j)
-         ol4(i,4) = ol2d4(i,j)
-      enddo
-
       !  All variables for gwdo2d are tile-sized and have only a single
       !  horizontal dimension. The _hv suffix refers to "horizontal vertical",
-      !  a reminder that there is a single horizontal index.
+      !  a reminder that there is a single horizontal index. Yes, we know that 
+      !  variables that have only a horizontal index are not *really* _hv.
 
       !  All of the following 3d and 2d variables are declared intent(in) in the
       !  gwdo2d subroutine, so there is no need to put the updated values back
@@ -204,6 +200,14 @@ contains
          kpbl2d_hv(i) = kpbl2d(i,j)
            sina_hv(i) =   sina(i,j)
            cosa_hv(i) =   cosa(i,j)
+          oa2d1_hv(i) =  oa2d1(i,j)
+          oa2d2_hv(i) =  oa2d2(i,j)
+          oa2d3_hv(i) =  oa2d3(i,j)
+          oa2d4_hv(i) =  oa2d4(i,j)
+          ol2d1_hv(i) =  ol2d1(i,j)
+          ol2d2_hv(i) =  ol2d2(i,j)
+          ol2d3_hv(i) =  ol2d3(i,j)
+          ol2d4_hv(i) =  ol2d4(i,j)
       enddo
 
       call gwdo2d(dudt=dudt,dvdt=dvdt                                          &
@@ -216,7 +220,10 @@ contains
               ,zl=z_hv                                                         &
               ,kpblmax=kpblmax                                                 &
               ,var=var2d_hv,oc1=oc12d_hv                                       &
-              ,oa4=oa4,ol4=ol4                                                 &
+              ,oa2d1=oa2d1_hv, oa2d2=oa2d2_hv                                  &
+              ,oa2d3=oa2d3_hv, oa2d4=oa2d4_hv                                  &
+              ,ol2d1=ol2d1_hv, ol2d2=ol2d2_hv                                  &
+              ,ol2d3=ol2d3_hv, ol2d4=ol2d4_hv                                  &
               ,dusfc=dusfc,dvsfc=dvsfc                                         &
               ,g_=g,cp_=cp,rd_=rd,rv_=rv,fv_=ep1,pi_=pi                        &
               ,dxmeter=dx_hv,deltim=dt                                         &
@@ -248,7 +255,12 @@ contains
                      t1, q1,                                                   &
                      prsi, prsl, prslk, zl,                                    &
                      kpblmax,                                                  &
-                     var, oc1, oa4, ol4, dusfc, dvsfc,                         &
+                     var, oc1,                                                 &
+                     oa2d1, oa2d2,                                             &
+                     oa2d3, oa2d4,                                             &
+                     ol2d1, ol2d2,                                             &
+                     ol2d3, ol2d4,                                             &
+                     dusfc, dvsfc,                                             &
                      g_, cp_, rd_, rv_, fv_, pi_,                              &
                      dxmeter, deltim, kpbl, lat,                               &
                      its, ite, kts, kte, kms, kme                              )
@@ -316,9 +328,10 @@ contains
 !
    real, dimension(its:ite,kts:kte)  , intent(in   ) :: prsl
    real, dimension(its:ite,kms:kme)  , intent(in   ) :: prsi
-   real, dimension(its:ite,4)        , intent(in   ) :: oa4, ol4
 !
-   real, dimension(its:ite)          , intent(in   ) :: var, oc1
+   real, dimension(its:ite)          , intent(in   ) :: var, oc1, &
+                                                        oa2d1, oa2d2, oa2d3, oa2d4, &
+                                                        ol2d1, ol2d2, ol2d3, ol2d4
    real, dimension(its:ite)          , intent(  out) :: dusfc, dvsfc
 !
    real, parameter      ::  ric     = 0.25    ! critical richardson number 
@@ -359,6 +372,7 @@ contains
    real, dimension(its:ite,kts:kte)   :: bnv2, usqj, taud, rho, vtk, vtj
    real, dimension(its:ite,kts:kte)   :: del 
    real, dimension(its:ite,kts:kte)   :: u1, v1
+   real, dimension(its:ite,4)         :: oa4, ol4
 !
    integer, dimension(its:ite)        :: kbl, klowtop
    integer, parameter       ::  mdir=8
@@ -503,7 +517,15 @@ contains
 ! nwd  1   2   3   4   5   6   7   8
 ! wd   w   s  sw  nw   e   n  ne  se
 !
-   do i = its,ite                                                       
+   do i = its,ite                      
+     oa4(i,1) = oa2d1(i)
+     oa4(i,2) = oa2d2(i)
+     oa4(i,3) = oa2d3(i)
+     oa4(i,4) = oa2d4(i)
+     ol4(i,1) = ol2d1(i)
+     ol4(i,2) = ol2d2(i)
+     ol4(i,3) = ol2d3(i)
+     ol4(i,4) = ol2d4(i)
      wdir  = atan2(ubar(i),vbar(i)) + pi_
      idir  = mod(nint(fdir*wdir),mdir) + 1
      nwd   = nwdir(idir)
