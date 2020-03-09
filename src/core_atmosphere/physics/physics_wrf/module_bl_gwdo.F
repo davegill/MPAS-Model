@@ -90,7 +90,7 @@ contains
             intent(inout)   ::                                        rublten, &
                                                                       rvblten
   real,     dimension( ims:ime, kms:kme, jms:jme )                           , &
-            intent(inout)   ::                                        dtaux3d, &
+            intent(  out)   ::                                        dtaux3d, &
                                                                       dtauy3d
 !
   real,      dimension( ims:ime, kms:kme, jms:jme )                          , &
@@ -100,7 +100,7 @@ contains
   integer,   dimension( ims:ime, jms:jme )                                   , &
              intent(in  )   ::                                         kpbl2d
   real,   dimension( ims:ime, jms:jme )                                      , &
-             intent(inout  )   ::                                      dusfcg, &
+             intent(  out)   ::                                        dusfcg, &
                                                                        dvsfcg
 !
   real,   dimension( ims:ime, jms:jme )                                      , &
@@ -121,7 +121,12 @@ contains
 !
 !local
 !
-  real,   dimension( its:ite, kts:kte )  ::                           delprsi
+  real,     dimension( its:ite, kts:kte ) ::                       rublten_hv, &
+                                                                   rvblten_hv, &
+                                                                   dtaux3d_hv, &
+                                                                   dtauy3d_hv
+  real,     dimension( its:ite ) ::                                 dusfcg_hv, &
+                                                                    dvsfcg_hv
   real,   dimension( its:ite, kts:kte )  ::  dudt, dvdt, dtaux, dtauy
   real,   dimension( its:ite )  ::  dusfc, dvsfc
   real,   dimension( its:ite, kms:kme )  ::                           p3di_hv
@@ -181,13 +186,15 @@ contains
 
       do k = kts,kte
         do i = its,ite
-            u3d_hv(i,k) =  u3d(i,k,j)
-            v3d_hv(i,k) =  v3d(i,k,j)
-            t3d_hv(i,k) =  t3d(i,k,j)
-           qv3d_hv(i,k) = qv3d(i,k,j)
-            p3d_hv(i,k) =  p3d(i,k,j)
-           pi3d_hv(i,k) = pi3d(i,k,j)
-              z_hv(i,k) =    z(i,k,j)
+           rublten_hv(i,k) =  rublten(i,k,j)
+           rvblten_hv(i,k) =  rvblten(i,k,j)
+               u3d_hv(i,k) =      u3d(i,k,j)
+               v3d_hv(i,k) =      v3d(i,k,j)
+               t3d_hv(i,k) =      t3d(i,k,j)
+              qv3d_hv(i,k) =     qv3d(i,k,j)
+               p3d_hv(i,k) =      p3d(i,k,j)
+              pi3d_hv(i,k) =     pi3d(i,k,j)
+                 z_hv(i,k) =        z(i,k,j)
         enddo
       enddo
 
@@ -213,6 +220,9 @@ contains
       call gwdo2d(dudt=dudt,dvdt=dvdt                                          &
               ,dtaux2d=dtaux,dtauy2d=dtauy                                     &
               ,sina=sina_hv,cosa=cosa_hv                                       &
+              ,rublten=rublten_hv,rvblten=rvblten_hv                           &
+              ,dtaux3d=dtaux3d_hv,dtauy3d=dtauy3d_hv                           &
+              ,dusfcg=dusfcg_hv,dvsfcg=dvsfcg_hv                               &
               ,uproj=u3d_hv,vproj=v3d_hv                                       &
               ,t1=t3d_hv,q1=qv3d_hv                                            &
               ,prsi=p3di_hv                                                    &
@@ -230,20 +240,23 @@ contains
               ,kpbl=kpbl2d_hv,lat=j                                            &
               ,its=its,ite=ite, kts=kts,kte=kte, kms=kms,kme=kte+1             )
 
-      ! Rotate tendencies from zonal/meridional back to model grid
+     !  3d layers
 
       do k = kts,kte
-         do i = its,ite
-            rublten(i,k,j) = rublten(i,k,j)+dudt(i,k)*cosa(i,j) + dvdt(i,k)*sina(i,j)
-            rvblten(i,k,j) = rvblten(i,k,j)-dudt(i,k)*sina(i,j) + dvdt(i,k)*cosa(i,j)
-            dtaux3d(i,k,j) = dtaux(i,k)*cosa(i,j) + dtauy(i,k)*sina(i,j)
-            dtauy3d(i,k,j) =-dtaux(i,k)*sina(i,j) + dtauy(i,k)*cosa(i,j)
+        do i = its,ite
+           rublten(i,k,j) = rublten_hv(i,k)
+           rvblten(i,k,j) = rvblten_hv(i,k)
+           dtaux3d(i,k,j) = dtaux3d_hv(i,k)
+           dtauy3d(i,k,j) = dtauy3d_hv(i,k)
         enddo
       enddo
-      do i = its,ite
-         dusfcg(i,j) = dusfc(i)*cosa(i,j) + dvsfc(i)*sina(i,j)
-         dvsfcg(i,j) =-dusfc(i)*sina(i,j) + dvsfc(i)*cosa(i,j)
-      enddo
+
+     !  2d
+
+     do i = its,ite
+         dusfcg(i,j) = dusfcg_hv(i)
+         dvsfcg(i,j) = dvsfcg_hv(i)
+     enddo
 
    enddo ! Outer J-loop
 !
@@ -251,7 +264,11 @@ contains
 !-------------------------------------------------------------------------------
 !-------------------------------------------------------------------------------
    subroutine gwdo2d(dudt, dvdt, dtaux2d, dtauy2d,                             &
-                     sina, cosa, uproj, vproj,                                 &
+                     sina, cosa,                                               &
+                     rublten,rvblten,                                          &
+                     dtaux3d,dtauy3d,                                          &
+                     dusfcg,dvsfcg,                                            &
+                     uproj, vproj,                                             &
                      t1, q1,                                                   &
                      prsi, prsl, prslk, zl,                                    &
                      kpblmax,                                                  &
@@ -322,6 +339,9 @@ contains
    real, dimension(its:ite)          , intent(in   ) :: dxmeter
    real, dimension(its:ite,kts:kte)  , intent(  out) :: dudt, dvdt        
    real, dimension(its:ite,kts:kte)  , intent(  out) :: dtaux2d, dtauy2d  
+   real, dimension(its:ite,kts:kte)  , intent(inout) :: rublten, rvblten
+   real, dimension(its:ite,kts:kte)  , intent(  out) :: dtaux3d, dtauy3d
+   real, dimension(its:ite)          , intent(  out) :: dusfcg, dvsfcg
    real, dimension(its:ite)          , intent(in   ) :: sina, cosa
    real, dimension(its:ite,kts:kte)  , intent(in   ) :: uproj, vproj
    real, dimension(its:ite,kts:kte)  , intent(in   ) :: t1, q1, prslk, zl 
@@ -816,6 +836,20 @@ contains
      dvsfc(i) = (-1./g_) * dvsfc(i)
    enddo
 !
+! rotate tendencies from zonal/meridional back to model grid
+!
+   do k = kts,kte
+      do i = its,ite
+         rublten(i,k) = rublten(i,k)+dudt(i,k)*cosa(i) + dvdt(i,k)*sina(i)
+         rvblten(i,k) = rvblten(i,k)-dudt(i,k)*sina(i) + dvdt(i,k)*cosa(i)
+         dtaux3d(i,k) = dtaux2d(i,k)*cosa(i) + dtauy2d(i,k)*sina(i)
+         dtauy3d(i,k) =-dtaux2d(i,k)*sina(i) + dtauy2d(i,k)*cosa(i)
+     enddo
+   enddo
+   do i = its,ite
+      dusfcg(i) = dusfc(i)*cosa(i) + dvsfc(i)*sina(i)
+      dvsfcg(i) =-dusfc(i)*sina(i) + dvsfc(i)*cosa(i)
+   enddo
    return                                                            
    end subroutine gwdo2d
 !-------------------------------------------------------------------------------
