@@ -1,3 +1,6 @@
+module ccpp_kinds
+   integer, parameter :: kind_phys = selected_real_kind(6)
+end module ccpp_kinds
 !-----------------------------------------------------------------------------------------------------------------
 ! bl_gwdo.F for CCPP
 
@@ -77,96 +80,97 @@ contains
 !    dusfc, dvsfc     - gw stress
 !
 !-------------------------------------------------------------------------------
+   use ccpp_kinds, only: kind_phys
    implicit none
 !
-   integer                           , intent(in   ) :: lat, kpblmax,          &
-                                                        its, ite, kts, kte, kme
-   integer, dimension(its:ite)       , intent(in   ) :: kpbl
-   real                              , intent(in   ) :: g_, pi_, rd_, rv_, fv_,&
-                                                        cp_, deltim
-   real, dimension(its:ite)          , intent(in   ) :: dxmeter
-   real, dimension(its:ite,kts:kte)  , intent(inout) :: rublten, rvblten
-   real, dimension(its:ite,kts:kte)  , intent(  out) :: dtaux3d, dtauy3d
-   real, dimension(its:ite)          , intent(  out) :: dusfcg, dvsfcg
-   real, dimension(its:ite)          , intent(in   ) :: sina, cosa
-   real, dimension(its:ite,kts:kte)  , intent(in   ) :: uproj, vproj
-   real, dimension(its:ite,kts:kte)  , intent(in   ) :: t1, q1, prslk, zl 
+   integer                                           , intent(in   ) :: lat, kpblmax,          &
+                                                                        its, ite, kts, kte, kme
+   integer, dimension(its:ite)       , intent(in   )                 :: kpbl
+   real(kind=kind_phys)                              , intent(in   ) :: g_, pi_, rd_, rv_, fv_,&
+                                                                        cp_, deltim
+   real(kind=kind_phys), dimension(its:ite)          , intent(in   ) :: dxmeter
+   real(kind=kind_phys), dimension(its:ite,kts:kte)  , intent(inout) :: rublten, rvblten
+   real(kind=kind_phys), dimension(its:ite,kts:kte)  , intent(  out) :: dtaux3d, dtauy3d
+   real(kind=kind_phys), dimension(its:ite)          , intent(  out) :: dusfcg, dvsfcg
+   real(kind=kind_phys), dimension(its:ite)          , intent(in   ) :: sina, cosa
+   real(kind=kind_phys), dimension(its:ite,kts:kte)  , intent(in   ) :: uproj, vproj
+   real(kind=kind_phys), dimension(its:ite,kts:kte)  , intent(in   ) :: t1, q1, prslk, zl 
 !
-   real, dimension(its:ite,kts:kte)  , intent(in   ) :: prsl
-   real, dimension(its:ite,kts:kme)  , intent(in   ) :: prsi
+   real(kind=kind_phys), dimension(its:ite,kts:kte)  , intent(in   ) :: prsl
+   real(kind=kind_phys), dimension(its:ite,kts:kme)  , intent(in   ) :: prsi
 !
-   real, dimension(its:ite)          , intent(in   ) :: var, oc1, &
-                                                        oa2d1, oa2d2, oa2d3, oa2d4, &
-                                                        ol2d1, ol2d2, ol2d3, ol2d4
-   character(len=*)                  , intent(  out) :: errmsg
-   integer                           , intent(  out) :: errflg
+   real(kind=kind_phys), dimension(its:ite)          , intent(in   ) :: var, oc1, &
+                                                                        oa2d1, oa2d2, oa2d3, oa2d4, &
+                                                                        ol2d1, ol2d2, ol2d3, ol2d4
+   character(len=*)                                  , intent(  out) :: errmsg
+   integer                                           , intent(  out) :: errflg
 !
-   real, parameter      ::  ric     = 0.25    ! critical richardson number 
-   real, parameter      ::  dw2min  = 1.
-   real, parameter      ::  rimin   = -100.
-   real, parameter      ::  bnv2min = 1.0e-5
-   real, parameter      ::  efmin   = 0.0
-   real, parameter      ::  efmax   = 10.0
-   real, parameter      ::  xl      = 4.0e4  
-   real, parameter      ::  critac  = 1.0e-5
-   real, parameter      ::  gmax    = 1.    
-   real, parameter      ::  veleps  = 1.0                                                 
-   real, parameter      ::  frc     = 1.0      
-   real, parameter      ::  ce      = 0.8     
-   real, parameter      ::  cg      = 0.5    
-   integer,parameter    ::  kpblmin = 2
+   real(kind=kind_phys), parameter      ::  ric     = 0.25    ! critical richardson number 
+   real(kind=kind_phys), parameter      ::  dw2min  = 1.
+   real(kind=kind_phys), parameter      ::  rimin   = -100.
+   real(kind=kind_phys), parameter      ::  bnv2min = 1.0e-5
+   real(kind=kind_phys), parameter      ::  efmin   = 0.0
+   real(kind=kind_phys), parameter      ::  efmax   = 10.0
+   real(kind=kind_phys), parameter      ::  xl      = 4.0e4  
+   real(kind=kind_phys), parameter      ::  critac  = 1.0e-5
+   real(kind=kind_phys), parameter      ::  gmax    = 1.    
+   real(kind=kind_phys), parameter      ::  veleps  = 1.0                                                 
+   real(kind=kind_phys), parameter      ::  frc     = 1.0      
+   real(kind=kind_phys), parameter      ::  ce      = 0.8     
+   real(kind=kind_phys), parameter      ::  cg      = 0.5    
+   integer,parameter                    ::  kpblmin = 2
 !
 ! local variables
 !
-   integer              ::  latd,lond
-   integer              ::  i,k,lcap,lcapp1,nwd,idir,                          &
-                            klcap,kp1,ikount,kk
+   integer                              ::  latd,lond
+   integer                              ::  i,k,lcap,lcapp1,nwd,idir,                          &
+                                            klcap,kp1,ikount,kk
 !
-   real                 ::  fdir,cs,rcsks,                                     &
-                            wdir,ti,rdz,temp,tem2,dw2,shr2,bvf2,rdelks,        &
-                            wtkbj,tem,gfobnv,hd,fro,rim,temc,tem1,efact,       &
-                            temv,dtaux,dtauy
+   real(kind=kind_phys)                 ::  fdir,cs,rcsks,                                     &
+                                            wdir,ti,rdz,temp,tem2,dw2,shr2,bvf2,rdelks,        &
+                                            wtkbj,tem,gfobnv,hd,fro,rim,temc,tem1,efact,       &
+                                            temv,dtaux,dtauy
 !
-   real, dimension(its:ite,kts:kte)   :: dudt, dvdt        
-   real, dimension(its:ite,kts:kte)   :: dtaux2d, dtauy2d  
-   real, dimension(its:ite)           :: dusfc, dvsfc
-   logical, dimension(its:ite)        :: ldrag, icrilv, flag,kloop1
-   real, dimension(its:ite)           :: coefm
+   real(kind=kind_phys), dimension(its:ite,kts:kte)   :: dudt, dvdt        
+   real(kind=kind_phys), dimension(its:ite,kts:kte)   :: dtaux2d, dtauy2d  
+   real(kind=kind_phys), dimension(its:ite)           :: dusfc, dvsfc
+   logical, dimension(its:ite)                        :: ldrag, icrilv, flag,kloop1
+   real(kind=kind_phys), dimension(its:ite)           :: coefm
 !                                                                       
-   real, dimension(its:ite)           :: taub, xn, yn, ubar, vbar, fr,         &
-                                         ulow, rulow, bnv, oa, ol, rhobar,     &
-                                         dtfac, brvf, xlinv, delks,delks1,     &
-                                         zlowtop,cleff
-   real, dimension(its:ite,kts:kte+1) :: taup
-   real, dimension(its:ite,kts:kte-1) :: velco
-   real, dimension(its:ite,kts:kte)   :: bnv2, usqj, taud, rho, vtk, vtj
-   real, dimension(its:ite,kts:kte)   :: del 
-   real, dimension(its:ite,kts:kte)   :: u1, v1
-   real, dimension(its:ite,4)         :: oa4, ol4
+   real(kind=kind_phys), dimension(its:ite)           :: taub, xn, yn, ubar, vbar, fr,         &
+                                                         ulow, rulow, bnv, oa, ol, rhobar,     &
+                                                         dtfac, brvf, xlinv, delks,delks1,     &
+                                                         zlowtop,cleff
+   real(kind=kind_phys), dimension(its:ite,kts:kte+1) :: taup
+   real(kind=kind_phys), dimension(its:ite,kts:kte-1) :: velco
+   real(kind=kind_phys), dimension(its:ite,kts:kte)   :: bnv2, usqj, taud, rho, vtk, vtj
+   real(kind=kind_phys), dimension(its:ite,kts:kte)   :: del 
+   real(kind=kind_phys), dimension(its:ite,kts:kte)   :: u1, v1
+   real(kind=kind_phys), dimension(its:ite,4)         :: oa4, ol4
 !
-   integer, dimension(its:ite)        :: kbl, klowtop
-   integer, parameter       ::  mdir=8
-   integer, dimension(mdir) :: nwdir
+   integer, dimension(its:ite)                        :: kbl, klowtop
+   integer, parameter                                 :: mdir=8
+   integer, dimension(mdir)                           :: nwdir
    data nwdir/6,7,5,8,2,3,1,4/
 !
 ! variables for flow-blocking drag
 !
-   real, parameter      :: frmax  = 10.
-   real, parameter      :: olmin  = 1.0e-5
-   real, parameter      :: odmin  = 0.1 
-   real, parameter      :: odmax  = 10. 
+   real(kind=kind_phys), parameter                    :: frmax  = 10.
+   real(kind=kind_phys), parameter                    :: olmin  = 1.0e-5
+   real(kind=kind_phys), parameter                    :: odmin  = 0.1 
+   real(kind=kind_phys), parameter                    :: odmax  = 10. 
 !
-   real                               :: fbdcd
-   real                               :: zblk, tautem
-   real                               :: fbdpe, fbdke 
-   real, dimension(its:ite)           :: delx, dely
-   real, dimension(its:ite,4)         :: dxy4, dxy4p
-   real, dimension(4)                 :: ol4p
-   real, dimension(its:ite)           :: dxy, dxyp, olp, od
-   real, dimension(its:ite,kts:kte+1) :: taufb
+   real(kind=kind_phys)                               :: fbdcd
+   real(kind=kind_phys)                               :: zblk, tautem
+   real(kind=kind_phys)                               :: fbdpe, fbdke 
+   real(kind=kind_phys), dimension(its:ite)           :: delx, dely
+   real(kind=kind_phys), dimension(its:ite,4)         :: dxy4, dxy4p
+   real(kind=kind_phys), dimension(4)                 :: ol4p
+   real(kind=kind_phys), dimension(its:ite)           :: dxy, dxyp, olp, od
+   real(kind=kind_phys), dimension(its:ite,kts:kte+1) :: taufb
 !
-   integer, dimension(its:ite)        :: komax
-   integer                            :: kblk
+   integer, dimension(its:ite)                        :: komax
+   integer                                            :: kblk
 !-------------------------------------------------------------------------------
 !
 ! constants                                                         
@@ -175,7 +179,7 @@ contains
    lcapp1 = lcap + 1                                                 
    fdir   = mdir / (2.0*pi_)
 !
-! initialize error stuff
+! initialize CCPP error flag and message
 !
     errmsg = ''
     errflg = 0
@@ -195,7 +199,7 @@ contains
 !
    cleff(its:ite) = dxmeter(its:ite)
 !
-! initialize arrays                                                 
+! initialize arrays, array syntax is OK for OpenMP since these are local
 !                                                                       
    ldrag   = .false. ; icrilv = .false. ; flag    = .true.
 !
@@ -209,8 +213,6 @@ contains
    taup    = 0.      ; taud   = 0.      ; dtaux2d = 0.     ; dtauy2d = 0.
 !
    dtfac   = 1.0     ; xlinv  = 1.0/xl
-!
-! initialize arrays for flow-blocking drag
 !
    komax = 0
    taufb = 0.0
