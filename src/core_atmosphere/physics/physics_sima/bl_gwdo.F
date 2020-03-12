@@ -1,18 +1,6 @@
 !-----------------------------------------------------------------------------------------------------------------
-! bl_gwdo.F was modified to accommodte both WRF and MPAS models / 2020-03-10
+! bl_gwdo.F for CCPP
 
-! modifications to sourcecode for implementation in MPAS:
-!    * made the variable dx (and local variable dxmeter) a two-dimensional array to include the impact
-!      of the mean distance between cells.
-!    * added the initialization of kpblmax to kte if the optional variables p_top,znu,and znw are not
-!      available in the argument list.
-!      Laura D. Fowler (laura@ucar.edu) / 2019-01-29.
-!    * because the topography variance is zero over ocean points,also check that the variable zlowtop
-!      is strictly greater than zero for the initialization of klowtop and kloop1.
-!      Laura D. Fowler (laura@ucar.edu) / 2019-01-30.
-
-!WRF:model_layer:physics
-!
 module bl_gwdo
 
    IMPLICIT NONE
@@ -39,7 +27,7 @@ contains
                      ol2d3, ol2d4,                                             &
                      g_, cp_, rd_, rv_, fv_, pi_,                              &
                      dxmeter, deltim, kpbl, lat,                               &
-                     its, ite, kts, kte, kms, kme,                             &
+                     its, ite, kts, kte, kme,                                  &
                      errmsg, errflg                                            )
 !-------------------------------------------------------------------------------
 !  
@@ -92,7 +80,7 @@ contains
    implicit none
 !
    integer                           , intent(in   ) :: lat, kpblmax,          &
-                                                        its, ite, kts, kte, kms, kme
+                                                        its, ite, kts, kte, kme
    integer, dimension(its:ite)       , intent(in   ) :: kpbl
    real                              , intent(in   ) :: g_, pi_, rd_, rv_, fv_,&
                                                         cp_, deltim
@@ -105,7 +93,7 @@ contains
    real, dimension(its:ite,kts:kte)  , intent(in   ) :: t1, q1, prslk, zl 
 !
    real, dimension(its:ite,kts:kte)  , intent(in   ) :: prsl
-   real, dimension(its:ite,kms:kme)  , intent(in   ) :: prsi
+   real, dimension(its:ite,kts:kme)  , intent(in   ) :: prsi
 !
    real, dimension(its:ite)          , intent(in   ) :: var, oc1, &
                                                         oa2d1, oa2d2, oa2d3, oa2d4, &
