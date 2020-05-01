@@ -147,32 +147,32 @@ kpblmax - ????in MPAS, this is just kte - can I remove?
   intent = in
   optional = F 
 [oa2d1]
-  standard_name = orographic_direction_asymmetry_direction1
-  long_name = orographic direction asymmetry direction1
+  standard_name = orographic_asymmetry_direction1
+  long_name = orographic asymmetry direction1
   units = dimensionless
   dimensions = (horizontal_loop_begin:horizontal_loop_end)
   type = real | kind = kind_phys
   intent = in
   optional = F 
 oa2d2
-  standard_name = orographic_direction_asymmetry_direction2
-  long_name = orographic direction asymmetry direction2
+  standard_name = orographic_asymmetry_direction2
+  long_name = orographic asymmetry direction2
   units = dimensionless
   dimensions = (horizontal_loop_begin:horizontal_loop_end)
   type = real | kind = kind_phys
   intent = in
   optional = F 
 oa2d3
-  standard_name = orographic_direction_asymmetry_direction3
-  long_name = orographic direction asymmetry direction3
+  standard_name = orographic_asymmetry_direction3
+  long_name = orographic asymmetry direction3
   units = dimensionless
   dimensions = (horizontal_loop_begin:horizontal_loop_end)
   type = real | kind = kind_phys
   intent = in
   optional = F 
 oa2d4
-  standard_name = orographic_direction_asymmetry_direction4
-  long_name = orographic direction asymmetry direction4
+  standard_name = orographic_asymmetry_direction4
+  long_name = orographic asymmetry direction4
   units = dimensionless
   dimensions = (horizontal_loop_begin:horizontal_loop_end)
   type = real | kind = kind_phys
