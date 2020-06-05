@@ -29,7 +29,7 @@ contains
                      ol2d1, ol2d2,                                             &
                      ol2d3, ol2d4,                                             &
                      g_, cp_, rd_, rv_, fv_, pi_,                              &
-                     dxmeter, deltim, kpbl, lat,                               &
+                     dxmeter, deltim, kpbl,                                    &
                      its, ite, kts, kte, kme,                                  &
                      errmsg, errflg                                            )
 !-------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ contains
    use ccpp_kinds, only: kind_phys
    implicit none
 !
-   integer                                           , intent(in   ) :: lat, kpblmax,          &
+   integer                                           , intent(in   ) :: kpblmax, &
                                                                         its, ite, kts, kte, kme
    integer, dimension(its:ite)       , intent(in   )                 :: kpbl
    real(kind=kind_phys)                              , intent(in   ) :: g_, pi_, rd_, rv_, fv_,&

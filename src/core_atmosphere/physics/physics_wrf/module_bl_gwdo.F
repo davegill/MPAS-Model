@@ -239,7 +239,7 @@ contains
               ,ol2d3=ol2d3_hv, ol2d4=ol2d4_hv                                  &
               ,g_=g,cp_=cp,rd_=rd,rv_=rv,fv_=ep1,pi_=pi                        &
               ,dxmeter=dx_hv,deltim=dt                                         &
-              ,kpbl=kpbl2d_hv,lat=j                                            &
+              ,kpbl=kpbl2d_hv                                                  &
               ,its=its,ite=ite, kts=kts,kte=kte, kme=kte+1                     &
               ,errmsg=errmsg,errflg=errflg                                     )
 
