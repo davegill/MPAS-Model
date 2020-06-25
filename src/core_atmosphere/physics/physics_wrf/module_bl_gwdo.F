@@ -240,7 +240,7 @@ contains
               ,g_=g,cp_=cp,rd_=rd,rv_=rv,fv_=ep1,pi_=pi                        &
               ,dxmeter=dx_hv,deltim=dt                                         &
               ,kpbl=kpbl2d_hv                                                  &
-              ,its=its,ite=ite, kts=kts,kte=kte, kme=kte+1                     &
+              ,its=its,ite=ite,kte=kte,kme=kte+1                               &
               ,errmsg=errmsg,errflg=errflg                                     )
 
       !  Variables that are INTENT(OUT) or INTENT(INOUT)
