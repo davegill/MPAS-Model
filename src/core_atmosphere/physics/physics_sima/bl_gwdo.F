@@ -28,7 +28,7 @@ contains
                      ol2d1, ol2d2,                                             &
                      ol2d3, ol2d4,                                             &
                      g_, cp_, rd_, rv_, fv_, pi_,                              &
-                     dxmeter, deltim, kpbl,                                    &
+                     dxmeter, deltim,                                          &
                      its, ite, kte, kme,                                       &
                      errmsg, errflg                                            )
 !-------------------------------------------------------------------------------

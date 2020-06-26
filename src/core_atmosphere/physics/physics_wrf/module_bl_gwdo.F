@@ -150,7 +150,6 @@ contains
                                                                      ol2d2_hv, &
                                                                      ol2d3_hv, &
                                                                      ol2d4_hv
-  integer,dimension( its:ite )           ::                         kpbl2d_hv   
   integer ::  i,j,k
 
   character(len=512)                     :: errmsg
@@ -201,7 +200,6 @@ contains
              dx_hv(i) =     dx(i,j)
           var2d_hv(i) =  var2d(i,j)
           oc12d_hv(i) =  oc12d(i,j)
-         kpbl2d_hv(i) = kpbl2d(i,j)
            sina_hv(i) =   sina(i,j)
            cosa_hv(i) =   cosa(i,j)
           oa2d1_hv(i) =  oa2d1(i,j)
@@ -230,7 +228,6 @@ contains
               ,ol2d3=ol2d3_hv, ol2d4=ol2d4_hv                                  &
               ,g_=g,cp_=cp,rd_=rd,rv_=rv,fv_=ep1,pi_=pi                        &
               ,dxmeter=dx_hv,deltim=dt                                         &
-              ,kpbl=kpbl2d_hv                                                  &
               ,its=its,ite=ite,kte=kte,kme=kte+1                               &
               ,errmsg=errmsg,errflg=errflg                                     )
 
