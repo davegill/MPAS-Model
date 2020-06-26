@@ -69,7 +69,6 @@ contains
 !    q1               - mixing ratio at t0-dt
 !    deltim           - time step (s)                                      
 !    del              - positive increment of pressure across layer (pa)
-!    kpbl             - vertical index of pbl height  
 !    prslk, zl, prsl, prsi    - pressure and height variables
 !    oa4, ol4, omax, var, oc1 - orographic statistics 
 !                                                                       
@@ -84,7 +83,6 @@ contains
 !
    integer, parameter                                                :: kts = 1
    integer                                           , intent(in   ) :: its, ite, kte, kme
-   integer, dimension(its:ite)       , intent(in   )                 :: kpbl
    real(kind=kind_phys)                              , intent(in   ) :: g_, pi_, rd_, rv_, fv_,&
                                                                         cp_, deltim
    real(kind=kind_phys), dimension(its:ite)          , intent(in   ) :: dxmeter
