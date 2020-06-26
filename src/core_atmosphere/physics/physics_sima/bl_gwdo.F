@@ -22,7 +22,6 @@ contains
                      uproj, vproj,                                             &
                      t1, q1,                                                   &
                      prsi, prsl, prslk, zl,                                    &
-                     kpblmax,                                                  &
                      var, oc1,                                                 &
                      oa2d1, oa2d2,                                             &
                      oa2d3, oa2d4,                                             &
@@ -70,7 +69,7 @@ contains
 !    q1               - mixing ratio at t0-dt
 !    deltim           - time step (s)                                      
 !    del              - positive increment of pressure across layer (pa)
-!    kpblmax, kpbl    - vertical index of pbl height  
+!    kpbl             - vertical index of pbl height  
 !    prslk, zl, prsl, prsi    - pressure and height variables
 !    oa4, ol4, omax, var, oc1 - orographic statistics 
 !                                                                       
@@ -84,8 +83,7 @@ contains
    implicit none
 !
    integer, parameter                                                :: kts = 1
-   integer                                           , intent(in   ) :: kpblmax, &
-                                                                        its, ite, kte, kme
+   integer                                           , intent(in   ) :: its, ite, kte, kme
    integer, dimension(its:ite)       , intent(in   )                 :: kpbl
    real(kind=kind_phys)                              , intent(in   ) :: g_, pi_, rd_, rv_, fv_,&
                                                                         cp_, deltim
@@ -123,6 +121,7 @@ contains
 !
 ! local variables
 !
+   integer                              ::  kpblmax
    integer                              ::  latd,lond
    integer                              ::  i,k,lcap,lcapp1,nwd,idir,                          &
                                             klcap,kp1,ikount,kk
@@ -259,10 +258,8 @@ contains
      enddo
    enddo
 !
+   kpblmax = kte
    do i = its,ite
-!
-! determine reference level: 2*var
-!
      kbl(i) = klowtop(i)
      kbl(i) = max(min(kbl(i),kpblmax),kpblmin)
    enddo

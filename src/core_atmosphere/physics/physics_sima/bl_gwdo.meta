@@ -129,7 +129,6 @@
   type = real | kind = kind_phys
   intent = in
   optional = F 
-kpblmax - ????in MPAS, this is just kte - can I remove?
 [var]
   standard_name = orographic_variance
   long_name = orographic variance

@@ -151,18 +151,10 @@ contains
                                                                      ol2d3_hv, &
                                                                      ol2d4_hv
   integer,dimension( its:ite )           ::                         kpbl2d_hv   
-  integer ::  i,j,k,kpblmax
+  integer ::  i,j,k
 
   character(len=512)                     :: errmsg
   integer                                :: errflg
-!
-   if(present(p_top) .and. present(znu) .and. present(znw)) then
-      do k = kts,kte
-        if (znu(k).gt.0.6) kpblmax = k + 1
-      enddo
-   else
-      kpblmax = kte
-   endif
 
    !  Outer j-loop. Allows consistency between WRF and MPAS in the driver.
 
@@ -231,7 +223,6 @@ contains
               ,prsi=p3di_hv                                                    &
               ,prsl=p3d_hv,prslk=pi3d_hv                                       &
               ,zl=z_hv                                                         &
-              ,kpblmax=kpblmax                                                 &
               ,var=var2d_hv,oc1=oc12d_hv                                       &
               ,oa2d1=oa2d1_hv, oa2d2=oa2d2_hv                                  &
               ,oa2d3=oa2d3_hv, oa2d4=oa2d4_hv                                  &
